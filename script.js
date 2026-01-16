@@ -1,4 +1,4 @@
-//Firebase config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
@@ -10,48 +10,92 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-//arcs
+// Book arcs
 const arcs = {
   "The Prophecies Begin": [
-    "Into the Wild","Fire and Ice","Forest of Secrets",
-    "Rising Storm","A Dangerous Path","The Darkest Hour"
+    "Into the Wild",
+    "Fire and Ice",
+    "Forest of Secrets",
+    "Rising Storm",
+    "A Dangerous Path",
+    "The Darkest Hour"
   ],
   "The New Prophecy": [
-    "Midnight","Moonrise","Dawn","Starlight","Twilight","Sunset"
+    "Midnight",
+    "Moonrise",
+    "Dawn",
+    "Starlight",
+    "Twilight",
+    "Sunset"
   ],
   "Power of Three": [
-    "The Sight","Dark River","Outcast","Eclipse","Long Shadows","Sunrise"
+    "The Sight",
+    "Dark River",
+    "Outcast",
+    "Eclipse",
+    "Long Shadows",
+    "Sunrise"
   ]
 };
 
-//signUp
-function signUp() { ... }
+// SIGN UP
+function signUp() {
+  const username = document.getElementById("username").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const clan = document.getElementById("clan").value;
 
-//LogIn
-function logIn() { ... }
+  if (!username || !email || !password) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
-//LogOut
-function logOut() { ... }
+  auth.createUserWithEmailAndPassword(email, password)
+    .then(cred => {
+      return db.collection("users").doc(cred.user.uid).set({
+        username: username,
+        clan: clan
+      });
+    })
+    .catch(err => alert(err.message));
+}
 
+// LOG IN
+function logIn() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-//auth.onAuthStateChanged
+  auth.signInWithEmailAndPassword(email, password)
+    .catch(err => alert(err.message));
+}
 
+// LOG OUT
+function logOut() {
+  auth.signOut();
+}
+
+// AUTH STATE
 auth.onAuthStateChanged(user => {
   const booksDiv = document.getElementById("books");
   const authDiv = document.getElementById("auth");
 
   booksDiv.innerHTML = "";
 
-    if (!user) {
-    booksDiv.innerHTML = "<p>🔒 Log in to track your books.</p>";
+  if (!user) {
     authDiv.style.display = "block";
+    booksDiv.innerHTML = "<p>🔒 Log in to track your books.</p>";
     return;
   }
 
-    authDiv.style.display = "none";
+  authDiv.style.display = "none";
   showBooks(user.uid);
 });
- 
+
+// SHOW BOOKS
+function showBooks(uid) {
+  const booksDiv = document.getElementById("books");
+  booksDiv.innerHTML = "";
+
   Object.keys(arcs).forEach(arc => {
     const title = document.createElement("h3");
     title.textContent = arc;
@@ -59,27 +103,23 @@ auth.onAuthStateChanged(user => {
 
     arcs[arc].forEach(book => {
       const div = document.createElement("div");
-      div.className = "book";
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
 
       checkbox.onchange = () => {
         db.collection("progress")
-          .doc(user.uid)
+          .doc(uid)
           .set({ [book]: checkbox.checked }, { merge: true });
       };
 
       div.appendChild(checkbox);
-      div.append(book);
+      div.append(" " + book);
       booksDiv.appendChild(div);
     });
   });
-});
+}
 
-
-//Show books
-function showBooks(uid) { ... }
 
 
 
