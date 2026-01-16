@@ -87,11 +87,14 @@ auth.onAuthStateChanged(user => {
   if (!user) {
     authDiv.style.display = "block";
     document.getElementById("welcome").textContent = "";
+    document.getElementById("logoutBtn").style.display = "none";
     booksDiv.innerHTML = "<p>🔒 Log in to track your books.</p>";
     return;
   }
 
   authDiv.style.display = "none";
+  document.getElementById("logoutBtn").style.display = "inline-block";
+  
   loadUserHeader(user.uid);
   showBooks(user.uid);
   loadCommunity();
