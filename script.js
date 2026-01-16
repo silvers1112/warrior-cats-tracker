@@ -1,3 +1,6 @@
+alert("script.js loaded");
+
+
 // Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
