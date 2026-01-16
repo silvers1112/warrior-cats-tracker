@@ -99,28 +99,35 @@ function showBooks(uid) {
   const booksDiv = document.getElementById("books");
   booksDiv.innerHTML = "";
 
-  Object.keys(arcs).forEach(arc => {
-    const title = document.createElement("h3");
-    title.textContent = arc;
-    booksDiv.appendChild(title);
+  db.collection("progress").doc(uid).get().then(doc => {
+    const progress = doc.exists ? doc.data() : {};
 
-    arcs[arc].forEach(book => {
-      const div = document.createElement("div");
+    Object.keys(arcs).forEach(arc => {
+      const title = document.createElement("h3");
+      title.textContent = arc;
+      booksDiv.appendChild(title);
 
-      const checkbox = document.createElement("input");
-      checkbox.type = "checkbox";
+      arcs[arc].forEach(book => {
+        const div = document.createElement("div");
 
-      checkbox.onchange = () => {
-        db.collection("progress")
-          .doc(uid)
-          .set({ [book]: checkbox.checked }, { merge: true });
-      };
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = progress[book] === true;
 
-      div.appendChild(checkbox);
-      div.append(" " + book);
-      booksDiv.appendChild(div);
+        checkbox.onchange = () => {
+          db.collection("progress")
+            .doc(uid)
+            .set({ [book]: checkbox.checked }, { merge: true });
+        };
+
+        div.appendChild(checkbox);
+        div.append(" " + book);
+        booksDiv.appendChild(div);
+      });
     });
   });
+}
+
 }
 
 
