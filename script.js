@@ -86,11 +86,13 @@ auth.onAuthStateChanged(user => {
 
   if (!user) {
     authDiv.style.display = "block";
+    document.getElementById("welcome").textContent = "";
     booksDiv.innerHTML = "<p>🔒 Log in to track your books.</p>";
     return;
   }
 
   authDiv.style.display = "none";
+  loadUserHeader(user.uid);
   showBooks(user.uid);
   loadCommunity();
 
@@ -152,6 +154,17 @@ function loadCommunity() {
         communityDiv.appendChild(div);
       });
     });
+  });
+}
+
+function loadUserHeader(uid) {
+  const welcome = document.getElementById("welcome");
+
+  db.collection("users").doc(uid).get().then(doc => {
+    if (!doc.exists) return;
+
+    const data = doc.data();
+    welcome.textContent = `🐾 ${data.username} of ${data.clan}`;
   });
 }
 
