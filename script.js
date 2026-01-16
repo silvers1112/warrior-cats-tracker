@@ -9,27 +9,25 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-function signUp() {
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const username = document.getElementById("username").value;
-  const clan = document.getElementById("clan").value;
+<div id="auth">
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then(cred => {
-      // Save warrior profile
-      return db.collection("users").doc(cred.user.uid).set({
-        username: username,
-        clan: clan
-      });
-    })
-    .then(() => {
-      alert("Welcome to the Clans!");
-    })
-    .catch(error => {
-      alert(error.message);
-    });
-}
+  <input id="username" placeholder="Warrior Name (signup only)">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <select id="clan">
+    <option>ThunderClan</option>
+    <option>RiverClan</option>
+    <option>ShadowClan</option>
+    <option>WindClan</option>
+    <option>SkyClan</option>
+  </select>
+
+  <button onclick="signUp()">Create Warrior</button>
+  <button onclick="logIn()">Log In</button>
+  <button onclick="logOut()">Log Out</button>
+
+</div>
 
 auth.onAuthStateChanged(user => {
   if (!user) return;
