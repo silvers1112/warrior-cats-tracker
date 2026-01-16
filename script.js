@@ -126,8 +126,11 @@ function showBooks(uid) {
         div.append(" " + book);
         booksDiv.appendChild(div);
       });
+    });
+  });
+}
 
-  function loadCommunity() {
+function loadCommunity() {
   const communityDiv = document.getElementById("community");
   communityDiv.innerHTML = "<h3>📊 Community Progress</h3>";
 
@@ -150,13 +153,8 @@ function showBooks(uid) {
       });
     });
   });
-}   
-    
-    });
-  });
 }
 
-}
 
 
 
