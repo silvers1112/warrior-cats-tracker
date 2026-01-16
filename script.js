@@ -25,17 +25,33 @@ const arcs = {
 };
 
 //signUp
+function signUp() { ... }
+
 //LogIn
+function logIn() { ... }
+
 //LogOut
+function logOut() { ... }
+
 
 //auth.onAuthStateChanged
 
 auth.onAuthStateChanged(user => {
-  if (!user) return;
-
   const booksDiv = document.getElementById("books");
+  const authDiv = document.getElementById("auth");
+
   booksDiv.innerHTML = "";
 
+    if (!user) {
+    booksDiv.innerHTML = "<p>🔒 Log in to track your books.</p>";
+    authDiv.style.display = "block";
+    return;
+  }
+
+    authDiv.style.display = "none";
+  showBooks(user.uid);
+});
+ 
   Object.keys(arcs).forEach(arc => {
     const title = document.createElement("h3");
     title.textContent = arc;
@@ -60,5 +76,10 @@ auth.onAuthStateChanged(user => {
     });
   });
 });
+
+
+//Show books
+function showBooks(uid) { ... }
+
 
 
