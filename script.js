@@ -92,6 +92,8 @@ auth.onAuthStateChanged(user => {
 
   authDiv.style.display = "none";
   showBooks(user.uid);
+  loadCommunity();
+
 });
 
 // SHOW BOOKS
@@ -124,6 +126,32 @@ function showBooks(uid) {
         div.append(" " + book);
         booksDiv.appendChild(div);
       });
+
+  function loadCommunity() {
+  const communityDiv = document.getElementById("community");
+  communityDiv.innerHTML = "<h3>📊 Community Progress</h3>";
+
+  db.collection("users").get().then(snapshot => {
+    snapshot.forEach(userDoc => {
+      const userId = userDoc.id;
+      const userData = userDoc.data();
+
+      db.collection("progress").doc(userId).get().then(progressDoc => {
+        const progress = progressDoc.exists ? progressDoc.data() : {};
+        const readCount = Object.values(progress).filter(v => v === true).length;
+
+        const div = document.createElement("div");
+        div.innerHTML = `
+          <strong>${userData.username}</strong>
+          (${userData.clan}) — 📚 ${readCount} books read
+        `;
+
+        communityDiv.appendChild(div);
+      });
+    });
+  });
+}   
+    
     });
   });
 }
