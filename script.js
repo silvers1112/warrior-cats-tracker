@@ -30,3 +30,16 @@ function signUp() {
       alert(error.message);
     });
 }
+
+const arcs = {
+  "The Prophecies Begin": [
+    "Into the Wild","Fire and Ice","Forest of Secrets",
+    "Rising Storm","A Dangerous Path","The Darkest Hour"
+  ],
+  "The New Prophecy": [
+    "Midnight","Moonrise","Dawn","Starlight","Twilight","Sunset"
+  ],
+  "Power of Three": [
+    "The Sight","Dark River","Outcast","Eclipse","Long Shadows","Sunrise"
+  ]
+};
