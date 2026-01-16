@@ -8,6 +8,32 @@
 
 <h1>🐾 Warrior Cats Reading Tracker</h1>
 
+<div id="auth">
+
+  <input id="username" placeholder="Warrior Name (signup only)">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <select id="clan">
+    <option>ThunderClan</option>
+    <option>RiverClan</option>
+    <option>ShadowClan</option>
+    <option>WindClan</option>
+    <option>SkyClan</option>
+  </select>
+
+  <button onclick="signUp()">Create Warrior</button>
+  <button onclick="logIn()">Log In</button>
+  <button onclick="logOut()">Log Out</button>
+
+</div>
+
+<h2>Your Books</h2>
+<div id="books"></div>
+
+<h2>🌍 Community Progress</h2>
+<div id="community"></div>
+  
 <div id="signup">
   <input id="username" placeholder="Warrior Name">
   <input id="email" placeholder="Email">
