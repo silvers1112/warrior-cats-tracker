@@ -1,1 +1,22 @@
+body {
+  font-family: Arial;
+  background: #f4efe9;
+  text-align: center;
+  padding: 20px;
+}
+
+input, select, button {
+  padding: 10px;
+  margin: 5px;
+  width: 90%;
+  max-width: 300px;
+}
+
+.book {
+  margin: 4px;
+}
+
+@media (max-width: 600px) {
+  body { font-size: 18px; }
+}
 
