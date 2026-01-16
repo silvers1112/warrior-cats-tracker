@@ -31,6 +31,37 @@ function signUp() {
     });
 }
 
+auth.onAuthStateChanged(user => {
+  if (!user) return;
+
+  const booksDiv = document.getElementById("books");
+  booksDiv.innerHTML = "";
+
+  Object.keys(arcs).forEach(arc => {
+    const title = document.createElement("h3");
+    title.textContent = arc;
+    booksDiv.appendChild(title);
+
+    arcs[arc].forEach(book => {
+      const div = document.createElement("div");
+      div.className = "book";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+
+      checkbox.onchange = () => {
+        db.collection("progress")
+          .doc(user.uid)
+          .set({ [book]: checkbox.checked }, { merge: true });
+      };
+
+      div.appendChild(checkbox);
+      div.append(book);
+      booksDiv.appendChild(div);
+    });
+  });
+});
+
 const arcs = {
   "The Prophecies Begin": [
     "Into the Wild","Fire and Ice","Forest of Secrets",
