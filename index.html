@@ -1,23 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Warrior Cats Tracker</title>
+  <title>Create Warrior</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🐾 Warrior Cats Reading Tracker</h1>
+<h1>🐾 Create Warrior / Log In</h1>
 
-<button onclick="location.href='auth.html'">Create Warrior</button>
-<button onclick="location.href='auth.html'">Log In</button>
+<input id="username" placeholder="Warrior Name (signup only)">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
-<h2>🌍 Community Progress</h2>
-<div id="community"></div>
+<select id="clan">
+  <option>ThunderClan</option>
+  <option>RiverClan</option>
+  <option>ShadowClan</option>
+  <option>WindClan</option>
+  <option>SkyClan</option>
+</select>
+
+<button onclick="signUp()">Create Warrior</button>
+<button onclick="logIn()">Log In</button>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="script.js"></script>
+
+<script>
+  document.getElementById("email").addEventListener("focus", () => {
+    document.getElementById("username").style.display = "none";
+    document.getElementById("clan").style.display = "none";
+  });
+</script>
 
 </body>
 </html>
