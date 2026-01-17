@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Your Warrior Journey</title>
+  <title>Your Books</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- USER HEADER -->
-  <h2 id="welcome">🐾 Welcome</h2>
+<h2 id="welcome"></h2>
+<button onclick="logOut()">Log Out</button>
 
-  <!-- LOG OUT -->
-  <button onclick="logOut()">Log Out</button>
+<h2>Your Books</h2>
+<div id="books"></div>
 
-  <!-- BOOK TRACKER -->
-  <h2>Your Books</h2>
-  <div id="books"></div>
+<h2>🌍 Community Progress</h2>
+<div id="community"></div>
 
-  <!-- COMMUNITY PROGRESS -->
-  <h2>🌍 Community Progress</h2>
-  <div id="community"></div>
-
-  <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-  <!-- YOUR SCRIPT -->
-  <script src="script.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
 
 </body>
 </html>
