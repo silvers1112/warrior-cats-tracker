@@ -3,22 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Log In - Warrior Cats Tracker</title>
+  <title>Login - Warrior Cats Tracker</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>🐾 Log In to Your Warrior Cats Tracker</h1>
+  <h1>🐾 Log In</h1>
 
-<input id="email" placeholder="Email" type="email">
-<input id="password" placeholder="Password" type="password">
+  <!-- Form for login -->
+  <input id="email" type="email" placeholder="Email" required>
+  <input id="password" type="password" placeholder="Password" required>
+  
+  <button onclick="logIn()">Log In</button>
 
-<button onclick="logIn()">Log In</button>
+  <p>Don't have an account? <a href="signup.html">Create one</a></p>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
