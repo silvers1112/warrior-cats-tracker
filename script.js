@@ -13,6 +13,18 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+function goToSignup() {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("auth").style.display = "block";
+  document.getElementById("username").style.display = "block";
+}
+
+function goToLogin() {
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("auth").style.display = "block";
+  document.getElementById("username").style.display = "none";
+}
+
 // Book arcs
 const arcs = {
   "The Prophecies Begin": [
