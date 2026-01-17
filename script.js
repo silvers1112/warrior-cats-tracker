@@ -15,15 +15,88 @@ const db = firebase.firestore();
 // Book arcs
 const arcs = {
   "The Prophecies Begin": [
-    "Into the Wild", "Fire and Ice", "Forest of Secrets",
-    "Rising Storm", "A Dangerous Path", "The Darkest Hour"
+    "Into the Wild",
+    "Fire and Ice",
+    "Forest of Secrets",
+    "Rising Storm",
+    "A Dangerous Path",
+    "The Darkest Hour"
   ],
   "The New Prophecy": [
-    "Midnight", "Moonrise", "Dawn", "Starlight", "Twilight", "Sunset"
+    "Midnight",
+    "Moonrise",
+    "Dawn",
+    "Starlight",
+    "Twilight",
+    "Sunset"
   ],
   "Power of Three": [
-    "The Sight", "Dark River", "Outcast",
-    "Eclipse", "Long Shadows", "Sunrise"
+    "The Sight",
+    "Dark River",
+    "Outcast",
+    "Eclipse",
+    "Long Shadows",
+    "Sunrise"
+  ],
+  "Omen of the Stars": [
+    "The Fourth Apprentice",
+    "Fading Echoes",
+    "Night Whispers",
+    "Sign of the Moon",
+    "The Forgotten Warrior",
+    "The Last Hope"
+  ],
+  "Dawn of the Clans": [
+    "The Sun Trail",
+    "Thunder Rising",
+    "The First Battle",
+    "The Blazing Star",
+    "A Forest Divided",
+    "Path of Stars"
+  ],
+  "A Vision of Shadows": [
+    "The Apprentice's Quest",
+    "Thunder and Shadow",
+    "Shattered Sky",
+    "Darkest Night",
+    "River of Secrets",
+    "The Raging Storm"
+  ],
+  "The Broken Code": [
+    "Warriors: Lost Stars",
+    "Warriors: The Silent Thaw",
+    "Warriors: Veil of Shadows",
+    "Warriors: Darkness Within",
+    "Warriors: A Light in the Mist",
+    "Warriors: The Place of No Stars"
+  ],
+  "Super Editions": [
+    "Firestar's Quest",
+    "Bluestar's Prophecy",
+    "Yellowfang's Secret",
+    "Tawnykit's Curse",
+    "Crowfeather's Trial",
+    "Leafpool's Wish",
+    "Mothwing's Secret",
+    "Skyclan's Destiny",
+    "Shattered Peace"
+  ],
+  "Novellas": [
+    "Spottedleaf's Heart",
+    "Hollyleaf's Story",
+    "Squirrelflight's Hope",
+    "Mistystar's Omen",
+    "Pinestar's Choice",
+    "Redtail's Debt",
+    "Ravenpaw's Farewell"
+  ],
+  "Tallstar's Revenge": [
+    "Tallstar's Revenge"
+  ],
+  "SkyClan and the Stranger": [
+    "SkyClan and the Stranger",
+    "SkyClan and the Stranger: The Rescue",
+    "SkyClan and the Stranger: The Siege"
   ]
 };
 
@@ -150,6 +223,7 @@ function showBooks(uid) {
     });
   });
 }
+
 
 // LOAD COMMUNITY
 function loadCommunity() {
