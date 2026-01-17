@@ -75,22 +75,29 @@ function logOut() {
 // AUTH STATE
 auth.onAuthStateChanged(user => {
 
-  if (document.getElementById("community")) loadCommunity();
+  if (document.getElementById("community")) {
+    loadCommunity();
+  }
 
   if (!user) {
-    if (onAppPage) window.location.href = "index.html";
+    if (window.location.pathname.includes("app")) {
+      window.location.href = "index.html";
+    }
     return;
   }
 
-  if (onLandingPage) {
+  if (
+    window.location.pathname.includes("login") ||
+    window.location.pathname.includes("signup")
+  ) {
     window.location.href = "app.html";
     return;
   }
 
   loadUserHeader(user.uid);
   showBooks(user.uid);
+  loadCommunity();
 });
-
 // BOOK DISPLAY
 function showBooks(uid) {
   books.innerHTML = "";
