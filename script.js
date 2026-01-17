@@ -48,18 +48,24 @@ const arcs = {
 function signUp() {
   auth.createUserWithEmailAndPassword(
     email.value, password.value
-  ).then(cred => {
-    return db.collection("users").doc(cred.user.uid).set({
-      username: username.value,
-      clan: clan.value
-    });
-  }).catch(e => alert(e.message));
-}
+ .then(() => {
+  window.location.href = "app.html";
+})
 
 function logIn() {
-  auth.signInWithEmailAndPassword(
-    email.value, password.value
-  ).catch(e => alert(e.message));
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("Enter email and password");
+    return;
+  }
+
+  auth.signInWithEmailAndPassword(email, password)
+    .then(() => {
+      window.location.href = "app.html";
+    })
+    .catch(err => alert(err.message));
 }
 
 function logOut() {
