@@ -63,6 +63,7 @@ function logIn() {
 
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
+      // Redirect to the app (profile) page
       window.location.href = "app.html";
     })
     .catch(err => alert(err.message));
