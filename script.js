@@ -93,18 +93,30 @@ function logOut() {
 
 // AUTH STATE
 auth.onAuthStateChanged(user => {
-  const booksDiv = document.getElementById("books");
-  const authDiv = document.getElementById("auth");
 
-  booksDiv.innerHTML = "";
-
+  // CASE 1: USER IS NOT LOGGED IN
   if (!user) {
-    authDiv.style.display = "block";
-    document.getElementById("welcome").textContent = "";
-    document.getElementById("logoutBtn").style.display = "none";
-    booksDiv.innerHTML = "<p>🔒 Log in to track your books.</p>";
+
+    // If they try to open the books page, kick them out
+    if (onAppPage) {
+      window.location.href = "index.html";
+    }
+
     return;
   }
+
+  // CASE 2: USER IS LOGGED IN BUT ON LANDING PAGE
+  if (onLandingPage) {
+    window.location.href = "app.html";
+    return;
+  }
+
+  // CASE 3: USER IS LOGGED IN AND ON BOOKS PAGE
+  showBooks(user.uid);
+  loadCommunity();
+  loadUsername(user.uid);
+
+});
 
   authDiv.style.display = "none";
   document.getElementById("logoutBtn").style.display = "inline-block";
