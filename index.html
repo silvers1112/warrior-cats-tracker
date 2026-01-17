@@ -6,25 +6,47 @@
 </head>
 <body>
 
-  <h1>🐾 Warrior Cats Reading Tracker</h1>
+<h1>🐾 Warrior Cats Tracker</h1>
 
-  <!-- LANDING BUTTONS -->
-  <div id="landing">
-    <button onclick="goToSignup()">Create Warrior</button>
-    <button onclick="goToLogin()">Log In</button>
-  </div>
+<!-- LANDING -->
+<div id="landing">
 
-  <!-- COMMUNITY PROGRESS (PUBLIC) -->
-  <h2>🌍 Community Progress</h2>
-  <div id="community"></div>
+  <button onclick="goToSignup()">Create Warrior</button>
+  <button onclick="goToLogin()">Log In</button>
 
-  <!-- FIREBASE -->
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</div>
 
-  <!-- YOUR SCRIPT -->
-  <script src="script.js"></script>
+<!-- AUTH FORM (HIDDEN AT FIRST) -->
+<div id="auth" style="display:none;">
+
+  <input id="username" placeholder="Warrior Name">
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+
+  <select id="clan">
+    <option>ThunderClan</option>
+    <option>RiverClan</option>
+    <option>ShadowClan</option>
+    <option>WindClan</option>
+    <option>SkyClan</option>
+  </select>
+
+  <button onclick="signUp()">Create Warrior</button>
+  <button onclick="logIn()">Log In</button>
+
+</div>
+
+<!-- COMMUNITY -->
+<div id="community"></div>
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- YOUR SCRIPT -->
+<script src="script.js"></script>
 
 </body>
+
 </html>
