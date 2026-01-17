@@ -1,96 +1,109 @@
+/* GENERAL PAGE STYLING */
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #f4efe9;
   text-align: center;
   padding: 20px;
+  margin: 0;
 }
 
+h1, h2, h3 {
+  color: #3b2f2f;
+}
+
+/* INPUTS & BUTTONS */
 input, select, button {
   padding: 10px;
-  margin: 5px;
-  width: 90%;
-  max-width: 300px;
+  margin: 6px 0;
+  width: 100%;
+  max-width: 320px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
 }
 
-.book {
-  margin: 4px;
+button {
+  cursor: pointer;
+  background: #c49a6c;
+  color: #fff;
+  border: none;
 }
 
-@media (max-width: 600px) {
-  body { font-size: 18px; }
+button:hover {
+  background: #b18455;
 }
 
-.auth-buttons {
+/* LANDING PAGE BUTTONS */
+#landing {
+  max-width: 320px;
+  margin: 20px auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.create-btn {
-  width: 100%;
-  max-width: 260px;
-  padding: 12px;
-  font-size: 15px;
-}
-
-.auth-row {
-  display: flex;
   gap: 12px;
-  width: 100%;
-  max-width: 260px;
 }
 
-.auth-row button {
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-
-.auth-buttons button {
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  cursor: pointer;
-}
+/* AUTH PAGE FORM */
 #auth {
-  max-width: 400px;
-  margin: 0 auto;
+  max-width: 320px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
 }
 
-.auth-row button {
-  width: 100%;      /* override the 90% */
-  max-width: none; /* remove max-width limit */
+/* LOG OUT BUTTON */
+button[onclick="logOut()"] {
+  margin-bottom: 20px;
+  background: #8b3a3a;
 }
 
-.create-btn {
-  width: 100%;
-  max-width: 260px;
+button[onclick="logOut()"]:hover {
+  background: #6f2c2c;
 }
 
-#auth,
-#books,
-#welcome,
-#logoutBtn {
-  display: none;
+/* BOOK LIST */
+#books {
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  text-align: left;
 }
 
-#landing {
+#books h3 {
+  margin-top: 20px;
+  color: #4a3b2b;
+}
+
+#books div {
+  margin: 6px 0;
+}
+
+/* COMMUNITY SECTION */
+#community {
   max-width: 500px;
   margin: 0 auto;
+  text-align: left;
 }
 
-.landing-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
+#community div {
+  background: #fff;
+  padding: 8px 10px;
+  margin: 6px 0;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
-.landing-buttons button {
-  padding: 12px 18px;
-  font-size: 16px;
+/* USER HEADER */
+#welcome {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+/* MOBILE FRIENDLY */
+@media (max-width: 600px) {
+  body {
+    font-size: 18px;
+  }
+
+  input, select, button {
+    font-size: 16px;
+  }
 }
