@@ -28,6 +28,13 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="script.js"></script>
 
+<script>
+  document.getElementById("email").addEventListener("focus", () => {
+    document.getElementById("username").style.display = "none";
+    document.getElementById("clan").style.display = "none";
+  });
+</script>
+
 </body>
 </html>
 
