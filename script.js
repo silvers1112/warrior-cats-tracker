@@ -126,4 +126,59 @@ auth.onAuthStateChanged(user => {
 // BOOK DISPLAY
 function showBooks(uid) {
   const booksDiv = document.getElementById("books");
-  booksDiv.in
+  booksDiv.innerHTML = "";
+
+  db.collection("progress").doc(uid).get().then(doc => {
+    const progress = doc.exists ? doc.data() : {};
+
+    Object.keys(arcs).forEach(arc => {
+      const h = document.createElement("h3");
+      h.textContent = arc;
+      booksDiv.appendChild(h);
+
+      arcs[arc].forEach(book => {
+        const d = document.createElement("div");
+        const c = document.createElement("input");
+        c.type = "checkbox";
+        c.checked = progress[book] === true;
+        c.onchange = () => {
+          db.collection("progress").doc(uid)
+            .set({ [book]: c.checked }, { merge: true });
+        };
+        d.appendChild(c);
+        d.append(" " + book);
+        booksDiv.appendChild(d);
+      });
+    });
+  });
+}
+
+// COMMUNITY
+function loadCommunity() {
+  const communityDiv = document.getElementById("community");
+  communityDiv.innerHTML = "";
+  db.collection("users").get().then(snap => {
+    snap.forEach(u => {
+      db.collection("progress").doc(u.id).get().then(p => {
+        const count = p.exists
+          ? Object.values(p.data()).filter(v => v).length
+          : 0;
+        const d = document.createElement("div");
+        d.textContent = `${u.data().username} (${u.data().clan}) — ${count} books read`;
+        communityDiv.appendChild(d);
+      });
+    });
+  });
+}
+
+// HEADER
+function loadUserHeader(uid) {
+  const welcomeDiv = document.getElementById("welcome");
+
+  db.collection("users").doc(uid).get().then(doc => {
+    if (!doc.exists) return;
+
+    const data = doc.data();
+    welcomeDiv.textContent = `🐾 ${data.username} of ${data.clan}`;
+  });
+}
