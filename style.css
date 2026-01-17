@@ -1,89 +1,77 @@
-/* General Styles */
+/* Basic Styling */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  text-align: center;
   margin: 0;
   padding: 0;
+  background: #f4f4f9;
+  text-align: center;
 }
 
-h1 {
-  font-size: 2em;
-  margin-top: 20px;
-  color: #6c5b3d;
+header {
+  background: #3c3c3c;
+  color: #fff;
+  padding: 15px;
 }
 
-h3 {
-  font-size: 1.5em;
-  margin-top: 20px;
-  color: #4a4a4a;
-}
-
-/* Input and Button Styles */
-input, select, button {
-  padding: 12px;
-  margin: 8px;
-  width: 80%;
-  max-width: 300px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  font-size: 1em;
+header #welcome {
+  font-size: 24px;
+  font-weight: bold;
 }
 
 button {
-  background-color: #6c5b3d;
-  color: white;
+  background-color: #ffcc00;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #4a3f2d;
+  background-color: #ffaa00;
 }
 
-/* Layout Styles */
-.container {
-  max-width: 600px;
-  margin: 0 auto;
+section {
   padding: 20px;
+  margin: 20px 0;
+  background-color: #fff;
+  border-radius: 8px;
 }
 
-.input-group {
-  margin-bottom: 15px;
+#books-section, #community-section {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-/* Book Progress */
 #books {
-  margin-top: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
   text-align: left;
-  display: inline-block;
-  padding: 10px;
 }
 
 .book {
-  margin: 5px;
+  background: #e6e6e6;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.checkbox {
+.book h4 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.book input {
   margin-right: 10px;
 }
 
-/* Community Progress */
-#community {
-  margin-top: 40px;
-  text-align: left;
-  display: inline-block;
-  padding: 20px;
-}
+/* Responsive Design */
+@media (max-width: 768px) {
+  #books {
+    grid-template-columns: 1fr;
+  }
 
-.community-item {
-  margin-bottom: 12px;
-  font-size: 1.1em;
-  color: #333;
-}
-
-.welcome {
-  font-size: 1.2em;
-  color: #6c5b3d;
-  margin-top: 20px;
+  header {
+    text-align: center;
+  }
 }
