@@ -1,5 +1,7 @@
 alert("script.js loaded");
 
+const onLandingPage = window.location.pathname.includes("index");
+const onAppPage = window.location.pathname.includes("app");
 
 // Firebase config
 const firebaseConfig = {
