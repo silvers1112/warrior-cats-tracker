@@ -6,29 +6,10 @@
 </head>
 <body>
 
-<h1>🐾 Warrior Cats Tracker</h1>
+<h1>🐾 Warrior Cats Reading Tracker</h1>
 
-<div id="landing">
-  <button onclick="goToSignup()">Create Warrior</button>
-  <button onclick="goToLogin()">Log In</button>
-</div>
-
-<div id="auth" style="display:none;">
-  <input id="username" placeholder="Warrior Name">
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-
-  <select id="clan">
-    <option>ThunderClan</option>
-    <option>RiverClan</option>
-    <option>ShadowClan</option>
-    <option>WindClan</option>
-    <option>SkyClan</option>
-  </select>
-
-  <button onclick="signUp()">Create Warrior</button>
-  <button onclick="logIn()">Log In</button>
-</div>
+<button onclick="location.href='auth.html'">Create Warrior</button>
+<button onclick="location.href='auth.html'">Log In</button>
 
 <h2>🌍 Community Progress</h2>
 <div id="community"></div>
@@ -36,4 +17,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></s
+<script src="script.js"></script>
+
+</body>
+</html>
