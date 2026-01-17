@@ -96,12 +96,9 @@ auth.onAuthStateChanged(user => {
 
   // CASE 1: USER IS NOT LOGGED IN
   if (!user) {
-
-    // If they try to open the books page, kick them out
     if (onAppPage) {
       window.location.href = "index.html";
     }
-
     return;
   }
 
