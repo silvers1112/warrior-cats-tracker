@@ -1,98 +1,89 @@
+/* General Styles */
 body {
-  font-family: Arial;
-  background: #f4efe9;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
   text-align: center;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
 }
 
+h1 {
+  font-size: 2em;
+  margin-top: 20px;
+  color: #6c5b3d;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-top: 20px;
+  color: #4a4a4a;
+}
+
+/* Input and Button Styles */
 input, select, button {
-  padding: 10px;
-  margin: 6px;
-  width: 90%;
+  padding: 12px;
+  margin: 8px;
+  width: 80%;
   max-width: 300px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 1em;
 }
 
 button {
+  background-color: #6c5b3d;
+  color: white;
   cursor: pointer;
 }
 
-#landing button {
-  max-width: 200px;
+button:hover {
+  background-color: #4a3f2d;
+}
+
+/* Layout Styles */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+/* Book Progress */
+#books {
+  margin-top: 30px;
+  text-align: left;
+  display: inline-block;
+  padding: 10px;
 }
 
 .book {
-  margin: 4px;
-}
-#landing {
-  max-width: 320px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  margin: 5px;
 }
 
-/* AUTH PAGE FORM */
-#auth {
-  max-width: 320px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
+.checkbox {
+  margin-right: 10px;
 }
 
-/* LOG OUT BUTTON */
-button[onclick="logOut()"] {
-  margin-bottom: 20px;
-  background: #8b3a3a;
-}
-
-button[onclick="logOut()"]:hover {
-  background: #6f2c2c;
-}
-
-/* BOOK LIST */
-#books {
-  max-width: 500px;
-  margin: 0 auto 30px auto;
-  text-align: left;
-}
-
-#books h3 {
-  margin-top: 20px;
-  color: #4a3b2b;
-}
-
-#books div {
-  margin: 6px 0;
-}
-
-/* COMMUNITY SECTION */
+/* Community Progress */
 #community {
-  max-width: 500px;
-  margin: 0 auto;
+  margin-top: 40px;
   text-align: left;
+  display: inline-block;
+  padding: 20px;
 }
 
-#community div {
-  background: #fff;
-  padding: 8px 10px;
-  margin: 6px 0;
-  border-radius: 6px;
-  font-size: 14px;
+.community-item {
+  margin-bottom: 12px;
+  font-size: 1.1em;
+  color: #333;
 }
 
-/* USER HEADER */
-#welcome {
-  margin-bottom: 10px;
-  font-size: 20px;
-}
-
-/* MOBILE FRIENDLY */
-@media (max-width: 600px) {
-  body {
-    font-size: 18px;
-  }
-
-  input, select, button {
-    font-size: 16px;
-  }
+.welcome {
+  font-size: 1.2em;
+  color: #6c5b3d;
+  margin-top: 20px;
 }
