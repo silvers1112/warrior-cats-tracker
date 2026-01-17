@@ -70,3 +70,27 @@ input, select, button {
   width: 100%;
   max-width: 260px;
 }
+
+#auth,
+#books,
+#welcome,
+#logoutBtn {
+  display: none;
+}
+
+#landing {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.landing-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.landing-buttons button {
+  padding: 12px 18px;
+  font-size: 16px;
+}
