@@ -8,11 +8,17 @@
 </head>
 <body>
 
-  <h1>🐾 Warrior Cats Tracker</h1>
+  <header>
+    <h1>🐾 Warrior Cats Tracker</h1>
+    <button onclick="location.href='signup.html'">Create Warrior</button>
+    <button onclick="location.href='login.html'">Log In</button>
+  </header>
 
-  <!-- Buttons for navigating to signup and login pages -->
-  <button onclick="location.href='signup.html'">Create Warrior</button>
-  <button onclick="location.href='login.html'">Log In</button>
+  <!-- Community Progress Section -->
+  <section id="community-section">
+    <h3>👥 Community Progress</h3>
+    <div id="community"></div>
+  </section>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
