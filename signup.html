@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create Warrior</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -8,10 +10,10 @@
 
 <h1>🐾 Create Your Warrior</h1>
 
-<input id="username" placeholder="Warrior Name">
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
-
+<!-- Sign up form -->
+<input id="username" placeholder="Warrior Name" type="text">
+<input id="email" placeholder="Email" type="email">
+<input id="password" placeholder="Password" type="password">
 <select id="clan">
   <option>ThunderClan</option>
   <option>RiverClan</option>
@@ -20,9 +22,9 @@
   <option>SkyClan</option>
 </select>
 
+<!-- Submit buttons -->
 <button onclick="signUp()">Create Warrior</button>
-
-<p><a href="login.html">Already have a warrior? Log in</a></p>
+<button onclick="location.href='index.html'">Back to Landing</button>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -31,4 +33,3 @@
 
 </body>
 </html>
-
