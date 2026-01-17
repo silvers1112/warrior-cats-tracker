@@ -1,24 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Your Books</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warrior Cats Tracker - Profile</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1 id="welcome">🐾 Your Books</h1>
+  <h1>🐾 Warrior Cats Tracker</h1>
 
-<button onclick="logOut()">Log Out</button>
+  <!-- User Profile Section -->
+  <div id="welcome"></div> <!-- Will show the username and clan here -->
 
-<div id="books"></div>
+  <!-- Books Section -->
+  <div id="books"></div> <!-- Will list all the books and progress -->
 
-<h2>🌍 Community Progress</h2>
-<div id="community"></div>
+  <!-- Community Progress Section -->
+  <div id="community"></div> <!-- Will show community progress -->
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <!-- Logout Button -->
+  <button onclick="logOut()">Log Out</button>
+
+  <!-- Firebase and Script -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
