@@ -1,24 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Warrior Cats Reading Tracker</title>
+  <title>Warrior Cats Tracker</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h1>🐾 Warrior Cats Tracker</h1>
 
-<!-- LANDING -->
 <div id="landing">
-
   <button onclick="goToSignup()">Create Warrior</button>
   <button onclick="goToLogin()">Log In</button>
-
 </div>
 
-<!-- AUTH FORM (HIDDEN AT FIRST) -->
 <div id="auth" style="display:none;">
-
   <input id="username" placeholder="Warrior Name">
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
@@ -33,20 +28,12 @@
 
   <button onclick="signUp()">Create Warrior</button>
   <button onclick="logIn()">Log In</button>
-
 </div>
 
-<!-- COMMUNITY -->
+<h2>🌍 Community Progress</h2>
 <div id="community"></div>
 
-<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
-<!-- YOUR SCRIPT -->
-<script src="script.js"></script>
-
-</body>
-
-</html>
+<script src="script.js"></s
