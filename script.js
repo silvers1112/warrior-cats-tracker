@@ -81,6 +81,11 @@ function logIn() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
+  if (!email || !password) {
+    alert("Enter email and password");
+    return;
+  }
+
   auth.signInWithEmailAndPassword(email, password)
     .catch(err => alert(err.message));
 }
