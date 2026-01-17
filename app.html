@@ -3,26 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Warrior Cats Tracker - Profile</title>
+  <title>Your Warrior Cats Profile</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <h1>🐾 Warrior Cats Tracker</h1>
+  <header>
+    <div id="welcome"></div>
+    <button id="logoutBtn" onclick="logOut()">Log Out</button>
+  </header>
 
-  <!-- User Profile Section -->
-  <div id="welcome"></div> <!-- Will show the username and clan here -->
+  <section id="books-section">
+    <h2>📚 Book Progress</h2>
+    <div id="books"></div>
+  </section>
 
-  <!-- Books Section -->
-  <div id="books"></div> <!-- Will list all the books and progress -->
+  <section id="community-section">
+    <h3>👥 Community Progress</h3>
+    <div id="community"></div>
+  </section>
 
-  <!-- Community Progress Section -->
-  <div id="community"></div> <!-- Will show community progress -->
-
-  <!-- Logout Button -->
-  <button onclick="logOut()">Log Out</button>
-
-  <!-- Firebase and Script -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
