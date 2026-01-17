@@ -32,26 +32,46 @@ function goToLogin() {
 // BOOKS
 const arcs = {
   "The Prophecies Begin": [
-    "Into the Wild","Fire and Ice","Forest of Secrets",
-    "Rising Storm","A Dangerous Path","The Darkest Hour"
+    "Into the Wild", "Fire and Ice", "Forest of Secrets",
+    "Rising Storm", "A Dangerous Path", "The Darkest Hour"
   ],
   "The New Prophecy": [
-    "Midnight","Moonrise","Dawn","Starlight","Twilight","Sunset"
+    "Midnight", "Moonrise", "Dawn", "Starlight", "Twilight", "Sunset"
   ],
   "Power of Three": [
-    "The Sight","Dark River","Outcast",
-    "Eclipse","Long Shadows","Sunrise"
+    "The Sight", "Dark River", "Outcast",
+    "Eclipse", "Long Shadows", "Sunrise"
   ]
 };
 
-// AUTH
+// SIGN UP
 function signUp() {
-  auth.createUserWithEmailAndPassword(
-    email.value, password.value
- .then(() => {
-  window.location.href = "app.html";
-})
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value;
+  const clan = document.getElementById("clan").value;
 
+  if (!email || !password || !username || !clan) {
+    alert("Please fill in all fields.");
+    return;
+  }
+
+  auth.createUserWithEmailAndPassword(email, password)
+    .then((cred) => {
+      return db.collection("users").doc(cred.user.uid).set({
+        username: username,
+        clan: clan
+      });
+    })
+    .then(() => {
+      window.location.href = "app.html";  // Redirect after successful sign-up
+    })
+    .catch(err => {
+      alert(err.message);  // Show error if something goes wrong
+    });
+}
+
+// LOG IN
 function logIn() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -63,26 +83,29 @@ function logIn() {
 
   auth.signInWithEmailAndPassword(email, password)
     .then(() => {
-      // Redirect to the app (profile) page
-      window.location.href = "app.html";
+      window.location.href = "app.html";  // Redirect to app.html after successful login
     })
-    .catch(err => alert(err.message));
+    .catch(err => {
+      alert(err.message);
+    });
 }
 
+// LOG OUT
 function logOut() {
   auth.signOut();
+  window.location.href = "index.html";  // Redirect to the landing page after logout
 }
 
 // AUTH STATE
 auth.onAuthStateChanged(user => {
 
   if (document.getElementById("community")) {
-    loadCommunity();
+    loadCommunity();  // Load the community on pages that have the community section
   }
 
   if (!user) {
     if (window.location.pathname.includes("app")) {
-      window.location.href = "index.html";
+      window.location.href = "index.html";  // Redirect to landing page if not logged in
     }
     return;
   }
@@ -91,7 +114,7 @@ auth.onAuthStateChanged(user => {
     window.location.pathname.includes("login") ||
     window.location.pathname.includes("signup")
   ) {
-    window.location.href = "app.html";
+    window.location.href = "app.html";  // Redirect to profile page if already logged in
     return;
   }
 
@@ -99,55 +122,8 @@ auth.onAuthStateChanged(user => {
   showBooks(user.uid);
   loadCommunity();
 });
+
 // BOOK DISPLAY
 function showBooks(uid) {
-  books.innerHTML = "";
-
-  db.collection("progress").doc(uid).get().then(doc => {
-    const progress = doc.exists ? doc.data() : {};
-
-    Object.keys(arcs).forEach(arc => {
-      const h = document.createElement("h3");
-      h.textContent = arc;
-      books.appendChild(h);
-
-      arcs[arc].forEach(book => {
-        const d = document.createElement("div");
-        const c = document.createElement("input");
-        c.type = "checkbox";
-        c.checked = progress[book] === true;
-        c.onchange = () => {
-          db.collection("progress").doc(uid)
-            .set({ [book]: c.checked }, { merge: true });
-        };
-        d.appendChild(c);
-        d.append(" " + book);
-        books.appendChild(d);
-      });
-    });
-  });
-}
-
-// COMMUNITY
-function loadCommunity() {
-  community.innerHTML = "";
-  db.collection("users").get().then(snap => {
-    snap.forEach(u => {
-      db.collection("progress").doc(u.id).get().then(p => {
-        const count = p.exists
-          ? Object.values(p.data()).filter(v => v).length
-          : 0;
-        const d = document.createElement("div");
-        d.textContent = `${u.data().username} (${u.data().clan}) — ${count}`;
-        community.appendChild(d);
-      });
-    });
-  });
-}
-
-// HEADER
-function loadUserHeader(uid) {
-  db.collection("users").doc(uid).get().then(doc => {
-    welcome.textContent = `🐾 ${doc.data().username} of ${doc.data().clan}`;
-  });
-}
+  const booksDiv = document.getElementById("books");
+  booksDiv.in
