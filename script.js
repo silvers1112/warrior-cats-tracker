@@ -119,23 +119,34 @@ function showBooks(uid) {
     const progress = doc.exists ? doc.data() : {};
 
     Object.keys(arcs).forEach(arc => {
-      const h = document.createElement("h3");
-      h.textContent = arc;
-      booksDiv.appendChild(h);
+      const arcDiv = document.createElement("div");
+      arcDiv.classList.add("arc");
+
+      const arcTitle = document.createElement("h3");
+      arcTitle.textContent = arc;
+      arcDiv.appendChild(arcTitle);
 
       arcs[arc].forEach(book => {
-        const d = document.createElement("div");
-        const c = document.createElement("input");
-        c.type = "checkbox";
-        c.checked = progress[book] === true;
-        c.onchange = () => {
+        const bookDiv = document.createElement("div");
+        bookDiv.classList.add("book");
+
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = progress[book] === true;
+
+        checkbox.onchange = () => {
           db.collection("progress").doc(uid)
-            .set({ [book]: c.checked }, { merge: true });
+            .set({ [book]: checkbox.checked }, { merge: true });
         };
-        d.appendChild(c);
-        d.append(" " + book);
-        booksDiv.appendChild(d);
+
+        const bookTitle = document.createElement("h4");
+        bookTitle.textContent = book;
+        bookDiv.appendChild(checkbox);
+        bookDiv.appendChild(bookTitle);
+        arcDiv.appendChild(bookDiv);
       });
+
+      booksDiv.appendChild(arcDiv);
     });
   });
 }
@@ -145,15 +156,19 @@ function loadCommunity() {
   const communityDiv = document.getElementById("community");
   communityDiv.innerHTML = "";
 
-  db.collection("users").get().then(snap => {
-    snap.forEach(u => {
-      db.collection("progress").doc(u.id).get().then(p => {
-        const count = p.exists
-          ? Object.values(p.data()).filter(v => v).length
-          : 0;
-        const d = document.createElement("div");
-        d.textContent = `${u.data().username} (${u.data().clan}) — ${count} books read`;
-        communityDiv.appendChild(d);
+  db.collection("users").get().then(snapshot => {
+    snapshot.forEach(userDoc => {
+      const userId = userDoc.id;
+      const userData = userDoc.data();
+
+      db.collection("progress").doc(userId).get().then(progressDoc => {
+        const progress = progressDoc.exists ? progressDoc.data() : {};
+        const readCount = Object.values(progress).filter(v => v === true).length;
+
+        const communityMember = document.createElement("div");
+        communityMember.textContent = `${userData.username} (${userData.clan}) — 📚 ${readCount} books read`;
+
+        communityDiv.appendChild(communityMember);
       });
     });
   });
