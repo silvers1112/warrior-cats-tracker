@@ -1,1 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Warrior</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>🐾 Create Warrior / Log In</h1>
+
+<input id="username" placeholder="Warrior Name (signup only)">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<select id="clan">
+  <option>ThunderClan</option>
+  <option>RiverClan</option>
+  <option>ShadowClan</option>
+  <option>WindClan</option>
+  <option>SkyClan</option>
+</select>
+
+<button onclick="signUp()">Create Warrior</button>
+<button onclick="logIn()">Log In</button>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
 
