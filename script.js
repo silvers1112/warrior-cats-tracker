@@ -12,6 +12,10 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// PAGE CHECK
+const onLandingPage = window.location.pathname.includes("index");
+const onAppPage = window.location.pathname.includes("app");
+
 // Book arcs
 const arcs = {
   "The Prophecies Begin": [
