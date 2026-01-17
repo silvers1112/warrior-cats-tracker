@@ -60,3 +60,13 @@ input, select, button {
   max-width: 400px;
   margin: 0 auto;
 }
+
+.auth-row button {
+  width: 100%;      /* override the 90% */
+  max-width: none; /* remove max-width limit */
+}
+
+.create-btn {
+  width: 100%;
+  max-width: 260px;
+}
