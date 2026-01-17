@@ -6,66 +6,25 @@
 </head>
 <body>
 
-<h1>🐾 Warrior Cats Reading Tracker</h1>
-
-<div id="landing">
-
   <h1>🐾 Warrior Cats Reading Tracker</h1>
-  <p>Join your Clan. Track your journey. See what others have read.</p>
 
-  <div class="landing-buttons">
+  <!-- LANDING BUTTONS -->
+  <div id="landing">
     <button onclick="goToSignup()">Create Warrior</button>
     <button onclick="goToLogin()">Log In</button>
   </div>
 
+  <!-- COMMUNITY PROGRESS (PUBLIC) -->
   <h2>🌍 Community Progress</h2>
   <div id="community"></div>
 
-</div>
+  <!-- FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
-<div id="auth">
-
-  <input id="username" placeholder="Warrior Name (signup only)">
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-
-  <select id="clan">
-    <option>ThunderClan</option>
-    <option>RiverClan</option>
-    <option>ShadowClan</option>
-    <option>WindClan</option>
-    <option>SkyClan</option>
-  </select>
-
-<div class="auth-buttons">
-  <button class="create-btn" onclick="signUp()">Create Warrior</button>
-
-  <div class="auth-row">
-    <button onclick="logIn()">Log In</button>
-  </div>
-</div>
-
-
-
-</div>
-
-<h2 id="welcome"></h2> 
-
-<button id="logoutBtn" onclick="logOut()">
-  🚪 Log Out
-</button>
-  
-<h2>Your Books</h2>
-<div id="books"></div>
-
-<h2>🌍 Community Progress</h2>
-<div id="community"></div>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <!-- YOUR SCRIPT -->
+  <script src="script.js"></script>
 
 </body>
 </html>
-
