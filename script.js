@@ -1,10 +1,6 @@
 alert("script.js loaded");
 
-// PAGE CHECK
-const onLandingPage = window.location.pathname.includes("index");
-const onAppPage = window.location.pathname.includes("app");
-
-// FIREBASE
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
@@ -16,20 +12,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// NAV
-function goToSignup() {
-  document.getElementById("landing").style.display = "none";
-  document.getElementById("auth").style.display = "block";
-  document.getElementById("username").style.display = "block";
-}
-
-function goToLogin() {
-  document.getElementById("landing").style.display = "none";
-  document.getElementById("auth").style.display = "block";
-  document.getElementById("username").style.display = "none";
-}
-
-// BOOKS
+// Book arcs
 const arcs = {
   "The Prophecies Begin": [
     "Into the Wild", "Fire and Ice", "Forest of Secrets",
@@ -99,31 +82,35 @@ function logOut() {
 // AUTH STATE
 auth.onAuthStateChanged(user => {
 
+  // Load community data on pages that have the community section
   if (document.getElementById("community")) {
-    loadCommunity();  // Load the community on pages that have the community section
+    loadCommunity();
   }
 
+  // If not logged in and trying to access the app page, redirect to index.html
   if (!user) {
     if (window.location.pathname.includes("app")) {
-      window.location.href = "index.html";  // Redirect to landing page if not logged in
+      window.location.href = "index.html";
     }
     return;
   }
 
+  // If logged in but on login or signup page, redirect to app page
   if (
     window.location.pathname.includes("login") ||
     window.location.pathname.includes("signup")
   ) {
-    window.location.href = "app.html";  // Redirect to profile page if already logged in
+    window.location.href = "app.html";
     return;
   }
 
+  // User is logged in, show books and community
   loadUserHeader(user.uid);
   showBooks(user.uid);
   loadCommunity();
 });
 
-// BOOK DISPLAY
+// SHOW BOOKS
 function showBooks(uid) {
   const booksDiv = document.getElementById("books");
   booksDiv.innerHTML = "";
@@ -153,10 +140,11 @@ function showBooks(uid) {
   });
 }
 
-// COMMUNITY
+// LOAD COMMUNITY
 function loadCommunity() {
   const communityDiv = document.getElementById("community");
   communityDiv.innerHTML = "";
+
   db.collection("users").get().then(snap => {
     snap.forEach(u => {
       db.collection("progress").doc(u.id).get().then(p => {
@@ -171,7 +159,7 @@ function loadCommunity() {
   });
 }
 
-// HEADER
+// LOAD USER HEADER
 function loadUserHeader(uid) {
   const welcomeDiv = document.getElementById("welcome");
 
