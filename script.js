@@ -1,9 +1,11 @@
 alert("script.js loaded");
 
+// PAGE DETECTION
 const onLandingPage = window.location.pathname.includes("index");
+const onAuthPage = window.location.pathname.includes("auth");
 const onAppPage = window.location.pathname.includes("app");
 
-// Firebase config
+// FIREBASE CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
@@ -15,19 +17,16 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// NAVIGATION
 function goToSignup() {
-  document.getElementById("landing").style.display = "none";
-  document.getElementById("auth").style.display = "block";
-  document.getElementById("username").style.display = "block";
+  window.location.href = "auth.html";
 }
 
 function goToLogin() {
-  document.getElementById("landing").style.display = "none";
-  document.getElementById("auth").style.display = "block";
-  document.getElementById("username").style.display = "none";
+  window.location.href = "auth.html";
 }
 
-// Book arcs
+// BOOK ARCS
 const arcs = {
   "The Prophecies Begin": [
     "Into the Wild",
@@ -91,10 +90,15 @@ function logOut() {
   auth.signOut();
 }
 
-// AUTH STATE
+// AUTH STATE CONTROL (MOST IMPORTANT PART)
 auth.onAuthStateChanged(user => {
 
-  // CASE 1: USER IS NOT LOGGED IN
+  // LOAD COMMUNITY ON ANY PAGE THAT HAS IT
+  if (document.getElementById("community")) {
+    loadCommunity();
+  }
+
+  // NOT LOGGED IN
   if (!user) {
     if (onAppPage) {
       window.location.href = "index.html";
@@ -102,99 +106,4 @@ auth.onAuthStateChanged(user => {
     return;
   }
 
-  // CASE 2: USER IS LOGGED IN BUT ON LANDING PAGE
-  if (onLandingPage) {
-    window.location.href = "app.html";
-    return;
-  }
-
-  // CASE 3: USER IS LOGGED IN AND ON BOOKS PAGE
-  showBooks(user.uid);
-  loadCommunity();
-  loadUsername(user.uid);
-
-});
-
-  authDiv.style.display = "none";
-  document.getElementById("logoutBtn").style.display = "inline-block";
-  
-  loadUserHeader(user.uid);
-  showBooks(user.uid);
-  loadCommunity();
-
-});
-
-// SHOW BOOKS
-function showBooks(uid) {
-  const booksDiv = document.getElementById("books");
-  booksDiv.innerHTML = "";
-
-  db.collection("progress").doc(uid).get().then(doc => {
-    const progress = doc.exists ? doc.data() : {};
-
-    Object.keys(arcs).forEach(arc => {
-      const title = document.createElement("h3");
-      title.textContent = arc;
-      booksDiv.appendChild(title);
-
-      arcs[arc].forEach(book => {
-        const div = document.createElement("div");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = progress[book] === true;
-
-        checkbox.onchange = () => {
-          db.collection("progress")
-            .doc(uid)
-            .set({ [book]: checkbox.checked }, { merge: true });
-        };
-
-        div.appendChild(checkbox);
-        div.append(" " + book);
-        booksDiv.appendChild(div);
-      });
-    });
-  });
-}
-
-function loadCommunity() {
-  const communityDiv = document.getElementById("community");
-  communityDiv.innerHTML = "<h3>📊 Community Progress</h3>";
-
-  db.collection("users").get().then(snapshot => {
-    snapshot.forEach(userDoc => {
-      const userId = userDoc.id;
-      const userData = userDoc.data();
-
-      db.collection("progress").doc(userId).get().then(progressDoc => {
-        const progress = progressDoc.exists ? progressDoc.data() : {};
-        const readCount = Object.values(progress).filter(v => v === true).length;
-
-        const div = document.createElement("div");
-        div.innerHTML = `
-          <strong>${userData.username}</strong>
-          (${userData.clan}) — 📚 ${readCount} books read
-        `;
-
-        communityDiv.appendChild(div);
-      });
-    });
-  });
-}
-
-function loadUserHeader(uid) {
-  const welcome = document.getElementById("welcome");
-
-  db.collection("users").doc(uid).get().then(doc => {
-    if (!doc.exists) return;
-
-    const data = doc.data();
-    welcome.textContent = `🐾 ${data.username} of ${data.clan}`;
-  });
-}
-
-
-
-
-
+  // LOGGED IN BUT NOT ON
