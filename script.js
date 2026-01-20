@@ -5,6 +5,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
   projectId: "warriorcatstracker"
+  appId: "1:603975837840:web:00e1291a87bfec9742d015"
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -118,16 +119,21 @@ function signUp() {
 
   auth.createUserWithEmailAndPassword(email, password)
     .then((cred) => {
+      console.log("Auth user created:", cred.user.uid);
+
       return db.collection("users").doc(cred.user.uid).set({
         username: username,
-        clan: clan
+        clan: clan,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
     })
     .then(() => {
-      window.location.href = "app.html";  // Redirect after successful sign-up
+      console.log("Firestore user saved");
+      window.location.href = "app.html";
     })
     .catch(err => {
-      alert(err.message);  // Show error if something goes wrong
+      console.error("Signup error:", err);
+      alert(err.message);
     });
 }
 
