@@ -4,7 +4,7 @@ alert("script.js loaded");
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
-  projectId: "warriorcatstracker"
+  projectId: "warriorcatstracker",
   appId: "1:603975837840:web:00e1291a87bfec9742d015"
 };
 
