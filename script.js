@@ -10,6 +10,16 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+auth.onAuthStateChanged(user => {
+  if (user) {
+    db.collection("users").doc(user.uid).set({
+      test: true
+    }, { merge: true })
+    .then(() => console.log("User write OK"))
+    .catch(err => console.error("User write FAILED", err));
+  }
+});
+
 const auth = firebase.auth();
 const db = firebase.firestore();
 
