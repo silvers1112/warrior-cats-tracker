@@ -117,25 +117,22 @@ function signUp() {
     return;
   }
 
-  auth.createUserWithEmailAndPassword(email, password)
-    .then((cred) => {
-      console.log("Auth user created:", cred.user.uid);
-
-      return db.collection("users").doc(cred.user.uid).set({
-        username: username,
-        clan: clan,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    })
-    .then(() => {
-      console.log("Firestore user saved");
-      window.location.href = "app.html";
-    })
-    .catch(err => {
-      console.error("Signup error:", err);
-      alert(err.message);
+ auth.createUserWithEmailAndPassword(email, password)
+  .then((cred) => {
+    return db.collection("users").doc(cred.user.uid).set({
+      username,
+      clan,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-}
+  })
+  .then(() => {
+    console.log("User document created");
+    window.location.href = "app.html";
+  })
+  .catch(err => {
+    console.error("Signup failed:", err);
+    alert(err.message);
+  });
 
 // LOG IN
 function logIn() {
