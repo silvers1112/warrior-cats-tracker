@@ -1,4 +1,5 @@
 alert("script.js loaded");
+alert("script.js loaded");
 
 // =====================
 // FIREBASE CONFIG
@@ -54,6 +55,19 @@ const arcs = {
     "The Last Hope"
   ]
 };
+
+// =====================
+// LOAD USER HEADER FUNCTION (Fixed position)
+// =====================
+function loadUserHeader(uid) {
+  db.collection("users").doc(uid).get().then(doc => {
+    if (!doc.exists) return;
+
+    const data = doc.data();
+    document.getElementById("welcome").textContent =
+      `🐾 ${data.username} of ${data.clan}`;
+  });
+}
 
 // =====================
 // SIGN UP
@@ -132,19 +146,6 @@ auth.onAuthStateChanged(user => {
     }
   }
 });
-
-// =====================
-// LOAD USER HEADER
-// =====================
-function loadUserHeader(uid) {
-  db.collection("users").doc(uid).get().then(doc => {
-    if (!doc.exists) return;
-
-    const data = doc.data();
-    document.getElementById("welcome").textContent =
-      `🐾 ${data.username} of ${data.clan}`;
-  });
-}
 
 // =====================
 // SHOW BOOKS
