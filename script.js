@@ -125,12 +125,18 @@ function logOut() {
 // =====================
 auth.onAuthStateChanged(user => {
 
-  // Redirect if not logged in
+  // ✅ Always load community if the element exists (index.html + app.html)
+  if (document.getElementById("community")) {
+    loadCommunity();
+  }
+
+  // Redirect if not logged in and trying to view app.html
   if (!user && location.pathname.includes("app")) {
     window.location.href = "index.html";
     return;
   }
 
+  // Only do user-specific stuff when logged in
   if (user) {
     if (document.getElementById("welcome")) {
       loadUserHeader(user.uid);
@@ -139,12 +145,9 @@ auth.onAuthStateChanged(user => {
     if (document.getElementById("books")) {
       showBooks(user.uid);
     }
-
-    if (document.getElementById("community")) {
-      loadCommunity();
-    }
   }
 });
+
 
 // =====================
 // SHOW BOOKS
@@ -194,22 +197,37 @@ function showBooks(uid) {
 // =====================
 function loadCommunity() {
   const communityDiv = document.getElementById("community");
-  communityDiv.innerHTML = "";
+  if (!communityDiv) return;
 
-  db.collection("users").get().then(snapshot => {
-    snapshot.forEach(userDoc => {
-      const userId = userDoc.id;
-      const userData = userDoc.data();
+  communityDiv.innerHTML = "Loading...";
 
-      db.collection("progress").doc(userId).get().then(progressDoc => {
-        const progress = progressDoc.exists ? progressDoc.data() : {};
-        const readCount = Object.values(progress).filter(v => v === true).length;
+  db.collection("users").get()
+    .then(snapshot => {
+      communityDiv.innerHTML = "";
 
-        const div = document.createElement("div");
-        div.textContent = `${userData.username} (${userData.clan}) — 📚 ${readCount} books`;
+      if (snapshot.empty) {
+        communityDiv.textContent = "No warriors yet. Be the first to join!";
+        return;
+      }
 
-        communityDiv.appendChild(div);
+      snapshot.forEach(userDoc => {
+        const userId = userDoc.id;
+        const userData = userDoc.data();
+
+        db.collection("progress").doc(userId).get().then(progressDoc => {
+          const progress = progressDoc.exists ? progressDoc.data() : {};
+          const readCount = Object.values(progress).filter(v => v === true).length;
+
+          const div = document.createElement("div");
+          div.textContent = `${userData.username} (${userData.clan}) — 📚 ${readCount} books`;
+
+          communityDiv.appendChild(div);
+        });
       });
+    })
+    .catch(err => {
+      console.error("Community load failed:", err);
+      communityDiv.textContent = "Community failed to load (check Firestore rules).";
     });
-  });
 }
+
