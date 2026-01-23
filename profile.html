@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Warrior Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div id="welcome"></div>
+  <button onclick="logOut()">Log Out</button>
+</header>
+
+<section>
+  <h2>🐾 Your Character</h2>
+  <p><strong>Name:</strong> <span id="profileName">Loading...</span></p>
+  <p><strong>Clan:</strong> <span id="profileClan">Loading...</span></p>
+</section>
+
+<section>
+  <button onclick="location.href='app.html'">📚 Go to Book Tracker</button>
+</section>
+
+<section id="community-section">
+  <h3>👥 Community Progress</h3>
+  <div id="community"></div>
+</section>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
