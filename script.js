@@ -236,7 +236,8 @@ function signUp() {
       });
     })
     .then(() => {
-      window.location.href = "app.html";
+      window.location.href = "profile.html";
+;
     })
     .catch(err => {
       console.error(err);
@@ -252,7 +253,7 @@ function logIn() {
   const password = document.getElementById("password").value;
 
   auth.signInWithEmailAndPassword(email, password)
-    .then(() => window.location.href = "app.html")
+    .then(() => window.location.href = "profile.html")
     .catch(err => alert(err.message));
 }
 
