@@ -270,7 +270,7 @@ function logOut() {
 // =====================
 auth.onAuthStateChanged(user => {
 
-  // ✅ Always load community if the element exists (index.html + app.html)
+  // ✅ Always load community (home page + app page)
   if (document.getElementById("community")) {
     loadCommunity();
   }
@@ -281,7 +281,7 @@ auth.onAuthStateChanged(user => {
     return;
   }
 
-  // Only do user-specific stuff when logged in
+  // Only user-specific stuff when logged in
   if (user) {
     if (document.getElementById("welcome")) {
       loadUserHeader(user.uid);
@@ -292,6 +292,7 @@ auth.onAuthStateChanged(user => {
     }
   }
 });
+
 
 function getCategoryForArc(arcName) {
   // Main series arcs (your 9 main arcs)
