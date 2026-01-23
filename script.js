@@ -21,6 +21,9 @@ const db = firebase.firestore();
 // WARRIOR CAT ARCS
 // =====================
 const arcs = {
+  // =====================
+  // MAIN SERIES ARCS
+  // =====================
   "The Prophecies Begin": [
     "Into the Wild",
     "Fire and Ice",
@@ -67,7 +70,7 @@ const arcs = {
   ],
 
   "A Vision of Shadows": [
-    "The Apprentice's Quest",
+    "The Apprentice’s Quest",
     "Thunder and Shadow",
     "Shattered Sky",
     "Darkest Night",
@@ -93,14 +96,102 @@ const arcs = {
     "Star"
   ],
 
-  // Newest arc (still releasing)
   "Changing Skies": [
-    "The Elders' Quest",
-    "Hidden Moon",
-    "Chasing Shadows",
-    "Guiding Light",
-    "Book 5 (TBA)",
-    "Book 6 (TBA)"
+    "The Elders’ Quest",
+    "Hidden Moon"
+  ],
+
+  // =====================
+  // BEYOND THE MAIN ARCS
+  // =====================
+
+  "Super Editions": [
+    "Firestar’s Quest",
+    "Bluestar’s Prophecy",
+    "SkyClan’s Destiny",
+    "Crookedstar’s Promise",
+    "Yellowfang’s Secret",
+    "Tallstar’s Revenge",
+    "Bramblestar’s Storm",
+    "Moth Flight’s Vision",
+    "Hawkwing’s Journey",
+    "Tigerheart’s Shadow",
+    "Crowfeather’s Trial",
+    "Squirrelflight’s Hope",
+    "Graystripe’s Vow",
+    "Leopardstar’s Honor",
+    "Onestar’s Confession",
+    "Riverstar’s Home",
+    "Ivypool’s Heart",
+    "StormClan’s Folly"
+  ],
+
+  "Manga": [
+    // Omnibus labels shown on the official list
+    "Warriors: Graystripe’s Adventure",
+    "The Lost Warrior",
+    "Warrior’s Refuge",
+    "Warrior’s Return",
+
+    "The Rise of Scourge (full color)",
+    "The Rise of Scourge",
+
+    "Into the Woods",
+    "Escape from the Forest",
+    "Return to the Clans",
+
+    "Warriors: Ravenpaw’s Path",
+    "Shattered Peace",
+    "A Clan in Need",
+    "The Heart of a Warrior",
+
+    "Warriors: SkyClan and the Stranger",
+    "The Rescue",
+    "After the Flood",
+    "Beyond the Code",
+
+    // Stand-alone graphic novels listed under Manga on the official page
+    "A Shadow in RiverClan",
+    "Winds of Change",
+    "Exile from ShadowClan",
+    "A Thief in ThunderClan"
+  ],
+
+  "Graphic Novel Adaptations": [
+    "The Prophecies Begin, Volume 1",
+    "The Prophecies Begin, Volume 2",
+    "The Prophecies Begin, Volume 3"
+  ],
+
+  "Novellas": [
+    "Hollyleaf’s Story",
+    "Mistystar’s Omen",
+    "Cloudstar’s Journey",
+    "Tigerclaw’s Fury",
+    "Leafpool’s Wish",
+    "Dovewing’s Silence",
+    "Mapleshade’s Vengeance",
+    "Goosefeather’s Curse",
+    "Ravenpaw’s Farewell",
+
+    // Collections shown on the official list
+    "The Untold Stories",
+    "Tales from the Clans",
+    "Shadows of the Clans",
+    "Legends of the Clans",
+    "Path of a Warrior",
+    "A Warrior’s Spirit",
+    "A Warrior’s Choice"
+  ],
+
+  "Field Guides": [
+    "Secrets of the Clans",
+    "Cats of the Clans",
+    "Code of the Clans",
+    "Battles of the Clans",
+    "Enter the Clans",
+    "The Ultimate Guide",
+    "The Ultimate Guide: Updated and Expanded Edition"
   ]
 };
 
