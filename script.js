@@ -415,10 +415,18 @@ function loadCommunity() {
   const communityDiv = document.getElementById("community");
   if (!communityDiv) return;
 
+  // Prevent duplicate listeners
+  if (communityUnsub) return;
+
   communityDiv.innerHTML = "Loading...";
 
-  db.collection("users").get()
-    .then(snapshot => {
+  // Clean up old progress listeners
+  progressUnsubs.forEach(u => u && u());
+  progressUnsubs = [];
+
+  // Live listener for users
+  communityUnsub = db.collection("users").onSnapshot(
+    (snapshot) => {
       communityDiv.innerHTML = "";
 
       if (snapshot.empty) {
@@ -430,20 +438,28 @@ function loadCommunity() {
         const userId = userDoc.id;
         const userData = userDoc.data();
 
-        db.collection("progress").doc(userId).get().then(progressDoc => {
-          const progress = progressDoc.exists ? progressDoc.data() : {};
-          const readCount = Object.values(progress).filter(v => v === true).length;
+        // Create row
+        const row = document.createElement("div");
+        row.textContent = `${userData.username} (${userData.clan}) — 📚 0 books`;
+        communityDiv.appendChild(row);
 
-          const div = document.createElement("div");
-          div.textContent = `${userData.username} (${userData.clan}) — 📚 ${readCount} books`;
+        // Live listener for this user's progress
+        const unsub = db.collection("progress").doc(userId).onSnapshot(
+          (progressDoc) => {
+            const progress = progressDoc.exists ? progressDoc.data() : {};
+            const readCount = Object.values(progress).filter(v => v === true).length;
 
-          communityDiv.appendChild(div);
-        });
+            row.textContent = `${userData.username} (${userData.clan}) — 📚 ${readCount} books`;
+          }
+        );
+
+        progressUnsubs.push(unsub);
       });
-    })
-    .catch(err => {
-      console.error("Community load failed:", err);
-      communityDiv.textContent = "Community failed to load (check Firestore rules).";
-    });
+    },
+    (err) => {
+      console.error("Community listener failed:", err);
+      communityDiv.textContent = "Community failed to load.";
+    }
+  );
 }
 
