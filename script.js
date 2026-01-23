@@ -351,12 +351,8 @@ function showBooks(uid) {
     });
   }
 
-  // Restore last selection if it exists
-  const savedFilter = localStorage.getItem("booksFilter");
-  // Always start on Main Series when logging in
-  filterEl.value = "Main Series";
-  localStorage.setItem("booksFilter", "Main Series");
-
+// Always start on Main Series when the app loads
+filterEl.value = "Main Series";
 
   function render() {
     const chosen = filterEl.value;
