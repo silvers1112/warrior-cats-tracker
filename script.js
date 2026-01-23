@@ -366,7 +366,12 @@ function showBooks(uid) {
   }
 
 // Always start on Main Series when the app loads
-filterEl.value = "Main Series";
+// Start on Main Series when arriving on the tracker page
+if (!filterEl.dataset.initialized) {
+  filterEl.value = "Main Series";
+  filterEl.dataset.initialized = "true";
+}
+
 
   function render() {
     const chosen = filterEl.value;
