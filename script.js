@@ -353,9 +353,10 @@ function showBooks(uid) {
 
   // Restore last selection if it exists
   const savedFilter = localStorage.getItem("booksFilter");
-  if (savedFilter && Array.from(filterEl.options).some(o => o.value === savedFilter)) {
-    filterEl.value = savedFilter;
-  }
+  // Always start on Main Series when logging in
+  filterEl.value = "Main Series";
+  localStorage.setItem("booksFilter", "Main Series");
+
 
   function render() {
     const chosen = filterEl.value;
