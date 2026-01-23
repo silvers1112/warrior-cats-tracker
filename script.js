@@ -29,6 +29,7 @@ const arcs = {
     "A Dangerous Path",
     "The Darkest Hour"
   ],
+
   "The New Prophecy": [
     "Midnight",
     "Moonrise",
@@ -37,6 +38,7 @@ const arcs = {
     "Twilight",
     "Sunset"
   ],
+
   "Power of Three": [
     "The Sight",
     "Dark River",
@@ -45,6 +47,7 @@ const arcs = {
     "Long Shadows",
     "Sunrise"
   ],
+
   "Omen of the Stars": [
     "The Fourth Apprentice",
     "Fading Echoes",
@@ -52,8 +55,55 @@ const arcs = {
     "Sign of the Moon",
     "The Forgotten Warrior",
     "The Last Hope"
+  ],
+
+  "Dawn of the Clans": [
+    "The Sun Trail",
+    "Thunder Rising",
+    "The First Battle",
+    "The Blazing Star",
+    "A Forest Divided",
+    "Path of Stars"
+  ],
+
+  "A Vision of Shadows": [
+    "The Apprentice's Quest",
+    "Thunder and Shadow",
+    "Shattered Sky",
+    "Darkest Night",
+    "River of Fire",
+    "The Raging Storm"
+  ],
+
+  "The Broken Code": [
+    "Lost Stars",
+    "The Silent Thaw",
+    "Veil of Shadows",
+    "Darkness Within",
+    "The Place of No Stars",
+    "A Light in the Mist"
+  ],
+
+  "A Starless Clan": [
+    "River",
+    "Sky",
+    "Shadow",
+    "Thunder",
+    "Wind",
+    "Star"
+  ],
+
+  // Newest arc (still releasing)
+  "Changing Skies": [
+    "The Elders' Quest",
+    "Hidden Moon",
+    "Chasing Shadows",
+    "Guiding Light",
+    "Book 5 (TBA)",
+    "Book 6 (TBA)"
   ]
 };
+
 
 // =====================
 // LOAD USER HEADER FUNCTION (Fixed position)
