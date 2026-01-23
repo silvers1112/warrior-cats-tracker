@@ -277,10 +277,13 @@ auth.onAuthStateChanged(user => {
   }
 
   // Redirect if not logged in and trying to view app.html
-  if (!user && location.pathname.includes("app")) {
-    window.location.href = "index.html";
-    return;
-  }
+  const protectedPages = ["app.html", "profile.html"];
+
+if (!user && protectedPages.some(p => location.pathname.includes(p))) {
+  window.location.href = "index.html";
+  return;
+}
+
 
   // Only user-specific stuff when logged in
   if (user) {
