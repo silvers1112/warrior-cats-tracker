@@ -289,48 +289,119 @@ auth.onAuthStateChanged(user => {
   }
 });
 
+function getCategoryForArc(arcName) {
+  // Main series arcs (your 9 main arcs)
+  const mainArcs = new Set([
+    "The Prophecies Begin",
+    "The New Prophecy",
+    "Power of Three",
+    "Omen of the Stars",
+    "Dawn of the Clans",
+    "A Vision of Shadows",
+    "The Broken Code",
+    "A Starless Clan",
+    "Changing Skies"
+  ]);
+
+  if (mainArcs.has(arcName)) return "Main Series";
+  if (arcName === "Super Editions") return "Super Editions";
+  if (arcName === "Manga") return "Manga";
+  if (arcName === "Graphic Novel Adaptations") return "Graphic Novel Adaptations";
+  if (arcName === "Novellas") return "Novellas";
+  if (arcName === "Field Guides") return "Field Guides";
+
+  // fallback
+  return "Other";
+}
 
 // =====================
 // SHOW BOOKS
 // =====================
 function showBooks(uid) {
   const booksDiv = document.getElementById("books");
+  const filterEl = document.getElementById("categoryFilter");
+  if (!booksDiv || !filterEl) return;
+
   booksDiv.innerHTML = "";
 
-  db.collection("progress").doc(uid).get().then(doc => {
-    const progress = doc.exists ? doc.data() : {};
+  // Build dropdown options
+  const categories = new Set();
+  Object.keys(arcs).forEach(arcName => categories.add(getCategoryForArc(arcName)));
 
-    Object.keys(arcs).forEach(arc => {
-      const arcDiv = document.createElement("div");
-      arcDiv.className = "arc";
+  const sortedCategories = Array.from(categories).sort((a, b) => a.localeCompare(b));
 
-      const title = document.createElement("h3");
-      title.textContent = arc;
-      arcDiv.appendChild(title);
+  // Put "Main Series" first if it exists
+  if (sortedCategories.includes("Main Series")) {
+    sortedCategories.splice(sortedCategories.indexOf("Main Series"), 1);
+    sortedCategories.unshift("Main Series");
+  }
 
-      arcs[arc].forEach(book => {
-        const bookDiv = document.createElement("div");
-
-        const checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = progress[book] === true;
-
-        checkbox.onchange = () => {
-          db.collection("progress").doc(uid)
-            .set({ [book]: checkbox.checked }, { merge: true });
-        };
-
-        const label = document.createElement("span");
-        label.textContent = book;
-
-        bookDiv.appendChild(checkbox);
-        bookDiv.appendChild(label);
-        arcDiv.appendChild(bookDiv);
-      });
-
-      booksDiv.appendChild(arcDiv);
+  // Populate dropdown only once
+  if (filterEl.options.length === 0) {
+    sortedCategories.forEach(cat => {
+      const opt = document.createElement("option");
+      opt.value = cat;
+      opt.textContent = cat;
+      filterEl.appendChild(opt);
     });
-  });
+  }
+
+  // Restore last selection if it exists
+  const savedFilter = localStorage.getItem("booksFilter");
+  if (savedFilter && Array.from(filterEl.options).some(o => o.value === savedFilter)) {
+    filterEl.value = savedFilter;
+  }
+
+  function render() {
+    const chosen = filterEl.value;
+    localStorage.setItem("booksFilter", chosen);
+
+    booksDiv.innerHTML = "";
+
+    db.collection("progress").doc(uid).get().then(doc => {
+      const progress = doc.exists ? doc.data() : {};
+
+      Object.keys(arcs).forEach(arcName => {
+        if (getCategoryForArc(arcName) !== chosen) return;
+
+        const arcDiv = document.createElement("div");
+        arcDiv.className = "arc";
+
+        const title = document.createElement("h3");
+        title.textContent = arcName;
+        arcDiv.appendChild(title);
+
+        arcs[arcName].forEach(book => {
+          const bookDiv = document.createElement("div");
+          bookDiv.className = "book";
+
+          const checkbox = document.createElement("input");
+          checkbox.type = "checkbox";
+          checkbox.checked = progress[book] === true;
+
+          checkbox.onchange = () => {
+            db.collection("progress").doc(uid)
+              .set({ [book]: checkbox.checked }, { merge: true });
+          };
+
+          const label = document.createElement("span");
+          label.textContent = book;
+
+          bookDiv.appendChild(checkbox);
+          bookDiv.appendChild(label);
+          arcDiv.appendChild(bookDiv);
+        });
+
+        booksDiv.appendChild(arcDiv);
+      });
+    });
+  }
+
+  // Re-render when dropdown changes
+  filterEl.onchange = render;
+
+  // Initial render
+  render();
 }
 
 // =====================
