@@ -464,3 +464,8 @@ function loadCommunity() {
   );
 }
 
+window.addEventListener("beforeunload", () => {
+  if (communityUnsub) communityUnsub();
+  progressUnsubs.forEach(u => u && u());
+});
+
