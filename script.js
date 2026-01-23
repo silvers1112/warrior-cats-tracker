@@ -208,10 +208,20 @@ function loadUserHeader(uid) {
     if (!doc.exists) return;
 
     const data = doc.data();
-    document.getElementById("welcome").textContent =
-      `🐾 ${data.username} of ${data.clan}`;
+
+    const welcomeEl = document.getElementById("welcome");
+    if (welcomeEl) {
+      welcomeEl.textContent = `🐾 ${data.username} of ${data.clan}`;
+    }
+
+    const nameEl = document.getElementById("profileName");
+    if (nameEl) nameEl.textContent = data.username;
+
+    const clanEl = document.getElementById("profileClan");
+    if (clanEl) clanEl.textContent = data.clan;
   });
 }
+
 
 // =====================
 // SIGN UP
