@@ -199,6 +199,14 @@ const arcs = {
   ]
 };
 
+const clanLogos = {
+  "ThunderClan": "clans/thunderclan.png",
+  "RiverClan": "clans/riverclan.png",
+  "ShadowClan": "clans/shadowclan.png",
+  "WindClan": "clans/windclan.png",
+  "SkyClan": "clans/skyclan.png"
+};
+
 
 // =====================
 // LOAD USER HEADER FUNCTION (Fixed position)
@@ -208,6 +216,12 @@ function loadUserHeader(uid) {
     if (!doc.exists) return;
 
     const data = doc.data();
+
+    const logo = document.getElementById("clanLogo");
+    if (logo && clanLogos[data.clan]) {
+    logo.src = clanLogos[data.clan];
+    logo.style.display = "inline-block";
+}
 
     const welcomeEl = document.getElementById("welcome");
     if (welcomeEl) {
