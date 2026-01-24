@@ -373,3 +373,10 @@ body.home {
   margin-top: 14px;
   text-shadow: 0 2px 10px rgba(0,0,0,0.75);
 }
+
+/* =====================
+   REMOVE HOMEPAGE HEADER ON AUTH PAGES
+===================== */
+.auth-page header {
+  display: none;
+}
