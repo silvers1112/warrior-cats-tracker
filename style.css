@@ -75,3 +75,57 @@ section {
     text-align: center;
   }
 }
+
+/* =====================
+   HOME PAGE HERO
+===================== */
+
+body.home {
+  margin: 0;
+}
+
+.hero {
+  height: 100vh;
+  background-image: url("images/home-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-content {
+  position: relative;
+  color: white;
+  text-align: center;
+  max-width: 700px;
+  padding: 20px;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+}
+
+.hero-buttons button {
+  margin: 10px;
+  padding: 14px 26px;
+  font-size: 18px;
+  border-radius: 8px;
+}
