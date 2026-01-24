@@ -255,3 +255,20 @@ body.home {
     inset 0 0 8px rgba(255, 200, 120, 0.4);
 }
 
+/* =====================
+   AUTH PAGES BACKGROUND
+===================== */
+.auth-page {
+  min-height: 100vh;
+  background-image: url("auth-background.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 80px;
+}
