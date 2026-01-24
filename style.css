@@ -136,8 +136,11 @@ body.home {
   font-family: 'Cinzel Decorative', serif;
   font-size: 3.5rem;
   letter-spacing: 2px;
-  text-shadow: 
-    0 2px 8px rgba(0, 0, 0, 0.7),
-    0 0 18px rgba(255, 255, 255, 0.15);
+  text-transform: uppercase;
+
+  text-shadow:
+    0 3px 12px rgba(0,0,0,0.75),
+    0 0 24px rgba(255, 220, 140, 0.25);
 }
+
 
