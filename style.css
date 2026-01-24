@@ -402,3 +402,56 @@ body.home {
   gap: 16px; /* space between buttons */
 }
 
+/* =====================
+   FLAME HOVER EFFECT (AUTH PAGES ONLY)
+===================== */
+
+.auth-page .forest-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Flame glow layer */
+.auth-page .forest-btn::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(
+    circle at bottom,
+    rgba(255, 140, 40, 0.65),
+    rgba(255, 80, 0, 0.25),
+    transparent 70%
+  );
+  opacity: 0;
+  transform: translateY(20%);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+/* Ember shimmer */
+.auth-page .forest-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 200, 120, 0.35),
+    transparent 70%
+  );
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: transform 0.6s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+/* Hover triggers */
+.auth-page .forest-btn:hover::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.auth-page .forest-btn:hover::after {
+  opacity: 1;
+  transform: translateX(100%);
+}
