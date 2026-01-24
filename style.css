@@ -388,20 +388,4 @@ body.home {
   display: none;
 }
 
-/* =====================
-   AUTH PAGE BUTTON SHAPE (Homepage-style)
-===================== */
-.auth-page .forest-btn {
-  border-radius: 12px;        /* more rectangular */
-  padding: 14px 36px;         /* wider like homepage */
-  font-size: 1.1rem;
-}
 
-/* =====================
-   AUTH BUTTON FONT FIX
-===================== */
-.auth-page .forest-btn {
-  font-family: 'Cinzel Decorative', serif;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-}
