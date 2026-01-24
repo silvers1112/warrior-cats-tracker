@@ -143,4 +143,64 @@ body.home {
     0 0 24px rgba(255, 220, 140, 0.25);
 }
 
+/* =====================
+   HERO BUTTONS (Forest Style)
+===================== */
+
+.hero-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-btn {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+
+  padding: 14px 34px;
+  border-radius: 40px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(120, 80, 40, 0.95),
+    rgba(180, 130, 70, 0.95)
+  );
+
+  color: #fff;
+  border: 2px solid rgba(255, 220, 170, 0.6);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.5),
+    inset 0 0 10px rgba(255, 200, 120, 0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.hero-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(
+    135deg,
+    rgba(150, 100, 50, 1),
+    rgba(220, 160, 90, 1)
+  );
+
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.6),
+    inset 0 0 14px rgba(255, 220, 160, 0.45);
+}
+
+.hero-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.6),
+    inset 0 0 8px rgba(255, 200, 120, 0.4);
+}
+
 
