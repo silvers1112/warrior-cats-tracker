@@ -475,3 +475,13 @@ body.home {
 .auth-page .forest-btn:hover::before {
   opacity: 1;
 }
+
+@keyframes emberPulse {
+  0% { opacity: 0.45; }
+  50% { opacity: 0.7; }
+  100% { opacity: 0.45; }
+}
+
+.auth-page .forest-btn:hover::before {
+  animation: emberPulse 1.8s ease-in-out infinite;
+}
