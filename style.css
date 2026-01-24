@@ -467,21 +467,17 @@ body.home {
 
   opacity: 0;
   filter: blur(8px);
-  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 
 /* hover = torch warms */
 .auth-page .forest-btn:hover::before {
   opacity: 1;
+  animation: emberPulse 1.8s ease-in-out infinite;
 }
 
 @keyframes emberPulse {
   0% { opacity: 0.45; }
   50% { opacity: 0.7; }
   100% { opacity: 0.45; }
-}
-
-.auth-page .forest-btn:hover::before {
-  animation: emberPulse 1.8s ease-in-out infinite;
 }
