@@ -436,36 +436,9 @@ body.home {
   pointer-events: none;
 }
 
-/* vertical flame column */
-.auth-page .forest-btn::after {
-  content: "";
-  position: absolute;
-  left: 35%;
-  right: 35%;
-  bottom: 15%;
-  height: 120%;
 
-  background: linear-gradient(
-    to top,
-    rgba(255, 180, 90, 0.65),
-    rgba(255, 120, 40, 0.45),
-    transparent 75%
-  );
 
-  opacity: 0;
-  transform: scaleY(0.2);
-  transform-origin: bottom;
-  transition:
-    opacity 0.25s ease,
-    transform 0.35s ease;
-  pointer-events: none;
-}
 
-/* hover = torch lights */
-.auth-page .forest-btn:hover::before {
-  opacity: 1;
-  transform: translateY(0) scaleY(1);
-}
 
 .auth-page .forest-btn:hover::after {
   opacity: 1;
