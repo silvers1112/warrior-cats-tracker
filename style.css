@@ -403,8 +403,7 @@ body.home {
 }
 
 /* =====================
-   CAMPFIRE HOVER (AUTH PAGES ONLY)
-   Cozy firelight + ember glow
+   TORCH IGNITION HOVER (AUTH PAGES ONLY)
 ===================== */
 
 .auth-page .forest-btn {
@@ -412,50 +411,63 @@ body.home {
   overflow: hidden;
 }
 
-/* soft firelight that sits low like a campfire */
+/* ignition glow (starts at bottom like lighting a torch) */
 .auth-page .forest-btn::before {
   content: "";
   position: absolute;
-  left: -15%;
-  right: -15%;
-  bottom: -60%;
-  height: 160%;
+  left: 0;
+  right: 0;
+  bottom: -50%;
 
+  height: 200%;
   background: radial-gradient(
-    circle at 50% 70%,
-    rgba(255, 170, 80, 0.55) 0%,
-    rgba(255, 120, 40, 0.30) 35%,
-    rgba(180, 60, 10, 0.12) 60%,
+    ellipse at center bottom,
+    rgba(255, 200, 120, 0.85) 0%,
+    rgba(255, 140, 60, 0.55) 25%,
+    rgba(180, 70, 20, 0.25) 45%,
+    transparent 65%
+  );
+
+  opacity: 0;
+  transform: translateY(20%) scaleY(0.6);
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s ease;
+  pointer-events: none;
+}
+
+/* vertical flame column */
+.auth-page .forest-btn::after {
+  content: "";
+  position: absolute;
+  left: 35%;
+  right: 35%;
+  bottom: 15%;
+  height: 120%;
+
+  background: linear-gradient(
+    to top,
+    rgba(255, 180, 90, 0.65),
+    rgba(255, 120, 40, 0.45),
     transparent 75%
   );
 
   opacity: 0;
-  transform: translateY(10%) scale(0.98);
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transform: scaleY(0.2);
+  transform-origin: bottom;
+  transition:
+    opacity 0.25s ease,
+    transform 0.35s ease;
   pointer-events: none;
 }
 
-/* ember spark: subtle flicker dots */
-.auth-page .forest-btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle, rgba(255,220,150,0.55) 0 2px, transparent 3px) 15% 70%/40px 40px,
-    radial-gradient(circle, rgba(255,180,90,0.45) 0 2px, transparent 3px) 55% 80%/55px 55px,
-    radial-gradient(circle, rgba(255,240,200,0.40) 0 1.5px, transparent 3px) 80% 60%/45px 45px;
-
-  opacity: 0;
-  transition: opacity 0.35s ease;
-  pointer-events: none;
-}
-
-/* hover state */
+/* hover = torch lights */
 .auth-page .forest-btn:hover::before {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0) scaleY(1);
 }
 
 .auth-page .forest-btn:hover::after {
   opacity: 1;
+  transform: scaleY(1);
 }
