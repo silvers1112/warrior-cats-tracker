@@ -392,4 +392,13 @@ body.home {
   display: none;
 }
 
+/* =====================
+   AUTH PAGE SPACING
+===================== */
+.auth-page .auth-actions {
+  margin-top: 28px; /* space between fields and buttons */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* space between buttons */
+}
 
