@@ -203,4 +203,55 @@ body.home {
     inset 0 0 8px rgba(255, 200, 120, 0.4);
 }
 
+/* =====================
+   FOREST BUTTON (Reusable)
+===================== */
+.forest-btn {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.05rem;
+  letter-spacing: 1px;
+
+  padding: 12px 28px;
+  border-radius: 40px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(120, 80, 40, 0.95),
+    rgba(180, 130, 70, 0.95)
+  );
+
+  color: #fff;
+  border: 2px solid rgba(255, 220, 170, 0.6);
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.45),
+    inset 0 0 10px rgba(255, 200, 120, 0.35);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.forest-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(
+    135deg,
+    rgba(150, 100, 50, 1),
+    rgba(220, 160, 90, 1)
+  );
+
+  box-shadow:
+    0 12px 26px rgba(0, 0, 0, 0.55),
+    inset 0 0 14px rgba(255, 220, 160, 0.45);
+}
+
+.forest-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.55),
+    inset 0 0 8px rgba(255, 200, 120, 0.4);
+}
 
