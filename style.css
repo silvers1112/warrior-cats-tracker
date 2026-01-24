@@ -286,3 +286,90 @@ body.home {
   border-radius: 8px;
 }
 
+/* =====================
+   AUTH PAGES (match homepage vibe)
+===================== */
+
+/* Make the auth pages use the same vibe + spacing */
+.auth-page {
+  min-height: 100vh;
+  background-image: url("auth-background.png"); /* change filename if needed */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding-top: 60px;
+  color: #fff;
+}
+
+/* Add a nice dark overlay like the homepage hero */
+.auth-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  pointer-events: none;
+}
+
+/* Wrap the page content in a "card" automatically */
+.auth-page > * {
+  position: relative; /* stays above overlay */
+}
+
+/* Make a card look without changing HTML */
+.auth-page h1,
+.auth-page input,
+.auth-page select,
+.auth-page p,
+.auth-page a {
+  font-family: 'Cinzel Decorative', serif;
+}
+
+.auth-page h1 {
+  margin-bottom: 18px;
+  font-size: 2.6rem;
+  letter-spacing: 2px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.75);
+}
+
+/* Create a centered panel look by styling inputs/select */
+.auth-page input,
+.auth-page select {
+  width: min(420px, 88vw);
+  padding: 14px 16px;
+  margin: 10px 0;
+
+  border-radius: 14px;
+  border: 2px solid rgba(255, 220, 170, 0.55);
+
+  background: rgba(0, 0, 0, 0.55);
+  color: #fff;
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.35),
+    inset 0 0 10px rgba(255, 200, 120, 0.12);
+
+  outline: none;
+}
+
+/* Placeholder text */
+.auth-page input::placeholder {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Make links readable */
+.auth-page a {
+  color: rgba(255, 230, 190, 0.95);
+  text-decoration: underline;
+}
+
+.auth-page p {
+  width: min(520px, 90vw);
+  margin-top: 14px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+}
