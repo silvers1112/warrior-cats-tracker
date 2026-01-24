@@ -92,8 +92,10 @@ body.home {
   background-repeat: no-repeat;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  padding-top: 40px;
+
 
   position: relative;
 }
