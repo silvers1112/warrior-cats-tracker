@@ -209,6 +209,9 @@ body.home {
 /* =====================
    FOREST BUTTON (UNIFIED)
 ===================== */
+/* =====================
+   FOREST BUTTON (GLOBAL)
+===================== */
 .forest-btn {
   all: unset;
   display: inline-block;
@@ -218,8 +221,8 @@ body.home {
   letter-spacing: 1px;
   text-transform: uppercase;
 
-  padding: 14px 34px;
-  border-radius: 40px;
+  padding: 14px 38px;
+  border-radius: 14px;   /* GLOBAL rectangular shape */
 
   background: linear-gradient(
     135deg,
@@ -261,6 +264,7 @@ body.home {
     0 6px 14px rgba(0, 0, 0, 0.6),
     inset 0 0 8px rgba(255, 200, 120, 0.4);
 }
+
 
 /* =====================
    AUTH PAGES BACKGROUND
