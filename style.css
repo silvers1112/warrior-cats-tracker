@@ -436,11 +436,42 @@ body.home {
   pointer-events: none;
 }
 
-
-
-
-
 .auth-page .forest-btn:hover::after {
   opacity: 1;
   transform: scaleY(1);
+}
+
+/* =====================
+   TORCH EMBER GLOW (AUTH PAGES ONLY)
+   Continuous, shape-free glow
+===================== */
+
+.auth-page .forest-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* ember glow */
+.auth-page .forest-btn::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+
+  background: radial-gradient(
+    circle at 50% 75%,
+    rgba(255, 200, 120, 0.55) 0%,
+    rgba(255, 150, 70, 0.35) 30%,
+    rgba(180, 80, 30, 0.18) 55%,
+    transparent 70%
+  );
+
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+/* hover = torch warms */
+.auth-page .forest-btn:hover::before {
+  opacity: 1;
 }
