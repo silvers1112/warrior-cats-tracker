@@ -402,44 +402,6 @@ body.home {
   gap: 16px; /* space between buttons */
 }
 
-/* =====================
-   TORCH IGNITION HOVER (AUTH PAGES ONLY)
-===================== */
-
-.auth-page .forest-btn {
-  position: relative;
-  overflow: hidden;
-}
-
-/* ignition glow (starts at bottom like lighting a torch) */
-.auth-page .forest-btn::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -50%;
-
-  height: 200%;
-  background: radial-gradient(
-    ellipse at center bottom,
-    rgba(255, 200, 120, 0.85) 0%,
-    rgba(255, 140, 60, 0.55) 25%,
-    rgba(180, 70, 20, 0.25) 45%,
-    transparent 65%
-  );
-
-  opacity: 0;
-  transform: translateY(20%) scaleY(0.6);
-  transition:
-    opacity 0.25s ease,
-    transform 0.35s ease;
-  pointer-events: none;
-}
-
-.auth-page .forest-btn:hover::after {
-  opacity: 1;
-  transform: scaleY(1);
-}
 
 /* =====================
    TORCH EMBER GLOW (AUTH PAGES ONLY)
@@ -449,21 +411,23 @@ body.home {
 .auth-page .forest-btn::before {
   content: "";
   position: absolute;
-  inset: -45%;
+  inset: -55%;
 
   background: radial-gradient(
     circle at 50% 75%,
-    rgba(255, 220, 140, 0.9) 0%,
-    rgba(255, 170, 80, 0.65) 30%,
-    rgba(200, 90, 30, 0.35) 55%,
-    rgba(120, 40, 10, 0.15) 70%,
-    transparent 80%
+    rgba(255, 245, 230, 1) 0%,     /* white-hot core */
+    rgba(255, 210, 140, 0.9) 20%,
+    rgba(255, 160, 70, 0.6) 40%,
+    rgba(160, 60, 20, 0.35) 60%,
+    rgba(60, 20, 10, 0.15) 75%,
+    transparent 85%
   );
 
   opacity: 0;
-  filter: blur(10px);
+  filter: blur(12px);
   pointer-events: none;
 }
+
 
 
 /* hover = torch warms */
@@ -473,8 +437,52 @@ body.home {
 }
 
 @keyframes emberPulse {
-  0%   { opacity: 0.35; }
-  50%  { opacity: 0.95; }
-  100% { opacity: 0.35; }
+  0%   { opacity: 0.08; }  /* almost off */
+  45%  { opacity: 1; }     /* fully lit */
+  55%  { opacity: 1; }
+  100% { opacity: 0.08; }
+}
+
+/* =====================
+   TORCH EMBER GLOW (AUTH PAGES ONLY)
+   High contrast: near-dark -> white-hot glow
+===================== */
+
+.auth-page .forest-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-page .forest-btn::before {
+  content: "";
+  position: absolute;
+  inset: -55%;
+
+  background: radial-gradient(
+    circle at 50% 75%,
+    rgba(255, 245, 230, 1) 0%,     /* white-hot core */
+    rgba(255, 210, 140, 0.9) 20%,
+    rgba(255, 160, 70, 0.6) 40%,
+    rgba(160, 60, 20, 0.35) 60%,
+    rgba(60, 20, 10, 0.15) 75%,
+    transparent 85%
+  );
+
+  opacity: 0;
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+/* hover = ignition */
+.auth-page .forest-btn:hover::before {
+  opacity: 1;
+  animation: emberPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes emberPulse {
+  0%   { opacity: 0.08; }  /* almost off */
+  45%  { opacity: 1; }     /* fully lit */
+  55%  { opacity: 1; }
+  100% { opacity: 0.08; }
 }
 
