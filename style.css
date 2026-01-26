@@ -521,3 +521,9 @@ body.home {
   margin: 0;
   padding: 10px 0;
 }
+
+.profile-footer {
+  display: flex;
+  justify-content: center;
+  margin: 40px 0 60px;
+}
