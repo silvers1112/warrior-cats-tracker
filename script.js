@@ -229,6 +229,32 @@ function logOut() {
   });
 }
 
+function getCompletedMainArcs(progress) {
+  const mainArcs = [
+    "The Prophecies Begin",
+    "The New Prophecy",
+    "Power of Three",
+    "Omen of the Stars",
+    "Dawn of the Clans",
+    "A Vision of Shadows",
+    "The Broken Code",
+    "A Starless Clan",
+    "Changing Skies"
+  ];
+
+  const completed = [];
+
+  mainArcs.forEach(arcName => {
+    const books = arcs[arcName];
+    if (!books) return;
+
+    const finished = books.every(book => progress[book] === true);
+    if (finished) completed.push(arcName);
+  });
+
+  return completed;
+}
+
 // =====================
 // AUTH STATE / PAGE ROUTING
 // =====================
@@ -441,48 +467,61 @@ function loadCommunity() {
   const communityDiv = document.getElementById("community");
   if (!communityDiv) return;
 
-  // Prevent duplicate listeners
   if (communityUnsub) return;
 
   communityDiv.innerHTML = "Loading...";
 
-  // Clean old per-user progress listeners
-  progressUnsubs.forEach((u) => u && u());
+  progressUnsubs.forEach(u => u && u());
   progressUnsubs = [];
 
-  // Live users list
-  communityUnsub = db.collection("users").onSnapshot(
-    (snapshot) => {
-      communityDiv.innerHTML = "";
+  communityUnsub = db.collection("users").onSnapshot(snapshot => {
+    communityDiv.innerHTML = "";
 
-      if (snapshot.empty) {
-        communityDiv.textContent = "No warriors yet. Be the first to join!";
-        return;
-      }
-
-      snapshot.forEach((userDoc) => {
-        const userId = userDoc.id;
-        const userData = userDoc.data();
-
-        const row = document.createElement("div");
-        row.textContent = `${userData.username} (${userData.clan}) — 📚 0 books`;
-        communityDiv.appendChild(row);
-
-        const unsub = db.collection("progress").doc(userId).onSnapshot((progressDoc) => {
-          const progress = progressDoc.exists ? progressDoc.data() : {};
-          const readCount = Object.values(progress).filter((v) => v === true).length;
-          row.textContent = `${userData.username} (${userData.clan}) — 📚 ${readCount} books`;
-        });
-
-        progressUnsubs.push(unsub);
-      });
-    },
-    (err) => {
-      console.error("Community listener failed:", err);
-      communityDiv.textContent = "Community failed to load.";
+    if (snapshot.empty) {
+      communityDiv.textContent = "No warriors yet. Be the first to join!";
+      return;
     }
-  );
+
+    snapshot.forEach(userDoc => {
+      const userId = userDoc.id;
+      const userData = userDoc.data();
+
+      const block = document.createElement("div");
+      block.style.marginBottom = "20px";
+
+      const nameLine = document.createElement("div");
+      nameLine.textContent = `${userData.username} (${userData.clan})`;
+      block.appendChild(nameLine);
+
+      const bookLine = document.createElement("div");
+      bookLine.textContent = `📚 Loading progress...`;
+      block.appendChild(bookLine);
+
+      const arcLine = document.createElement("div");
+      arcLine.textContent = `⭐ Completed Arcs: Loading...`;
+      block.appendChild(arcLine);
+
+      communityDiv.appendChild(block);
+
+      const unsub = db.collection("progress").doc(userId).onSnapshot(progressDoc => {
+        const progress = progressDoc.exists ? progressDoc.data() : {};
+
+        const readCount = Object.values(progress).filter(v => v === true).length;
+        bookLine.textContent = `📚 ${readCount} books read`;
+
+        const completedArcs = getCompletedMainArcs(progress);
+
+        arcLine.textContent =
+          completedArcs.length > 0
+            ? `⭐ Completed Arcs: ${completedArcs.join(", ")}`
+            : `⭐ Completed Arcs: None yet`;
+      });
+
+      progressUnsubs.push(unsub);
+    });
+  });
 }
+
 
 // =====================
 // CLEANUP LISTENERS
