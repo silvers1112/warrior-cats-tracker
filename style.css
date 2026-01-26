@@ -265,46 +265,13 @@ body.home {
     inset 0 0 8px rgba(255, 200, 120, 0.4);
 }
 
-
 /* =====================
-   AUTH PAGES BACKGROUND
+   AUTH PAGES (Login + Create)
 ===================== */
+
 .auth-page {
   min-height: 100vh;
   background-image: url("auth-background.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-
-  padding-top: 80px;
-}
-
-/* =====================
-   AUTH PAGE READABILITY
-===================== */
-.auth-page h1,
-.auth-page input,
-.auth-page select,
-.auth-page p {
-  background: rgba(0, 0, 0, 0.55);
-  color: #fff;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-/* =====================
-   AUTH PAGES (match homepage vibe)
-===================== */
-
-/* Make the auth pages use the same vibe + spacing */
-.auth-page {
-  min-height: 100vh;
-  background-image: url("auth-background.png"); /* change filename if needed */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -318,7 +285,7 @@ body.home {
   color: #fff;
 }
 
-/* Add a nice dark overlay like the homepage hero */
+/* dark overlay */
 .auth-page::before {
   content: "";
   position: fixed;
@@ -327,30 +294,27 @@ body.home {
   pointer-events: none;
 }
 
-/* Wrap the page content in a "card" automatically */
 .auth-page > * {
-  position: relative; /* stays above overlay */
+  position: relative;
 }
 
-/* Make a card look without changing HTML */
-.auth-page h1,
-.auth-page input,
-.auth-page select,
-.auth-page p,
-.auth-page a {
-  font-family: 'Cinzel Decorative', serif;
+/* Hide homepage header if it exists */
+.auth-page header {
+  display: none;
 }
 
 .auth-page h1 {
+  font-family: 'Cinzel Decorative', serif;
   margin-bottom: 18px;
   font-size: 2.6rem;
   letter-spacing: 2px;
   text-shadow: 0 3px 12px rgba(0,0,0,0.75);
 }
 
-/* Create a centered panel look by styling inputs/select */
+/* Inputs */
 .auth-page input,
 .auth-page select {
+  font-family: 'Cinzel Decorative', serif;
   width: min(420px, 88vw);
   padding: 14px 16px;
   margin: 10px 0;
@@ -368,13 +332,13 @@ body.home {
   outline: none;
 }
 
-/* Placeholder text */
 .auth-page input::placeholder {
   color: rgba(255,255,255,0.7);
 }
 
-/* Make links readable */
+/* Links */
 .auth-page a {
+  font-family: 'Cinzel Decorative', serif;
   color: rgba(255, 230, 190, 0.95);
   text-decoration: underline;
 }
@@ -385,66 +349,16 @@ body.home {
   text-shadow: 0 2px 10px rgba(0,0,0,0.75);
 }
 
-/* =====================
-   REMOVE HOMEPAGE HEADER ON AUTH PAGES
-===================== */
-.auth-page header {
-  display: none;
-}
-
-/* =====================
-   AUTH PAGE SPACING
-===================== */
+/* Spacing between fields and buttons */
 .auth-page .auth-actions {
-  margin-top: 28px; /* space between fields and buttons */
+  margin-top: 28px;
   display: flex;
   flex-direction: column;
-  gap: 16px; /* space between buttons */
-}
-
-
-/* =====================
-   TORCH EMBER GLOW (AUTH PAGES ONLY)
-   Continuous, shape-free glow
-===================== */
-
-.auth-page .forest-btn::before {
-  content: "";
-  position: absolute;
-  inset: -55%;
-
-  background: radial-gradient(
-    circle at 50% 75%,
-    rgba(255, 245, 230, 1) 0%,     /* white-hot core */
-    rgba(255, 210, 140, 0.9) 20%,
-    rgba(255, 160, 70, 0.6) 40%,
-    rgba(160, 60, 20, 0.35) 60%,
-    rgba(60, 20, 10, 0.15) 75%,
-    transparent 85%
-  );
-
-  opacity: 0;
-  filter: blur(12px);
-  pointer-events: none;
-}
-
-
-
-/* hover = torch warms */
-.auth-page .forest-btn:hover::before {
-  opacity: 1;
-  animation: emberPulse 1.8s ease-in-out infinite;
-}
-
-@keyframes emberPulse {
-  0%   { opacity: 0.08; }  /* almost off */
-  45%  { opacity: 1; }     /* fully lit */
-  55%  { opacity: 1; }
-  100% { opacity: 0.08; }
+  gap: 16px;
 }
 
 /* =====================
-   TORCH EMBER GLOW (AUTH PAGES ONLY)
+   TORCH EMBER GLOW (AUTH BUTTONS ONLY)
    High contrast: near-dark -> white-hot glow
 ===================== */
 
@@ -460,7 +374,7 @@ body.home {
 
   background: radial-gradient(
     circle at 50% 75%,
-    rgba(255, 245, 230, 1) 0%,     /* white-hot core */
+    rgba(255, 245, 230, 1) 0%,
     rgba(255, 210, 140, 0.9) 20%,
     rgba(255, 160, 70, 0.6) 40%,
     rgba(160, 60, 20, 0.35) 60%,
@@ -473,18 +387,18 @@ body.home {
   pointer-events: none;
 }
 
-/* hover = ignition */
 .auth-page .forest-btn:hover::before {
   opacity: 1;
   animation: emberPulse 1.6s ease-in-out infinite;
 }
 
 @keyframes emberPulse {
-  0%   { opacity: 0.08; }  /* almost off */
-  45%  { opacity: 1; }     /* fully lit */
+  0%   { opacity: 0.08; }
+  45%  { opacity: 1; }
   55%  { opacity: 1; }
   100% { opacity: 0.08; }
 }
+
 
 /* =====================
    PROFILE PAGE BACKGROUND
