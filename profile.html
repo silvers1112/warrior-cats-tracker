@@ -10,37 +10,39 @@
 
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="profile-page">
 
-   <img id="clanLogo"
-         src=""
-         alt="Clan logo"
-         style="width:40px;height:40px;display:none;">
+  <!-- Clan logo in upper-left corner -->
+  <img id="clanLogo"
+       class="clan-corner-logo"
+       src=""
+       alt="Clan logo"
+       style="display:none;">
 
+  <header>
+    <div id="welcome" class="profile-title"></div>
+  </header>
 
-<header>
-  <div id="welcome" class="profile-title"></div>
-</header>
+  <section>
+    <button class="forest-btn" onclick="location.href='app.html'">
+      📚 Go to Book Tracker
+    </button>
+  </section>
 
+  <section id="community-section">
+    <h3>👥 Community Progress</h3>
+    <div id="community"></div>
+  </section>
 
+  <div class="profile-footer">
+    <button class="forest-btn" onclick="logOut()">Log Out</button>
+  </div>
 
-<section>
-  <button class="forest-btn" onclick="location.href='app.html'">📚 Go to Book Tracker</button>
-</section>
-
-<section id="community-section">
-  <h3>👥 Community Progress</h3>
-  <div id="community"></div>
-</section>
-
-<div class="profile-footer">
-  <button class="forest-btn" onclick="logOut()">Log Out</button>
-</div>  
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>
