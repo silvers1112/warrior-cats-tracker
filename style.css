@@ -479,6 +479,43 @@ body.home {
   padding: 10px 0;
 }
 
+.profile-subtitle {
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 1px;
+  color: #fff;
+  margin: 10px 0 18px;
+}
+
+.arc-row {
+  max-width: 720px;
+  margin: 14px auto;
+  text-align: left;
+  color: #fff;
+}
+
+.arc-row .arc-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 600;
+}
+
+.arc-bar {
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.18);
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.arc-bar > div {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: rgba(255, 220, 140, 0.85);
+}
+
+
 /* Clan logo in upper-left corner */
 .clan-corner-logo {
   position: fixed;
