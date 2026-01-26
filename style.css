@@ -486,3 +486,28 @@ body.home {
   100% { opacity: 0.08; }
 }
 
+/* =====================
+   PROFILE PAGE BACKGROUND
+===================== */
+
+.profile-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.65)
+    ),
+    url("images/profile-bg.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.profile-page section,
+.profile-page header {
+  background: rgba(10, 14, 18, 0.75);
+  backdrop-filter: blur(4px);
+  border-radius: 14px;
+}
