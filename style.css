@@ -534,3 +534,16 @@ body.home {
   align-items: center;
   margin: 10px 0 20px;
 }
+
+/* Clan logo in upper-left corner */
+.clan-corner-logo {
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  width: 56px;
+  height: 56px;
+
+  opacity: 0.9;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
+  z-index: 1000;
+}
