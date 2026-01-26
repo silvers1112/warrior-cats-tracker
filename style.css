@@ -560,3 +560,16 @@ body.home {
     0 2px 8px rgba(0,0,0,0.9),
     0 0 10px rgba(0,0,0,0.6);
 }
+
+/* Profile page action buttons (bottom-right stack) */
+.profile-actions {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  align-items: flex-end;
+}
