@@ -496,7 +496,7 @@ function loadCommunity() {
         // Compact user block
         const block = document.createElement("div");
         block.style.marginBottom = "18px"; // space between users
-        block.style.lineHeight = "1.25";
+        block.style.lineHeight = "1.05";
         block.style.textAlign = "center";
 
         // Username + clan
@@ -504,7 +504,7 @@ function loadCommunity() {
         nameLine.textContent = `${userData.username} (${userData.clan})`;
         nameLine.style.fontSize = "1.05rem";
         nameLine.style.fontWeight = "600";
-        nameLine.style.marginBottom = "2px";
+        nameLine.style.marginBottom = "0px";
         block.appendChild(nameLine);
 
         // Books read (smaller)
@@ -512,7 +512,7 @@ function loadCommunity() {
         bookLine.textContent = "📚 Books Read: 0";
         bookLine.style.fontSize = "0.8rem";
         bookLine.style.opacity = "0.85";
-        bookLine.style.marginBottom = "1px";
+        bookLine.style.marginBottom = "0px";
         block.appendChild(bookLine);
 
         // Completed arcs (smallest) — main arcs only
