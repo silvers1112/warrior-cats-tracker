@@ -24,12 +24,6 @@
     <div id="welcome" class="profile-title"></div>
   </header>
 
-  <section>
-    <button class="forest-btn" type="button" onclick="location.href='app.html'">
-      📚 Go to Book Tracker
-    </button>
-  </section>
-
   <section id="arc-progress-section">
     <h3 class="profile-subtitle">Arc Progress</h3>
     <div id="arcProgress"></div>
@@ -40,9 +34,16 @@
     <div id="community"></div>
   </section>
 
-  <div class="profile-footer">
-    <button class="forest-btn" type="button" onclick="logOut()">Log Out</button>
+  <div class="profile-footer profile-actions">
+  <button class="forest-btn" onclick="location.href='app.html'">
+    📚 Book Tracker
+  </button>
+
+  <button class="forest-btn" onclick="logOut()">
+    Log Out
+  </button>
   </div>
+
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
