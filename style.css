@@ -508,8 +508,8 @@ body.home {
 
 .profile-page section,
 .profile-page header {
-  background: rgba(10, 14, 18, 0.75);
-  backdrop-filter: blur(4px);
+  background: rgba(10, 14, 18, 0.55);
+  backdrop-filter: blur(3px);
   border-radius: 14px;
 }
 
