@@ -487,19 +487,26 @@ function loadCommunity() {
       const userData = userDoc.data();
 
       const block = document.createElement("div");
-      block.style.marginBottom = "20px";
+      block.style.marginBottom = "28px";  // space between users
+      block.style.lineHeight = "1.4";     // tighten internal spacing
+
 
       const nameLine = document.createElement("div");
+      nameLine.style.fontWeight = "600";
+      nameLine.style.marginBottom = "4px";
       nameLine.textContent = `${userData.username} (${userData.clan})`;
       block.appendChild(nameLine);
 
       const bookLine = document.createElement("div");
+      bookLine.style.marginBottom = "2px";
       bookLine.textContent = `📚 Loading progress...`;
       block.appendChild(bookLine);
 
       const arcLine = document.createElement("div");
+      arcLine.style.opacity = "0.9";
       arcLine.textContent = `⭐ Completed Arcs: Loading...`;
       block.appendChild(arcLine);
+
 
       communityDiv.appendChild(block);
 
