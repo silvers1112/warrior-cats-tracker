@@ -482,52 +482,66 @@ function loadCommunity() {
       return;
     }
 
-    snapshot.forEach(userDoc => {
-      const userId = userDoc.id;
-      const userData = userDoc.data();
+snapshot.forEach(userDoc => {
+  const userId = userDoc.id;
+  const userData = userDoc.data();
 
-      const block = document.createElement("div");
-      block.style.marginBottom = "28px";  // space between users
-      block.style.lineHeight = "1.4";     // tighten internal spacing
+  // Compact user block
+  const block = document.createElement("div");
+  block.style.marginBottom = "18px";   // space between users
+  block.style.lineHeight = "1.25";
+  block.style.textAlign = "center";
 
+  // Username + clan
+  const nameLine = document.createElement("div");
+  nameLine.textContent = `${userData.username} (${userData.clan})`;
+  nameLine.style.fontSize = "1.05rem";
+  nameLine.style.fontWeight = "600";
+  nameLine.style.marginBottom = "2px";
 
-      const nameLine = document.createElement("div");
-      nameLine.style.fontWeight = "600";
-      nameLine.style.marginBottom = "4px";
-      nameLine.textContent = `${userData.username} (${userData.clan})`;
-      block.appendChild(nameLine);
+  block.appendChild(nameLine);
 
-      const bookLine = document.createElement("div");
-      bookLine.style.marginBottom = "2px";
-      bookLine.textContent = `📚 Loading progress...`;
-      block.appendChild(bookLine);
+  // Books read (smaller)
+  const bookLine = document.createElement("div");
+  bookLine.textContent = "📚 Books Read: 0";
+  bookLine.style.fontSize = "0.8rem";
+  bookLine.style.opacity = "0.85";
+  bookLine.style.marginBottom = "1px";
 
-      const arcLine = document.createElement("div");
-      arcLine.style.opacity = "0.9";
-      arcLine.textContent = `⭐ Completed Arcs: Loading...`;
-      block.appendChild(arcLine);
+  block.appendChild(bookLine);
 
+  // Completed arcs (smallest)
+  const arcLine = document.createElement("div");
+  arcLine.textContent = "⭐ Completed Arcs: None";
+  arcLine.style.fontSize = "0.75rem";
+  arcLine.style.opacity = "0.75";
 
-      communityDiv.appendChild(block);
+  block.appendChild(arcLine);
 
-      const unsub = db.collection("progress").doc(userId).onSnapshot(progressDoc => {
-        const progress = progressDoc.exists ? progressDoc.data() : {};
+  communityDiv.appendChild(block);
 
-        const readCount = Object.values(progress).filter(v => v === true).length;
-        bookLine.textContent = `📚 ${readCount} books read`;
+  // Live progress listener
+  const unsub = db.collection("progress").doc(userId).onSnapshot(progressDoc => {
+    const progress = progressDoc.exists ? progressDoc.data() : {};
 
-        const completedArcs = getCompletedMainArcs(progress);
+    const booksRead = Object.values(progress).filter(v => v === true).length;
 
-        arcLine.textContent =
-          completedArcs.length > 0
-            ? `⭐ Completed Arcs: ${completedArcs.join(", ")}`
-            : `⭐ Completed Arcs: None yet`;
-      });
-
-      progressUnsubs.push(unsub);
+    const completedArcs = Object.keys(arcs).filter(arcName => {
+      const books = arcs[arcName];
+      if (!books || books.length === 0) return false;
+      return books.every(book => progress[book] === true);
     });
+
+    bookLine.textContent = `📚 Books Read: ${booksRead}`;
+    arcLine.textContent =
+      completedArcs.length > 0
+        ? `⭐ Completed Arcs: ${completedArcs.length}`
+        : `⭐ Completed Arcs: None`;
   });
-}
+
+  progressUnsubs.push(unsub);
+});
+
 
 
 // =====================
