@@ -427,21 +427,21 @@ body.home {
   padding: 18px;
 }
 
-.profile-page section,
-.profile-page header {
-  background: rgba(10, 14, 18, 0.38);   /* more transparent */
-  backdrop-filter: blur(2px);
-  border-radius: 14px;
-}
-
-
 .profile-title {
   font-family: 'Cinzel Decorative', serif;
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  text-shadow: 0 3px 12px rgba(0,0,0,0.75);
+
+  color: #fff;
+
+  text-shadow:
+    0 4px 14px rgba(0,0,0,0.9),
+    0 0 28px rgba(255, 220, 140, 0.35);
+
+  margin: 24px 0;
 }
+
 
 
 .profile-footer {
@@ -455,6 +455,28 @@ body.home {
   justify-content: center;
   align-items: center;
   margin: 10px 0 20px;
+}
+
+/* Profile page: text-only readability */
+.profile-page header,
+.profile-page section {
+  background: none;
+  backdrop-filter: none;
+}
+
+.profile-page h1,
+.profile-page h2,
+.profile-page h3,
+.profile-page p,
+.profile-page button {
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.85),
+    0 0 14px rgba(0,0,0,0.6);
+}
+
+.profile-page section {
+  margin: 24px auto;
+  padding: 10px 0;
 }
 
 /* Clan logo in upper-left corner */
