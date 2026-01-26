@@ -311,14 +311,18 @@ if (!user && protectedPages.some(p => location.pathname.includes(p))) {
 
   // Only user-specific stuff when logged in
   if (user) {
-    if (document.getElementById("welcome")) {
-      loadUserHeader(user.uid);
-    }
-
-    if (document.getElementById("books")) {
-      showBooks(user.uid);
-    }
+  if (document.getElementById("welcome")) {
+    loadUserHeader(user.uid);
   }
+
+  if (document.getElementById("arcProgress")) {
+    renderArcProgress(user.uid);
+  }
+
+  if (document.getElementById("books")) {
+    showBooks(user.uid);
+  }
+}
 });
 
 
