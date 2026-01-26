@@ -463,84 +463,102 @@ function showBooks(uid) {
 // =====================
 // COMMUNITY: REAL-TIME PROGRESS
 // =====================
+// =====================
+// COMMUNITY: REAL-TIME PROGRESS
+// =====================
 function loadCommunity() {
   const communityDiv = document.getElementById("community");
   if (!communityDiv) return;
 
+  // Prevent duplicate listeners
   if (communityUnsub) return;
 
   communityDiv.innerHTML = "Loading...";
 
-  progressUnsubs.forEach(u => u && u());
+  // Clean up old per-user progress listeners
+  progressUnsubs.forEach((u) => u && u());
   progressUnsubs = [];
 
-  communityUnsub = db.collection("users").onSnapshot(snapshot => {
-    communityDiv.innerHTML = "";
+  // Live users list
+  communityUnsub = db.collection("users").onSnapshot(
+    (snapshot) => {
+      communityDiv.innerHTML = "";
 
-    if (snapshot.empty) {
-      communityDiv.textContent = "No warriors yet. Be the first to join!";
-      return;
+      if (snapshot.empty) {
+        communityDiv.textContent = "No warriors yet. Be the first to join!";
+        return;
+      }
+
+      snapshot.forEach((userDoc) => {
+        const userId = userDoc.id;
+        const userData = userDoc.data();
+
+        // Compact user block
+        const block = document.createElement("div");
+        block.style.marginBottom = "18px"; // space between users
+        block.style.lineHeight = "1.25";
+        block.style.textAlign = "center";
+
+        // Username + clan
+        const nameLine = document.createElement("div");
+        nameLine.textContent = `${userData.username} (${userData.clan})`;
+        nameLine.style.fontSize = "1.05rem";
+        nameLine.style.fontWeight = "600";
+        nameLine.style.marginBottom = "2px";
+        block.appendChild(nameLine);
+
+        // Books read (smaller)
+        const bookLine = document.createElement("div");
+        bookLine.textContent = "📚 Books Read: 0";
+        bookLine.style.fontSize = "0.8rem";
+        bookLine.style.opacity = "0.85";
+        bookLine.style.marginBottom = "1px";
+        block.appendChild(bookLine);
+
+        // Completed arcs (smallest) — main arcs only
+        const arcLine = document.createElement("div");
+        arcLine.textContent = "⭐ Completed Main Arcs: None";
+        arcLine.style.fontSize = "0.75rem";
+        arcLine.style.opacity = "0.75";
+        block.appendChild(arcLine);
+
+        communityDiv.appendChild(block);
+
+        // Live progress listener for this user
+        const unsub = db.collection("progress").doc(userId).onSnapshot((progressDoc) => {
+          const progress = progressDoc.exists ? progressDoc.data() : {};
+
+          const booksRead = Object.values(progress).filter((v) => v === true).length;
+
+          // Completed MAIN arcs only (uses your helper)
+          const completedMain = getCompletedMainArcs(progress);
+
+          bookLine.textContent = `📚 Books Read: ${booksRead}`;
+          arcLine.textContent =
+            completedMain.length > 0
+              ? `⭐ Completed Main Arcs: ${completedMain.length}`
+              : `⭐ Completed Main Arcs: None`;
+        });
+
+        progressUnsubs.push(unsub);
+      });
+    },
+    (err) => {
+      console.error("Community listener failed:", err);
+      communityDiv.textContent = "Community failed to load.";
     }
+  );
+}
 
-snapshot.forEach(userDoc => {
-  const userId = userDoc.id;
-  const userData = userDoc.data();
-
-  // Compact user block
-  const block = document.createElement("div");
-  block.style.marginBottom = "18px";   // space between users
-  block.style.lineHeight = "1.25";
-  block.style.textAlign = "center";
-
-  // Username + clan
-  const nameLine = document.createElement("div");
-  nameLine.textContent = `${userData.username} (${userData.clan})`;
-  nameLine.style.fontSize = "1.05rem";
-  nameLine.style.fontWeight = "600";
-  nameLine.style.marginBottom = "2px";
-
-  block.appendChild(nameLine);
-
-  // Books read (smaller)
-  const bookLine = document.createElement("div");
-  bookLine.textContent = "📚 Books Read: 0";
-  bookLine.style.fontSize = "0.8rem";
-  bookLine.style.opacity = "0.85";
-  bookLine.style.marginBottom = "1px";
-
-  block.appendChild(bookLine);
-
-  // Completed arcs (smallest)
-  const arcLine = document.createElement("div");
-  arcLine.textContent = "⭐ Completed Arcs: None";
-  arcLine.style.fontSize = "0.75rem";
-  arcLine.style.opacity = "0.75";
-
-  block.appendChild(arcLine);
-
-  communityDiv.appendChild(block);
-
-  // Live progress listener
-  const unsub = db.collection("progress").doc(userId).onSnapshot(progressDoc => {
-    const progress = progressDoc.exists ? progressDoc.data() : {};
-
-    const booksRead = Object.values(progress).filter(v => v === true).length;
-
-    const completedArcs = Object.keys(arcs).filter(arcName => {
-      const books = arcs[arcName];
-      if (!books || books.length === 0) return false;
-      return books.every(book => progress[book] === true);
-    });
-
-    bookLine.textContent = `📚 Books Read: ${booksRead}`;
-    arcLine.textContent =
-      completedArcs.length > 0
-        ? `⭐ Completed Arcs: ${completedArcs.length}`
-        : `⭐ Completed Arcs: None`;
-  });
-
-  progressUnsubs.push(unsub);
+// =====================
+// CLEANUP LISTENERS
+// =====================
+window.addEventListener("beforeunload", () => {
+  if (communityUnsub) communityUnsub();
+  progressUnsubs.forEach((u) => u && u());
+  if (arcProgressUnsub) arcProgressUnsub();
 });
+
 
 
 
