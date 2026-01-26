@@ -420,6 +420,13 @@ body.home {
   background-attachment: fixed;
 }
 
+.profile-page header,
+.profile-page section {
+  max-width: 900px;
+  margin: 18px auto;
+  padding: 18px;
+}
+
 .profile-page section,
 .profile-page header {
   background: rgba(10, 14, 18, 0.38);   /* more transparent */
