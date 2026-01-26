@@ -25,7 +25,7 @@
   </header>
 
   <section>
-    <button class="forest-btn" onclick="location.href='app.html'">
+    <button class="forest-btn" type="button" onclick="location.href='app.html'">
       📚 Go to Book Tracker
     </button>
   </section>
@@ -35,14 +35,13 @@
     <div id="arcProgress"></div>
   </section>
 
-
   <section id="community-section">
-    <h3>👥 Community Progress</h3>
+    <h3 class="profile-subtitle">Community Progress</h3>
     <div id="community"></div>
   </section>
 
   <div class="profile-footer">
-    <button class="forest-btn" onclick="logOut()">Log Out</button>
+    <button class="forest-btn" type="button" onclick="logOut()">Log Out</button>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
