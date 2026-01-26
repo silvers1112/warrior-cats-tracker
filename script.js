@@ -379,6 +379,60 @@ function showBooks(uid) {
     });
   }
 
+  function renderArcProgress(uid) {
+  const container = document.getElementById("arcProgress");
+  if (!container) return;
+
+  // Only main series arcs (each 6 books)
+  const mainArcNames = [
+    "The Prophecies Begin",
+    "The New Prophecy",
+    "Power of Three",
+    "Omen of the Stars",
+    "Dawn of the Clans",
+    "A Vision of Shadows",
+    "The Broken Code",
+    "A Starless Clan",
+    "Changing Skies"
+  ];
+
+  // Live update when your progress changes
+  db.collection("progress").doc(uid).onSnapshot((doc) => {
+    const progress = doc.exists ? doc.data() : {};
+    container.innerHTML = "";
+
+    mainArcNames.forEach((arcName) => {
+      const books = arcs[arcName] || [];
+      if (books.length === 0) return;
+
+      const readCount = books.filter((b) => progress[b] === true).length;
+      const total = books.length;
+
+      // Show arcs that have been started (at least 1 checked)
+      if (readCount === 0) return;
+
+      const pct = Math.round((readCount / total) * 100);
+
+      const row = document.createElement("div");
+      row.className = "arc-row";
+      row.innerHTML = `
+        <div class="arc-top">
+          <span>${arcName}</span>
+          <span>${readCount} / ${total} (${pct}%)</span>
+        </div>
+        <div class="arc-bar"><div style="width:${pct}%"></div></div>
+      `;
+      container.appendChild(row);
+    });
+
+    // If none started yet
+    if (container.innerHTML.trim() === "") {
+      container.textContent = "No arcs started yet. Start checking books in the tracker!";
+    }
+  });
+}
+
+
 // Always start on Main Series when the app loads
 // Start on Main Series when arriving on the tracker page
 if (!filterEl.dataset.initialized) {
