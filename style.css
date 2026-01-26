@@ -527,3 +527,10 @@ body.home {
   justify-content: center;
   margin: 40px 0 60px;
 }
+
+.profile-section-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 20px;
+}
