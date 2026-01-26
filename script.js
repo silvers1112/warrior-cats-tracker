@@ -225,7 +225,7 @@ function loadUserHeader(uid) {
 
     const welcomeEl = document.getElementById("welcome");
     if (welcomeEl) {
-      welcomeEl.textContent = `🐾 ${data.username} of ${data.clan}`;
+      welcomeEl.textContent = `${data.username} of ${data.clan}`;
     }
 
     const nameEl = document.getElementById("profileName");
