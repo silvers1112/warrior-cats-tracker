@@ -422,10 +422,11 @@ body.home {
 
 .profile-page section,
 .profile-page header {
-  background: rgba(10, 14, 18, 0.55);
-  backdrop-filter: blur(3px);
+  background: rgba(10, 14, 18, 0.38);   /* more transparent */
+  backdrop-filter: blur(2px);
   border-radius: 14px;
 }
+
 
 .profile-title {
   font-family: 'Cinzel Decorative', serif;
