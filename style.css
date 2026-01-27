@@ -312,16 +312,17 @@ body.home {
   letter-spacing: 1px;
   color: #fff;
 
-  margin: 16px 0 0;   /* reduced top spacing */
+  margin: 12px 0 -6px;   /* pulls clan upward */
 }
 
 .profile-clan {
   font-family: "WarriorInk", cursive;
   font-size: 1.9rem;
 
-  margin: 0 0 12px;   /* NO gap between name + clan */
+  margin: 0;             /* zero spacing */
   opacity: 0.95;
 }
+
 
 
 /* Section subtitles */
