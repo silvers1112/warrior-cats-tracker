@@ -763,3 +763,7 @@ body.home {
   margin: 60px auto 70px;
   width: fit-content;
 }
+
+.app-page #welcome {
+  font-family: "WarriorInk", cursive;
+}
