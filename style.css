@@ -311,15 +311,18 @@ body.home {
   font-size: 3.2rem;
   letter-spacing: 1px;
   color: #fff;
-  margin: 24px 0 0;
+
+  margin: 16px 0 0;   /* reduced top spacing */
 }
 
 .profile-clan {
   font-family: "WarriorInk", cursive;
   font-size: 1.9rem;
-  margin: 4px 0 16px;
+
+  margin: 0 0 12px;   /* NO gap between name + clan */
   opacity: 0.95;
 }
+
 
 /* Section subtitles */
 .profile-subtitle {
