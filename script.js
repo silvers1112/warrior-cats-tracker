@@ -292,31 +292,27 @@ auth.onAuthStateChanged((user) => {
 // PROFILE: HEADER + CLAN LOGO
 // =====================
 function loadUserHeader(uid) {
-  db.collection("users")
-    .doc(uid)
-    .get()
-    .then((doc) => {
-      if (!doc.exists) return;
-      const data = doc.data();
+  db.collection("users").doc(uid).get().then(doc => {
+    if (!doc.exists) return;
 
-      const logo = document.getElementById("clanLogo");
-      if (logo && clanLogos[data.clan]) {
-        logo.src = clanLogos[data.clan];
-        logo.style.display = "block";
-      }
+    const data = doc.data();
 
-      const welcomeEl = document.getElementById("welcome");
-      if (welcomeEl) {
-        welcomeEl.textContent = `${data.username} of ${data.clan}`;
-      }
+    // Clan logo (upper-left)
+    const logo = document.getElementById("clanLogo");
+    if (logo && clanLogos[data.clan]) {
+      logo.src = clanLogos[data.clan];
+      logo.style.display = "block";
+    }
 
-      // Optional profile fields if you ever add them back
-      const nameEl = document.getElementById("profileName");
-      if (nameEl) nameEl.textContent = data.username;
-
-      const clanEl = document.getElementById("profileClan");
-      if (clanEl) clanEl.textContent = data.clan;
-    });
+    // Profile title (name + clan stacked)
+    const welcomeEl = document.getElementById("welcome");
+    if (welcomeEl) {
+      welcomeEl.innerHTML = `
+        <div class="profile-name">${data.username}</div>
+        <div class="profile-clan">${data.clan}</div>
+      `;
+    }
+  });
 }
 
 // =====================
