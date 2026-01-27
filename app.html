@@ -3,32 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Warrior Cats Profile</title>
+  <title>Book Tracker</title>
+
+  <!-- Wilderness / Homepage Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-  <header>
-  <div id="welcome"></div>
+<body class="app-page">
 
-  <button class="forest-btn" onclick="location.href='profile.html'">🐾 Back to Profile</button>
-  <button class="forest-btn" id="logoutBtn" onclick="logOut()">Log Out</button>
+  <!-- optional: show clan logo in corner here too (same id used by JS) -->
+  <img id="clanLogo"
+       class="clan-corner-logo"
+       src=""
+       alt="Clan logo"
+       style="display:none;">
 
-</header>
+  <header class="app-header">
+    <div id="welcome" class="profile-title"></div>
+  </header>
 
+  <section class="app-actions">
+    <button class="forest-btn" type="button" onclick="location.href='profile.html'">
+      Back to Profile
+    </button>
 
-  <section id="books-section">
-  <h2>📚 Book Progress</h2>
-
-  <label for="categoryFilter"><strong>Show:</strong></label>
-  <select id="categoryFilter"></select>
-
-  <div id="books"></div>
+    <button class="forest-btn" type="button" onclick="logOut()">
+      Log Out
+    </button>
   </section>
 
+  <section id="books-section">
+    <h2 class="profile-subtitle">Book Tracker</h2>
+
+    <label for="categoryFilter" class="profile-subtitle" style="font-size:1.1rem; text-transform:none;">
+      Show:
+    </label>
+    <select id="categoryFilter"></select>
+
+    <div id="books"></div>
+  </section>
 
   <section id="community-section">
-    <h3>👥 Community Progress</h3>
+    <h3 class="profile-subtitle">Community Progress</h3>
     <div id="community"></div>
   </section>
 
