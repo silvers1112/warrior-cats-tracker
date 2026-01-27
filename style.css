@@ -767,3 +767,32 @@ body.home {
 .app-page #welcome {
   font-family: "WarriorInk", cursive;
 }
+
+/* =====================
+   PROFILE NAME STACK
+===================== */
+
+.profile-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 3px 12px rgba(0,0,0,0.85),
+    0 0 24px rgba(255, 220, 140, 0.25);
+}
+
+.profile-clan {
+  margin-top: 6px;
+
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  opacity: 0.9;
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.8);
+}
