@@ -574,8 +574,9 @@ body.home {
   margin: 40px auto 60px;     /* center horizontally */
   width: fit-content;
 }
+
 /* =====================
-   APP PAGE BACKGROUND
+   APP PAGE (FINAL – CLEAN & MATCHES SITE)
 ===================== */
 
 .app-page {
@@ -583,31 +584,10 @@ body.home {
 
   background:
     linear-gradient(
-      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.22),
       rgba(0, 0, 0, 0.45)
     ),
-    url("images/app-bg.png");
-
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-
-  color: #fff;
-}
-
-/* =====================
-   APP PAGE (match profile style)
-===================== */
-
-.app-page {
-  min-height: 100vh;
-  background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.18),
-      rgba(0, 0, 0, 0.35)
-    ),
-    url("images/profile-bg.png");
+    url("images/app-bg.png"); /* 🔥 YOUR ACRYLIC BOOKCASE IMAGE */
 
   background-size: cover;
   background-position: center;
@@ -616,6 +596,51 @@ body.home {
 
   text-align: center;
   color: #fff;
+}
+
+/* Remove default header styling */
+.app-page header {
+  background: none;
+  padding: 10px 0 0;
+}
+
+/* Text readability without opaque boxes */
+.app-page h1,
+.app-page h2,
+.app-page h3,
+.app-page p,
+.app-page label {
+  font-family: 'Cinzel Decorative', serif;
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.9),
+    0 0 14px rgba(0,0,0,0.6);
+}
+
+/* Category dropdown */
+.app-page select#categoryFilter {
+  font-family: 'Cinzel Decorative', serif;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 220, 170, 0.55);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  outline: none;
+  margin: 12px 0 22px;
+}
+
+/* Book cards – darker, atmospheric */
+.app-page .book {
+  background: rgba(0,0,0,0.38);
+  border: 1px solid rgba(255, 220, 170, 0.25);
+  color: #fff;
+}
+
+/* Arc titles */
+.app-page .arc h3 {
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 24px;
 }
 
 /* Remove default gray header look on app page */
