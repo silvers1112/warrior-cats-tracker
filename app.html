@@ -24,16 +24,6 @@
     <div id="welcome" class="profile-title"></div>
   </header>
 
-  <section class="app-actions">
-    <button class="forest-btn" type="button" onclick="location.href='profile.html'">
-      Back to Profile
-    </button>
-
-    <button class="forest-btn" type="button" onclick="logOut()">
-      Log Out
-    </button>
-  </section>
-
   <section id="books-section">
     <h2 class="profile-subtitle">Book Tracker</h2>
 
@@ -54,6 +44,17 @@
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="script.js"></script>
+
+  <div class="app-actions-bottom">
+  <button class="forest-btn" onclick="location.href='profile.html'">
+    Back to Profile
+  </button>
+
+  <button class="forest-btn" onclick="logOut()">
+    Log Out
+  </button>
+</div>
+
 
 </body>
 </html>
