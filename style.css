@@ -403,7 +403,7 @@ body.home {
   min-height: 100vh;
   background:
     linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.35)),
-    url("images/profile-bg.png");
+    url("images/app-bg.png");
 
   background-size: cover;
   background-position: center;
