@@ -1,95 +1,31 @@
 /* =====================
-   CUSTOM HANDWRITTEN FONT
+   CUSTOM HANDWRITTEN FONT (Quentin .otf)
 ===================== */
 @font-face {
   font-family: "WarriorInk";
-  src: url("fonts/Quentin.otf") format("truetype");
+  src: url("fonts/Quentin.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
 }
 
-/* Basic Styling */
+/* =====================
+   BASE
+===================== */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: #f4f4f9;
   text-align: center;
-}
-
-header {
-  background: #3c3c3c;
-  color: #fff;
-  padding: 15px;
-}
-
-header #welcome {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-button {
-  background-color: #ffcc00;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #ffaa00;
 }
 
 section {
   padding: 20px;
   margin: 20px 0;
-  background-color: #fff;
-  border-radius: 8px;
-}
-
-#books-section, #community-section {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-#books {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  text-align: left;
-}
-
-.book {
-  background: #e6e6e6;
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.book h4 {
-  margin: 0;
-  font-size: 18px;
-}
-
-.book input {
-  margin-right: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  #books {
-    grid-template-columns: 1fr;
-  }
-
-  header {
-    text-align: center;
-  }
 }
 
 /* =====================
    HOME PAGE HERO
 ===================== */
-
 body.home {
   margin: 0;
 }
@@ -105,7 +41,6 @@ body.home {
   align-items: flex-start;
   justify-content: center;
   padding-top: 40px;
-
 
   position: relative;
 }
@@ -125,38 +60,24 @@ body.home {
   padding: 20px;
 }
 
-.hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 15px;
-}
-
-.hero-content p {
-  font-size: 1.2rem;
-  margin-bottom: 25px;
-}
-
-.hero-buttons button {
-  margin: 10px;
-  padding: 14px 26px;
-  font-size: 18px;
-  border-radius: 8px;
-}
-
 .hero-title {
   font-family: 'Cinzel Decorative', serif;
   font-size: 3.5rem;
   letter-spacing: 2px;
   text-transform: uppercase;
+  margin: 0 0 10px;
 
   text-shadow:
     0 3px 12px rgba(0,0,0,0.75),
     0 0 24px rgba(255, 220, 140, 0.25);
 }
 
-/* =====================
-   HERO BUTTONS (Forest Style)
-===================== */
+.hero-content p {
+  font-size: 1.2rem;
+  margin: 0 0 25px;
+}
 
+/* Hero buttons layout */
 .hero-buttons {
   display: flex;
   gap: 20px;
@@ -164,63 +85,8 @@ body.home {
   flex-wrap: wrap;
 }
 
-.hero-btn {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.1rem;
-  letter-spacing: 1px;
-
-  padding: 14px 34px;
-  border-radius: 40px;
-
-  background: linear-gradient(
-    135deg,
-    rgba(120, 80, 40, 0.95),
-    rgba(180, 130, 70, 0.95)
-  );
-
-  color: #fff;
-  border: 2px solid rgba(255, 220, 170, 0.6);
-
-  cursor: pointer;
-
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.5),
-    inset 0 0 10px rgba(255, 200, 120, 0.35);
-
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    background 0.25s ease;
-}
-
-.hero-btn:hover {
-  transform: translateY(-3px);
-  background: linear-gradient(
-    135deg,
-    rgba(150, 100, 50, 1),
-    rgba(220, 160, 90, 1)
-  );
-
-  box-shadow:
-    0 12px 26px rgba(0, 0, 0, 0.6),
-    inset 0 0 14px rgba(255, 220, 160, 0.45);
-}
-
-.hero-btn:active {
-  transform: translateY(0);
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.6),
-    inset 0 0 8px rgba(255, 200, 120, 0.4);
-}
-
 /* =====================
-   FOREST BUTTON (Reusable)
-===================== */
-/* =====================
-   FOREST BUTTON (UNIFIED)
-===================== */
-/* =====================
-   FOREST BUTTON (GLOBAL)
+   GLOBAL BUTTON: FOREST
 ===================== */
 .forest-btn {
   all: unset;
@@ -232,7 +98,7 @@ body.home {
   text-transform: uppercase;
 
   padding: 14px 38px;
-  border-radius: 14px;   /* GLOBAL rectangular shape */
+  border-radius: 14px;
 
   background: linear-gradient(
     135deg,
@@ -277,8 +143,9 @@ body.home {
 
 /* =====================
    AUTH PAGES (Login + Create)
+   NOTE: auth-background.png should be next to HTML files
+   If you put it in /images, change url(...) accordingly.
 ===================== */
-
 .auth-page {
   min-height: 100vh;
   background-image: url("auth-background.png");
@@ -295,7 +162,6 @@ body.home {
   color: #fff;
 }
 
-/* dark overlay */
 .auth-page::before {
   content: "";
   position: fixed;
@@ -308,20 +174,18 @@ body.home {
   position: relative;
 }
 
-/* Hide homepage header if it exists */
 .auth-page header {
   display: none;
 }
 
 .auth-page h1 {
   font-family: 'Cinzel Decorative', serif;
-  margin-bottom: 18px;
+  margin: 0 0 18px;
   font-size: 2.6rem;
   letter-spacing: 2px;
   text-shadow: 0 3px 12px rgba(0,0,0,0.75);
 }
 
-/* Inputs */
 .auth-page input,
 .auth-page select {
   font-family: 'Cinzel Decorative', serif;
@@ -346,7 +210,6 @@ body.home {
   color: rgba(255,255,255,0.7);
 }
 
-/* Links */
 .auth-page a {
   font-family: 'Cinzel Decorative', serif;
   color: rgba(255, 230, 190, 0.95);
@@ -355,11 +218,10 @@ body.home {
 
 .auth-page p {
   width: min(520px, 90vw);
-  margin-top: 14px;
+  margin: 14px 0 0;
   text-shadow: 0 2px 10px rgba(0,0,0,0.75);
 }
 
-/* Spacing between fields and buttons */
 .auth-page .auth-actions {
   margin-top: 28px;
   display: flex;
@@ -367,11 +229,7 @@ body.home {
   gap: 16px;
 }
 
-/* =====================
-   TORCH EMBER GLOW (AUTH BUTTONS ONLY)
-   High contrast: near-dark -> white-hot glow
-===================== */
-
+/* Torch ember glow (auth buttons only) */
 .auth-page .forest-btn {
   position: relative;
   overflow: hidden;
@@ -381,7 +239,6 @@ body.home {
   content: "";
   position: absolute;
   inset: -55%;
-
   background: radial-gradient(
     circle at 50% 75%,
     rgba(255, 245, 230, 1) 0%,
@@ -391,7 +248,6 @@ body.home {
     rgba(60, 20, 10, 0.15) 75%,
     transparent 85%
   );
-
   opacity: 0;
   filter: blur(12px);
   pointer-events: none;
@@ -409,88 +265,63 @@ body.home {
   100% { opacity: 0.08; }
 }
 
-
 /* =====================
-   PROFILE PAGE BACKGROUND
+   PROFILE PAGE
 ===================== */
-
 .profile-page {
   min-height: 100vh;
   background:
-  linear-gradient(
-   rgba(0, 0, 0, 0.18),
-   rgba(0, 0, 0, 0.35)
-),
-
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.35)),
     url("images/profile-bg.png");
 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+
+  color: #fff;
 }
 
-.profile-page header,
-.profile-page section {
-  max-width: 900px;
-  margin: 18px auto;
-  padding: 18px;
-}
-
-/* Handwritten white-paint title (character name) */
-.profile-title {
-  font-family: "WarriorInk", cursive;
-  font-size: 3rem;
-  letter-spacing: 1px;
-
-  color: #ffffff;
-
-  text-shadow:
-    0 2px 6px rgba(0,0,0,0.85),
-    0 0 12px rgba(255,255,255,0.25);
-
-  margin: 24px 0;
-}
-
-
-
-
-
-.profile-footer {
-  display: flex;
-  justify-content: center;
-  margin: 40px 0 60px;
-}
-
-.profile-section-title {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px 0 20px;
-}
-
-/* Profile page: text-only readability */
-.profile-page header,
-.profile-page section {
-  background: none;
-  backdrop-filter: none;
-}
-
+/* Keep content readable without panels (text shadows only) */
 .profile-page h1,
 .profile-page h2,
 .profile-page h3,
 .profile-page p,
-.profile-page button {
+.profile-page button,
+.profile-page label,
+.profile-page span,
+.profile-page div {
   text-shadow:
     0 2px 8px rgba(0,0,0,0.85),
     0 0 14px rgba(0,0,0,0.6);
 }
 
+/* Layout width */
+.profile-page header,
 .profile-page section {
-  margin: 24px auto;
+  max-width: 900px;
+  margin: 18px auto;
   padding: 10px 0;
+  background: none;
 }
 
+/* Character name / clan stack (JS writes inside #welcome) */
+.profile-name {
+  font-family: "WarriorInk", cursive;
+  font-size: 3.2rem;
+  letter-spacing: 1px;
+  color: #fff;
+  margin: 24px 0 0;
+}
+
+.profile-clan {
+  font-family: "WarriorInk", cursive;
+  font-size: 1.9rem;
+  margin: 4px 0 16px;
+  opacity: 0.95;
+}
+
+/* Section subtitles */
 .profile-subtitle {
   font-family: 'Cinzel Decorative', serif;
   letter-spacing: 1px;
@@ -498,6 +329,7 @@ body.home {
   margin: 10px 0 18px;
 }
 
+/* Arc progress */
 .arc-row {
   max-width: 720px;
   margin: 14px auto;
@@ -527,7 +359,25 @@ body.home {
   background: rgba(255, 220, 140, 0.85);
 }
 
+/* Community progress readability */
+#community-section h3 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin: 10px 0 18px;
+}
 
+/* Bottom actions on profile (stacked + centered) */
+.profile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto 60px;
+  width: fit-content;
+}
 
 /* Clan logo in upper-left corner */
 .clan-corner-logo {
@@ -536,70 +386,20 @@ body.home {
   left: 18px;
   width: 56px;
   height: 56px;
-
   opacity: 0.9;
   filter: drop-shadow(0 4px 8px rgba(0,0,0,0.7));
   z-index: 1000;
 }
 
 /* =====================
-   COMMUNITY PROGRESS READABILITY
+   APP PAGE (matches profile vibe)
+   Uses same background as profile for consistency
 ===================== */
-
-#community-section h3 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 2rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-
-  color: #fff;
-
-  text-shadow:
-    0 3px 12px rgba(0,0,0,0.85),
-    0 0 18px rgba(255, 220, 140, 0.25);
-}
-
-#community div {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.05rem;
-  letter-spacing: 0.8px;
-
-  color: #ffffff;
-
-  margin: 10px 0;
-  padding: 6px 0;
-
-  text-shadow:
-    0 2px 8px rgba(0,0,0,0.9),
-    0 0 10px rgba(0,0,0,0.6);
-}
-
-/* Profile page action buttons — centered & stacked */
-.profile-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-
-  align-items: center;        /* center buttons */
-  justify-content: center;
-
-  margin: 40px auto 60px;     /* center horizontally */
-  width: fit-content;
-}
-
-/* =====================
-   APP PAGE (FINAL – CLEAN & MATCHES SITE)
-===================== */
-
 .app-page {
   min-height: 100vh;
-
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.22),
-      rgba(0, 0, 0, 0.45)
-    ),
-    url("images/app-bg.png"); /* 🔥 YOUR ACRYLIC BOOKCASE IMAGE */
+    linear-gradient(rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.35)),
+    url("images/profile-bg.png");
 
   background-size: cover;
   background-position: center;
@@ -610,25 +410,43 @@ body.home {
   color: #fff;
 }
 
-/* Remove default header styling */
+/* Remove default header look on app page */
 .app-page header {
   background: none;
   padding: 10px 0 0;
+  margin: 0;
 }
 
-/* Text readability without opaque boxes */
+/* Readability without panels */
 .app-page h1,
 .app-page h2,
 .app-page h3,
 .app-page p,
-.app-page label {
-  font-family: 'Cinzel Decorative', serif;
+.app-page label,
+.app-page span,
+.app-page div {
   text-shadow:
-    0 2px 8px rgba(0,0,0,0.9),
+    0 2px 8px rgba(0,0,0,0.85),
     0 0 14px rgba(0,0,0,0.6);
 }
 
-/* Category dropdown */
+/* App title uses the handwritten font too (optional) */
+.app-page #welcome {
+  font-family: "WarriorInk", cursive;
+  font-size: 2.6rem;
+  margin: 24px 0 10px;
+}
+
+/* Buttons row on app page */
+.app-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 14px auto 22px;
+  flex-wrap: wrap;
+}
+
+/* Dropdown styling */
 .app-page select#categoryFilter {
   font-family: 'Cinzel Decorative', serif;
   padding: 12px 14px;
@@ -640,159 +458,40 @@ body.home {
   margin: 12px 0 22px;
 }
 
-/* Book cards – darker, atmospheric */
-.app-page .book {
-  background: rgba(0,0,0,0.38);
+/* Book grid */
+#books {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  text-align: left;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Book item */
+.book {
+  background: rgba(0,0,0,0.35);
   border: 1px solid rgba(255, 220, 170, 0.25);
+  border-radius: 12px;
+  padding: 14px;
   color: #fff;
 }
 
-/* Arc titles */
-.app-page .arc h3 {
+.book input {
+  margin-right: 10px;
+}
+
+.arc h3 {
   font-family: 'Cinzel Decorative', serif;
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-top: 24px;
 }
 
-/* Remove default gray header look on app page */
-.app-header {
-  background: none;
-  padding: 10px 0 0;
+/* Responsive */
+@media (max-width: 768px) {
+  #books {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* Keep content readable without opaque boxes */
-.app-page h1,
-.app-page h2,
-.app-page h3,
-.app-page p,
-.app-page label,
-.app-page select,
-.app-page #community,
-.app-page #books {
-  text-shadow:
-    0 2px 8px rgba(0,0,0,0.85),
-    0 0 14px rgba(0,0,0,0.6);
-}
-
-/* Buttons row */
-.app-actions {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-  margin: 14px auto 22px;
-  flex-wrap: wrap;
-}
-
-/* Dropdown styling to match */
-.app-page select#categoryFilter {
-  font-family: 'Cinzel Decorative', serif;
-  padding: 12px 14px;
-  border-radius: 14px;
-  border: 2px solid rgba(255, 220, 170, 0.55);
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
-  outline: none;
-  margin: 10px 0 20px;
-}
-
-/* Make book grid look more like your theme (less gray boxy) */
-.app-page .book {
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255, 220, 170, 0.25);
-  color: #fff;
-}
-
-/* Make arc headings match */
-.app-page .arc h3 {
-  font-family: 'Cinzel Decorative', serif;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-top: 22px;
-}
-
-/* =====================
-   APP PAGE — REMOVE WHITE BACKGROUNDS
-   (match profile page)
-===================== */
-
-/* Remove white boxes behind sections */
-.app-page section,
-.app-page #books-section,
-.app-page #community-section {
-  background: none;
-  backdrop-filter: none;
-  box-shadow: none;
-  border-radius: 0;
-  padding: 10px 0;
-}
-
-/* Remove white backgrounds from book cards */
-.app-page .book {
-  background: none;
-  box-shadow: none;
-  border: none;
-  padding: 6px 0;
-}
-
-/* Keep text readable only via shadow */
-.app-page h1,
-.app-page h2,
-.app-page h3,
-.app-page p,
-.app-page span,
-.app-page label {
-  text-shadow:
-    0 2px 8px rgba(0,0,0,0.9),
-    0 0 14px rgba(0,0,0,0.6);
-}
-
-/* =====================
-   APP PAGE — BOTTOM BUTTONS
-   (match profile page)
-===================== */
-
-.app-actions-bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-
-  align-items: center;
-  justify-content: center;
-
-  margin: 60px auto 70px;
-  width: fit-content;
-}
-
-.app-page #welcome {
-  font-family: "WarriorInk", cursive;
-}
-
-/* =====================
-   PROFILE NAME STACK
-===================== */
-
-.profile-name {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 2.8rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-
-  text-shadow:
-    0 3px 12px rgba(0,0,0,0.85),
-    0 0 24px rgba(255, 220, 140, 0.25);
-}
-
-.profile-clan {
-  margin-top: 6px;
-
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 1.4rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-
-  opacity: 0.9;
-
-  text-shadow:
-    0 2px 8px rgba(0,0,0,0.8);
-}
