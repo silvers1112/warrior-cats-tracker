@@ -699,3 +699,38 @@ body.home {
   margin-top: 22px;
 }
 
+/* =====================
+   APP PAGE — REMOVE WHITE BACKGROUNDS
+   (match profile page)
+===================== */
+
+/* Remove white boxes behind sections */
+.app-page section,
+.app-page #books-section,
+.app-page #community-section {
+  background: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 10px 0;
+}
+
+/* Remove white backgrounds from book cards */
+.app-page .book {
+  background: none;
+  box-shadow: none;
+  border: none;
+  padding: 6px 0;
+}
+
+/* Keep text readable only via shadow */
+.app-page h1,
+.app-page h2,
+.app-page h3,
+.app-page p,
+.app-page span,
+.app-page label {
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.9),
+    0 0 14px rgba(0,0,0,0.6);
+}
