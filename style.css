@@ -574,3 +574,81 @@ body.home {
   width: fit-content;
 }
 
+/* =====================
+   APP PAGE (match profile style)
+===================== */
+
+.app-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.18),
+      rgba(0, 0, 0, 0.35)
+    ),
+    url("images/profile-bg.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  text-align: center;
+  color: #fff;
+}
+
+/* Remove default gray header look on app page */
+.app-header {
+  background: none;
+  padding: 10px 0 0;
+}
+
+/* Keep content readable without opaque boxes */
+.app-page h1,
+.app-page h2,
+.app-page h3,
+.app-page p,
+.app-page label,
+.app-page select,
+.app-page #community,
+.app-page #books {
+  text-shadow:
+    0 2px 8px rgba(0,0,0,0.85),
+    0 0 14px rgba(0,0,0,0.6);
+}
+
+/* Buttons row */
+.app-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 14px auto 22px;
+  flex-wrap: wrap;
+}
+
+/* Dropdown styling to match */
+.app-page select#categoryFilter {
+  font-family: 'Cinzel Decorative', serif;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 220, 170, 0.55);
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  outline: none;
+  margin: 10px 0 20px;
+}
+
+/* Make book grid look more like your theme (less gray boxy) */
+.app-page .book {
+  background: rgba(0,0,0,0.35);
+  border: 1px solid rgba(255, 220, 170, 0.25);
+  color: #fff;
+}
+
+/* Make arc headings match */
+.app-page .arc h3 {
+  font-family: 'Cinzel Decorative', serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 22px;
+}
+
