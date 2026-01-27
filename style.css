@@ -1,3 +1,13 @@
+/* =====================
+   CUSTOM HANDWRITTEN FONT
+===================== */
+@font-face {
+  font-family: "WarriorInk";
+  src: url("fonts/Quentin.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* Basic Styling */
 body {
   font-family: Arial, sans-serif;
