@@ -734,3 +734,20 @@ body.home {
     0 2px 8px rgba(0,0,0,0.9),
     0 0 14px rgba(0,0,0,0.6);
 }
+
+/* =====================
+   APP PAGE — BOTTOM BUTTONS
+   (match profile page)
+===================== */
+
+.app-actions-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  align-items: center;
+  justify-content: center;
+
+  margin: 60px auto 70px;
+  width: fit-content;
+}
