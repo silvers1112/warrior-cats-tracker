@@ -516,6 +516,7 @@ body.home {
 }
 
 
+
 /* Clan logo in upper-left corner */
 .clan-corner-logo {
   position: fixed;
@@ -572,6 +573,27 @@ body.home {
 
   margin: 40px auto 60px;     /* center horizontally */
   width: fit-content;
+}
+/* =====================
+   APP PAGE BACKGROUND
+===================== */
+
+.app-page {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.45)
+    ),
+    url("images/app-bg.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+
+  color: #fff;
 }
 
 /* =====================
