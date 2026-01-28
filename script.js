@@ -10,7 +10,7 @@ const firebaseConfig = {
   appId: "1:603975837840:web:00e1291a87bfec9742d015",
 };
 
-// Initialize Firebase (avoid double-init if you ever add more scripts)
+// Initialize Firebase (avoid double init)
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
@@ -18,52 +18,6 @@ if (!firebase.apps.length) {
 // Services
 const auth = firebase.auth();
 const db = firebase.firestore();
-
-function loadBio(uid) {
-  const bioInput = document.getElementById("bioInput");
-  if (!bioInput) return;
-
-  db.collection("users").doc(uid).get().then(doc => {
-    if (!doc.exists) return;
-
-    const data = doc.data();
-    bioInput.value = data.bio || "";
-  });
-}
-
-
-function publishBio() {
-  const user = auth.currentUser;
-  if (!user) {
-    alert("You must be logged in to publish your bio.");
-    return;
-  }
-
-  const bioInput = document.getElementById("bioInput");
-  const status = document.getElementById("bioStatus");
-  if (!bioInput) return;
-
-  const bio = bioInput.value.trim();
-
-  if (status) status.textContent = "Publishing...";
-
-  db.collection("users").doc(user.uid).set(
-    {
-      bio: bio,
-      bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
-    },
-    { merge: true }
-  )
-  .then(() => {
-    if (status) status.textContent = "✅ Bio published!";
-  })
-  .catch(err => {
-    console.error("Bio publish failed:", err);
-    if (status) status.textContent = "❌ Failed to publish bio.";
-    alert(err.message);
-  });
-}
-
 
 // Real-time listeners
 let communityUnsub = null;
@@ -223,6 +177,53 @@ const mainArcNames = [
 ];
 
 // =====================
+// BIO: LOAD + PUBLISH
+// =====================
+function loadBio(uid) {
+  const bioInput = document.getElementById("bioInput");
+  if (!bioInput) return;
+
+  db.collection("users").doc(uid).get().then((doc) => {
+    if (!doc.exists) return;
+    const data = doc.data();
+    bioInput.value = data.bio || "";
+  });
+}
+
+function publishBio() {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("You must be logged in to publish your bio.");
+    return;
+  }
+
+  const bioInput = document.getElementById("bioInput");
+  const status = document.getElementById("bioStatus");
+  if (!bioInput) return;
+
+  const bio = bioInput.value.trim();
+  if (status) status.textContent = "Publishing...";
+
+  db.collection("users")
+    .doc(user.uid)
+    .set(
+      {
+        bio,
+        bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    )
+    .then(() => {
+      if (status) status.textContent = "✅ Bio published!";
+    })
+    .catch((err) => {
+      console.error("Bio publish failed:", err);
+      if (status) status.textContent = "❌ Failed to publish bio.";
+      alert(err.message);
+    });
+}
+
+// =====================
 // AUTH: SIGN UP / LOGIN / LOGOUT
 // =====================
 function signUp() {
@@ -275,26 +276,17 @@ function logOut() {
   });
 }
 
+// =====================
+// COMPLETED MAIN ARCS
+// =====================
 function getCompletedMainArcs(progress) {
-  const mainArcs = [
-    "The Prophecies Begin",
-    "The New Prophecy",
-    "Power of Three",
-    "Omen of the Stars",
-    "Dawn of the Clans",
-    "A Vision of Shadows",
-    "The Broken Code",
-    "A Starless Clan",
-    "Changing Skies"
-  ];
-
   const completed = [];
 
-  mainArcs.forEach(arcName => {
+  mainArcNames.forEach((arcName) => {
     const books = arcs[arcName];
-    if (!books) return;
+    if (!books || books.length === 0) return;
 
-    const finished = books.every(book => progress[book] === true);
+    const finished = books.every((book) => progress[book] === true);
     if (finished) completed.push(arcName);
   });
 
@@ -318,9 +310,14 @@ auth.onAuthStateChanged((user) => {
 
   if (!user) return;
 
-  // Profile header + corner logo
+  // Header + clan logo + name/clan stack
   if (document.getElementById("welcome") || document.getElementById("clanLogo")) {
     loadUserHeader(user.uid);
+  }
+
+  // Bio load (profile page)
+  if (document.getElementById("bioInput")) {
+    loadBio(user.uid);
   }
 
   // Profile arc progress
@@ -335,22 +332,20 @@ auth.onAuthStateChanged((user) => {
 });
 
 // =====================
-// PROFILE: HEADER + CLAN LOGO
+// PROFILE: HEADER + CLAN LOGO + NAME/CLAN STACK
 // =====================
 function loadUserHeader(uid) {
-  db.collection("users").doc(uid).get().then(doc => {
+  db.collection("users").doc(uid).get().then((doc) => {
     if (!doc.exists) return;
 
     const data = doc.data();
 
-    // Clan logo (upper-left)
     const logo = document.getElementById("clanLogo");
     if (logo && clanLogos[data.clan]) {
       logo.src = clanLogos[data.clan];
       logo.style.display = "block";
     }
 
-    // Profile title (name + clan stacked)
     const welcomeEl = document.getElementById("welcome");
     if (welcomeEl) {
       welcomeEl.innerHTML = `
@@ -368,7 +363,6 @@ function renderArcProgress(uid) {
   const container = document.getElementById("arcProgress");
   if (!container) return;
 
-  // Prevent multiple listeners
   if (arcProgressUnsub) arcProgressUnsub();
 
   arcProgressUnsub = db.collection("progress").doc(uid).onSnapshot((doc) => {
@@ -384,7 +378,7 @@ function renderArcProgress(uid) {
       const readCount = books.filter((b) => progress[b] === true).length;
       const total = books.length;
 
-      if (readCount === 0) return; // only started arcs
+      if (readCount === 0) return;
       startedAny = true;
 
       const pct = Math.round((readCount / total) * 100);
@@ -446,7 +440,6 @@ function showBooks(uid) {
       filterEl.appendChild(opt);
     });
 
-    // Start on Main Series once per page load
     filterEl.value = "Main Series";
   }
 
@@ -480,9 +473,7 @@ function showBooks(uid) {
             checkbox.checked = progress[book] === true;
 
             checkbox.onchange = () => {
-              db.collection("progress")
-                .doc(uid)
-                .set({ [book]: checkbox.checked }, { merge: true });
+              db.collection("progress").doc(uid).set({ [book]: checkbox.checked }, { merge: true });
             };
 
             const label = document.createElement("span");
@@ -503,25 +494,20 @@ function showBooks(uid) {
 }
 
 // =====================
-// COMMUNITY: REAL-TIME PROGRESS
-// =====================
-// =====================
-// COMMUNITY: REAL-TIME PROGRESS
+// COMMUNITY: REAL-TIME PROGRESS (compact)
 // =====================
 function loadCommunity() {
   const communityDiv = document.getElementById("community");
   if (!communityDiv) return;
 
-  // Prevent duplicate listeners
   if (communityUnsub) return;
 
   communityDiv.innerHTML = "Loading...";
 
-  // Clean up old per-user progress listeners
+  // clean old per-user listeners
   progressUnsubs.forEach((u) => u && u());
   progressUnsubs = [];
 
-  // Live users list
   communityUnsub = db.collection("users").onSnapshot(
     (snapshot) => {
       communityDiv.innerHTML = "";
@@ -535,13 +521,11 @@ function loadCommunity() {
         const userId = userDoc.id;
         const userData = userDoc.data();
 
-        // Compact user block
         const block = document.createElement("div");
-        block.style.marginBottom = "16px"; // space ONLY between users
-        block.style.lineHeight = "1";      // zero internal spacing
+        block.style.marginBottom = "16px"; // space only between users
+        block.style.lineHeight = "1"; // no spacing between lines
         block.style.textAlign = "center";
 
-        // Username + clan
         const nameLine = document.createElement("div");
         nameLine.textContent = `${userData.username} (${userData.clan})`;
         nameLine.style.fontSize = "1.05rem";
@@ -549,7 +533,6 @@ function loadCommunity() {
         nameLine.style.margin = "0";
         block.appendChild(nameLine);
 
-        // Books read (smaller)
         const bookLine = document.createElement("div");
         bookLine.textContent = "📚 Books Read: 0";
         bookLine.style.fontSize = "0.8rem";
@@ -557,7 +540,6 @@ function loadCommunity() {
         bookLine.style.margin = "0";
         block.appendChild(bookLine);
 
-        // Completed arcs (smallest) — main arcs only
         const arcLine = document.createElement("div");
         arcLine.textContent = "⭐ Completed Main Arcs: None";
         arcLine.style.fontSize = "0.75rem";
@@ -567,13 +549,9 @@ function loadCommunity() {
 
         communityDiv.appendChild(block);
 
-        // Live progress listener for this user
         const unsub = db.collection("progress").doc(userId).onSnapshot((progressDoc) => {
           const progress = progressDoc.exists ? progressDoc.data() : {};
-
           const booksRead = Object.values(progress).filter((v) => v === true).length;
-
-          // Completed MAIN arcs only (uses your helper)
           const completedMain = getCompletedMainArcs(progress);
 
           bookLine.textContent = `📚 Books Read: ${booksRead}`;
@@ -592,18 +570,6 @@ function loadCommunity() {
     }
   );
 }
-
-// =====================
-// CLEANUP LISTENERS
-// =====================
-window.addEventListener("beforeunload", () => {
-  if (communityUnsub) communityUnsub();
-  progressUnsubs.forEach((u) => u && u());
-  if (arcProgressUnsub) arcProgressUnsub();
-});
-
-
-
 
 // =====================
 // CLEANUP LISTENERS
