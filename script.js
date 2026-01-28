@@ -19,6 +19,39 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+function publishBio() {
+  const user = auth.currentUser;
+  if (!user) {
+    alert("You must be logged in to publish your bio.");
+    return;
+  }
+
+  const bioInput = document.getElementById("bioInput");
+  const status = document.getElementById("bioStatus");
+  if (!bioInput) return;
+
+  const bio = bioInput.value.trim();
+
+  if (status) status.textContent = "Publishing...";
+
+  db.collection("users").doc(user.uid).set(
+    {
+      bio: bio,
+      bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    },
+    { merge: true }
+  )
+  .then(() => {
+    if (status) status.textContent = "✅ Bio published!";
+  })
+  .catch(err => {
+    console.error("Bio publish failed:", err);
+    if (status) status.textContent = "❌ Failed to publish bio.";
+    alert(err.message);
+  });
+}
+
+
 // Real-time listeners
 let communityUnsub = null;
 let progressUnsubs = [];
