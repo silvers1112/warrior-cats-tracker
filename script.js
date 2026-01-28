@@ -340,11 +340,6 @@ function loadUserHeader(uid) {
 
     const data = doc.data();
 
-    const logo = document.getElementById("clanLogo");
-    if (logo && clanLogos[data.clan]) {
-      logo.src = clanLogos[data.clan];
-      logo.style.display = "block";
-    }
 
     const welcomeEl = document.getElementById("welcome");
     if (welcomeEl) {
