@@ -25,19 +25,18 @@
   <div id="welcome" class="profile-title"></div>
 
   <!-- Character Biography -->
-  <div class="profile-bio">
-    <textarea
-      id="bioInput"
-      placeholder="Write your warrior’s story..."
-      rows="4"></textarea>
-      <button class="forest-btn" id="publishBioBtn" type="button" onclick="publishBio()">
-  Publish Bio
-</button>
+<section class="bio-section">
+  <textarea
+    id="bioInput"
+    placeholder="Write your warrior’s story..."
+  ></textarea>
 
-<p id="bioStatus"></p>
-
+  <div class="bio-actions">
+    <button class="forest-btn" onclick="publishBio()">Publish Bio</button>
+    <div id="bioStatus"></div>
   </div>
-</header>
+</section>
+
 
 
   <section id="arc-progress-section">
