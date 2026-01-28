@@ -603,46 +603,37 @@ body.home {
 }
 
 /* =====================
-   BIOGRAPHY FIELD — OPEN PARCHMENT START
+   BIOGRAPHY FIELD
 ===================== */
 
-.bio-section {
-  max-width: 1000px;   /* about twice as wide */
-  margin: 28px auto 40px;
-  text-align: center;
-}
-
+.bio-section textarea,
 #bioInput {
-  width: 100%;
-  min-height: 260px;
+  width: 90%;
+  max-width: 1000px;
 
-  /* VERY SMALL top padding */
-  padding: 12px 28px 26px 28px;
+  height: 140px;          /* ⬅️ HALF SIZE (was ~280px) */
+  min-height: 140px;
+  resize: vertical;      /* allow small manual resize if wanted */
 
-  font-family: "YourTTFFontName", serif; /* your uploaded TTF */
-  font-size: 1.05rem;
-  line-height: 1.55;
+  padding: 28px 36px;    /* keeps parchment feel without tall box */
 
-  color: #2b1d0f;
+  font-family: "WarriorInk", cursive;
+  font-size: 1.15rem;
+  line-height: 1.6;
 
-  background:
-    linear-gradient(
-      rgba(255, 248, 220, 0.96),
-      rgba(245, 232, 195, 0.96)
-    );
+  background: url("images/parchment.png") center / cover no-repeat;
+  color: #2a1c12;
 
   border: none;
-  border-radius: 10px;
+  border-radius: 18px;
 
   box-shadow:
-    inset 0 0 18px rgba(120, 90, 40, 0.35),
-    0 10px 26px rgba(0,0,0,0.45);
+    0 12px 28px rgba(0,0,0,0.45),
+    inset 0 0 18px rgba(120, 80, 40, 0.35);
 
   outline: none;
-  resize: vertical;
-
-  text-align: left;
 }
+
 
 /* Cursor starts clean, no artificial spacing */
 #bioInput::placeholder {
