@@ -57,7 +57,7 @@ a { color: inherit; }
 }
 
 /* =====================
-   HOME PAGE
+   HOME PAGE (TOP-ALIGNED like before)
 ===================== */
 .home .hero {
   height: 100vh;
@@ -65,8 +65,10 @@ a { color: inherit; }
   position: relative;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;     /* ✅ move content to top */
   justify-content: center;
+
+  padding-top: 40px;          /* ✅ space from top */
 }
 
 .home .hero::before {
@@ -80,6 +82,8 @@ a { color: inherit; }
   position: relative;
   max-width: 760px;
   padding: 20px;
+
+  text-align: center;
 }
 
 .hero-title {
@@ -103,6 +107,7 @@ a { color: inherit; }
   justify-content: center;
   flex-wrap: wrap;
 }
+
 
 /* =====================
    AUTH PAGES (Login + Signup)
