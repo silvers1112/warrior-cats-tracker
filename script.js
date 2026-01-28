@@ -1,8 +1,8 @@
 console.log("script.js loaded");
 
-// =====================
-// FIREBASE CONFIG
-// =====================
+/* =====================
+   FIREBASE CONFIG
+===================== */
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
@@ -17,11 +17,10 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// =====================
-// HELPERS
-// =====================
+/* =====================
+   HELPERS
+===================== */
 function currentFile() {
-  // Works on GitHub Pages too
   const p = window.location.pathname;
   const parts = p.split("/").filter(Boolean);
   return (parts[parts.length - 1] || "index.html").toLowerCase();
@@ -33,17 +32,14 @@ function go(page) {
   window.location.href = page;
 }
 
-// =====================
-// AUTH ACTIONS (LOGIN / SIGNUP / LOGOUT)
-// =====================
+/* =====================
+   AUTH ACTIONS
+===================== */
 function logIn() {
   const email = document.getElementById("email")?.value?.trim();
   const password = document.getElementById("password")?.value;
 
-  if (!email || !password) {
-    alert("Enter email and password");
-    return;
-  }
+  if (!email || !password) return alert("Enter email and password");
 
   auth.signInWithEmailAndPassword(email, password)
     .then(() => go("profile.html"))
@@ -83,9 +79,9 @@ function logOut() {
   auth.signOut().then(() => go("index.html"));
 }
 
-// =====================
-// PROFILE: LOAD NAME/CLAN + BIO
-// =====================
+/* =====================
+   PROFILE: NAME/CLAN + BIO
+===================== */
 function loadProfile(uid) {
   const welcomeEl = document.getElementById("welcome");
   if (!welcomeEl) return;
@@ -94,7 +90,6 @@ function loadProfile(uid) {
     .then((doc) => {
       if (!doc.exists) return;
       const data = doc.data();
-
       welcomeEl.innerHTML = `
         <div class="profile-name">${data.username || ""}</div>
         <div class="profile-clan">${data.clan || ""}</div>
@@ -117,10 +112,7 @@ function loadBio(uid) {
 
 function publishBio() {
   const user = auth.currentUser;
-  if (!user) {
-    alert("You must be logged in to publish your bio.");
-    return;
-  }
+  if (!user) return alert("You must be logged in to publish your bio.");
 
   const bioInput = document.getElementById("bioInput");
   const status = document.getElementById("bioStatus");
@@ -146,9 +138,9 @@ function publishBio() {
   });
 }
 
-// =====================
-// BOOK TRACKER DATA + FUNCTIONS
-// =====================
+/* =====================
+   BOOK TRACKER DATA
+===================== */
 const arcs = {
   "The Prophecies Begin": [
     "Into the Wild", "Fire and Ice", "Forest of Secrets",
@@ -209,6 +201,9 @@ function getCategoryForArc(arcName) {
   return "Other";
 }
 
+/* =====================
+   BOOK TRACKER (REAL-TIME)
+===================== */
 let progressUnsubSelf = null;
 
 function showBooks(uid) {
@@ -216,7 +211,6 @@ function showBooks(uid) {
   const filterEl = document.getElementById("categoryFilter");
   if (!booksDiv || !filterEl) return;
 
-  // Build dropdown once
   if (filterEl.options.length === 0) {
     const categories = new Set();
     Object.keys(arcs).forEach((arcName) => categories.add(getCategoryForArc(arcName)));
@@ -237,7 +231,6 @@ function showBooks(uid) {
     filterEl.value = "Main Series";
   }
 
-  // Live update your progress
   if (progressUnsubSelf) progressUnsubSelf();
   progressUnsubSelf = db.collection("progress").doc(uid).onSnapshot(
     (doc) => {
@@ -246,14 +239,11 @@ function showBooks(uid) {
     },
     (err) => {
       console.error("Progress listener failed:", err);
-      booksDiv.innerHTML =
-        "❌ Could not load books. This is almost always Firestore rules.<br>" +
-        "Firebase Console → Firestore → Rules.";
+      booksDiv.innerHTML = "❌ Could not load books (Firestore rules blocking reads).";
     }
   );
 
   filterEl.onchange = () => {
-    // re-render using latest cached snapshot by forcing a get
     db.collection("progress").doc(uid).get().then((doc) => {
       const progress = doc.exists ? doc.data() : {};
       renderBooksUI(uid, progress);
@@ -303,25 +293,25 @@ function renderBooksUI(uid, progress) {
   });
 }
 
-// =====================
-// COMMUNITY: 4 CLAN BOXES
-// =====================
+/* =====================
+   COMMUNITY: 4 CLAN BOXES (TOP LEVEL)
+===================== */
 let communityUnsub = null;
 let communityProgressUnsubs = [];
 
 function getMainArcProgressPercent(progress) {
-  // Uses your existing arcs + mainArcNames
   let total = 0;
   let read = 0;
 
-  mainArcNames.forEach(arcName => {
+  mainArcNames.forEach((arcName) => {
     const books = arcs[arcName] || [];
     total += books.length;
-    books.forEach(b => { if (progress[b] === true) read += 1; });
+    books.forEach((b) => {
+      if (progress[b] === true) read += 1;
+    });
   });
 
-  if (total === 0) return 0;
-  return Math.round((read / total) * 100);
+  return total === 0 ? 0 : Math.round((read / total) * 100);
 }
 
 function renderCommunity4Clans() {
@@ -329,15 +319,7 @@ function renderCommunity4Clans() {
   const river = document.getElementById("clanRiver");
   const shadow = document.getElementById("clanShadow");
   const wind = document.getElementById("clanWind");
-
   if (!thunder || !river || !shadow || !wind) return;
-
-  // Prevent duplicate listeners
-  if (communityUnsub) return;
-
-  // Clear any old progress listeners
-  communityProgressUnsubs.forEach(u => u && u());
-  communityProgressUnsubs = [];
 
   const clanTargets = {
     ThunderClan: thunder,
@@ -346,26 +328,28 @@ function renderCommunity4Clans() {
     WindClan: wind,
   };
 
-  // Show loading state
-  Object.values(clanTargets).forEach(el => (el.innerHTML = "Loading..."));
+  if (communityUnsub) return;
+
+  communityProgressUnsubs.forEach((u) => u && u());
+  communityProgressUnsubs = [];
+
+  Object.values(clanTargets).forEach((el) => (el.innerHTML = "Loading..."));
 
   communityUnsub = db.collection("users").onSnapshot(
     (snapshot) => {
-      // Clear clan columns
-      Object.values(clanTargets).forEach(el => (el.innerHTML = ""));
+      Object.values(clanTargets).forEach((el) => (el.innerHTML = ""));
 
       if (snapshot.empty) {
-        Object.values(clanTargets).forEach(el => (el.innerHTML = "<div>No warriors yet.</div>"));
+        Object.values(clanTargets).forEach((el) => (el.innerHTML = "<div>No warriors yet.</div>"));
         return;
       }
 
       snapshot.forEach((userDoc) => {
         const uid = userDoc.id;
         const userData = userDoc.data();
-        const clan = userData.clan;
+        const target = clanTargets[userData.cl
 
-        // Only show 4 clans (ignore SkyClan here)
-        const target = clanTargets[clan];
+        /* Safety: ignore SkyClan + anything else */
         if (!target) return;
 
         const card = document.createElement("div");
@@ -382,80 +366,73 @@ function renderCommunity4Clans() {
         const bioEl = document.createElement("div");
         bioEl.className = "warrior-bio";
         const bio = (userData.bio || "").trim();
-        bioEl.textContent = bio ? `“${bio.slice(0, 120)}${bio.length > 120 ? "…" : ""}”` : "No bio published.";
+        bioEl.textContent = bio
+          ? `“${bio.slice(0, 120)}${bio.length > 120 ? "…" : ""}”`
+          : "No bio published.";
 
         card.appendChild(nameEl);
         card.appendChild(statsEl);
         card.appendChild(bioEl);
         target.appendChild(card);
 
-        // Live progress for each user
         const unsub = db.collection("progress").doc(uid).onSnapshot((pdoc) => {
           const progress = pdoc.exists ? pdoc.data() : {};
-          const booksRead = Object.values(progress).filter(v => v === true).length;
+          const booksRead = Object.values(progress).filter((v) => v === true).length;
           const pct = getMainArcProgressPercent(progress);
-
           statsEl.textContent = `📚 Books Read: ${booksRead} • ⭐ Main Arc Progress: ${pct}%`;
         });
 
         communityProgressUnsubs.push(unsub);
       });
 
-      // If any clan has nobody, show a message
-      Object.entries(clanTargets).forEach(([clanName, el]) => {
+      Object.values(clanTargets).forEach((el) => {
         if (el.children.length === 0) el.innerHTML = "<div>No warriors yet.</div>";
       });
     },
     (err) => {
       console.error("Community load failed:", err);
-      Object.values(clanTargets).forEach(el => (el.innerHTML = "Community failed to load (check Firestore rules)."));
+      Object.values(clanTargets).forEach((el) => (el.innerHTML = "❌ Community failed to load."));
     }
   );
 }
 
-// Cleanup when leaving page
+/* Cleanup */
 window.addEventListener("beforeunload", () => {
   if (communityUnsub) communityUnsub();
-  communityProgressUnsubs.forEach(u => u && u());
+  communityProgressUnsubs.forEach((u) => u && u());
+  if (progressUnsubSelf) progressUnsubSelf();
 });
 
-// =====================
-// AUTH ROUTING
-// =====================
+/* =====================
+   AUTH ROUTING
+===================== */
 auth.onAuthStateChanged((user) => {
-  const isLogin = onPage("login.html");
-  const isSignup = onPage("signup.html");
-  const isProfile = onPage("profile.html");
-  const isApp = onPage("app.html");
-  const isCommunity = onPage("community.html");
+  const isLogin = isPage("login.html");
+  const isSignup = isPage("signup.html");
+  const isProfile = isPage("profile.html");
+  const isApp = isPage("app.html");
+  const isCommunity = isPage("community.html");
 
-  // Block logged-out users from protected pages
   if (!user && (isProfile || isApp || isCommunity)) {
     go("index.html");
     return;
   }
 
-  // Logged-in users shouldn't see login/signup
   if (user && (isLogin || isSignup)) {
     go("profile.html");
     return;
   }
 
-  // PROFILE PAGE
   if (user && isProfile) {
     loadProfile(user.uid);
-    if (document.getElementById("bioInput")) {
-      loadBio(user.uid);
-    }
+    if (document.getElementById("bioInput")) loadBio(user.uid);
   }
 
-  // BOOK TRACKER
   if (user && isApp) {
     loadProfile(user.uid);
     showBooks(user.uid);
   }
 
-  // ✅ COMMUNITY PAGE (STEP 4 GOES HERE)
   if (user && isCommunity) {
     renderCommunity4Clans();
   }
