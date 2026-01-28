@@ -1,8 +1,8 @@
 console.log("script.js loaded");
 
-/* =====================
-   FIREBASE CONFIG
-===================== */
+// =====================
+// FIREBASE CONFIG
+// =====================
 const firebaseConfig = {
   apiKey: "AIzaSyDxddG9tRkEU_wdtrX066CfYNnC7nwCpzM",
   authDomain: "warriorcatstracker.firebaseapp.com",
@@ -17,9 +17,9 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-/* =====================
-   HELPERS
-===================== */
+// =====================
+// HELPERS
+// =====================
 function currentFile() {
   const p = window.location.pathname;
   const parts = p.split("/").filter(Boolean);
@@ -32,16 +32,20 @@ function go(page) {
   window.location.href = page;
 }
 
-/* =====================
-   AUTH ACTIONS
-===================== */
+// =====================
+// AUTH ACTIONS (LOGIN / SIGNUP / LOGOUT)
+// =====================
 function logIn() {
   const email = document.getElementById("email")?.value?.trim();
   const password = document.getElementById("password")?.value;
 
-  if (!email || !password) return alert("Enter email and password");
+  if (!email || !password) {
+    alert("Enter email and password");
+    return;
+  }
 
-  auth.signInWithEmailAndPassword(email, password)
+  auth
+    .signInWithEmailAndPassword(email, password)
     .then(() => go("profile.html"))
     .catch((err) => {
       console.error(err);
@@ -60,7 +64,8 @@ function signUp() {
     return;
   }
 
-  auth.createUserWithEmailAndPassword(email, password)
+  auth
+    .createUserWithEmailAndPassword(email, password)
     .then((cred) => {
       return db.collection("users").doc(cred.user.uid).set({
         username,
@@ -79,17 +84,20 @@ function logOut() {
   auth.signOut().then(() => go("index.html"));
 }
 
-/* =====================
-   PROFILE: NAME/CLAN + BIO
-===================== */
+// =====================
+// PROFILE: LOAD NAME/CLAN + BIO
+// =====================
 function loadProfile(uid) {
   const welcomeEl = document.getElementById("welcome");
   if (!welcomeEl) return;
 
-  db.collection("users").doc(uid).get()
+  db.collection("users")
+    .doc(uid)
+    .get()
     .then((doc) => {
       if (!doc.exists) return;
       const data = doc.data();
+
       welcomeEl.innerHTML = `
         <div class="profile-name">${data.username || ""}</div>
         <div class="profile-clan">${data.clan || ""}</div>
@@ -102,7 +110,9 @@ function loadBio(uid) {
   const bioInput = document.getElementById("bioInput");
   if (!bioInput) return;
 
-  db.collection("users").doc(uid).get()
+  db.collection("users")
+    .doc(uid)
+    .get()
     .then((doc) => {
       if (!doc.exists) return;
       bioInput.value = doc.data().bio || "";
@@ -112,7 +122,10 @@ function loadBio(uid) {
 
 function publishBio() {
   const user = auth.currentUser;
-  if (!user) return alert("You must be logged in to publish your bio.");
+  if (!user) {
+    alert("You must be logged in to publish your bio.");
+    return;
+  }
 
   const bioInput = document.getElementById("bioInput");
   const status = document.getElementById("bioStatus");
@@ -121,26 +134,28 @@ function publishBio() {
   const bio = bioInput.value.trim();
   if (status) status.textContent = "Saving...";
 
-  db.collection("users").doc(user.uid).set(
-    {
-      bio,
-      bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    },
-    { merge: true }
-  )
-  .then(() => {
-    if (status) status.textContent = "✅ Bio saved";
-  })
-  .catch((err) => {
-    console.error(err);
-    if (status) status.textContent = "❌ Error saving bio";
-    alert(err.message);
-  });
+  db.collection("users")
+    .doc(user.uid)
+    .set(
+      {
+        bio,
+        bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    )
+    .then(() => {
+      if (status) status.textContent = "✅ Bio saved";
+    })
+    .catch((err) => {
+      console.error(err);
+      if (status) status.textContent = "❌ Error saving bio";
+      alert(err.message);
+    });
 }
 
-/* =====================
-   BOOK TRACKER DATA
-===================== */
+// =====================
+// BOOK TRACKER DATA
+// =====================
 const arcs = {
   "The Prophecies Begin": [
     "Into the Wild", "Fire and Ice", "Forest of Secrets",
@@ -201,9 +216,9 @@ function getCategoryForArc(arcName) {
   return "Other";
 }
 
-/* =====================
-   BOOK TRACKER (REAL-TIME)
-===================== */
+// =====================
+// BOOK TRACKER (REAL-TIME)
+// =====================
 let progressUnsubSelf = null;
 
 function showBooks(uid) {
@@ -293,9 +308,9 @@ function renderBooksUI(uid, progress) {
   });
 }
 
-/* =====================
-   COMMUNITY: 4 CLAN BOXES (TOP LEVEL)
-===================== */
+// =====================
+// COMMUNITY: 4 CLAN BOXES
+// =====================
 let communityUnsub = null;
 let communityProgressUnsubs = [];
 
@@ -321,12 +336,7 @@ function renderCommunity4Clans() {
   const wind = document.getElementById("clanWind");
   if (!thunder || !river || !shadow || !wind) return;
 
-  const clanTargets = {
-    ThunderClan: thunder,
-    RiverClan: river,
-    ShadowClan: shadow,
-    WindClan: wind,
-  };
+  const clanTargets = { ThunderClan: thunder, RiverClan: river, ShadowClan: shadow, WindClan: wind };
 
   if (communityUnsub) return;
 
@@ -339,18 +349,11 @@ function renderCommunity4Clans() {
     (snapshot) => {
       Object.values(clanTargets).forEach((el) => (el.innerHTML = ""));
 
-      if (snapshot.empty) {
-        Object.values(clanTargets).forEach((el) => (el.innerHTML = "<div>No warriors yet.</div>"));
-        return;
-      }
-
       snapshot.forEach((userDoc) => {
         const uid = userDoc.id;
         const userData = userDoc.data();
-        const target = clanTargets[userData.cl
-
-        /* Safety: ignore SkyClan + anything else */
-        if (!target) return;
+        const target = clanTargets[userData.clan];
+        if (!target) return; // ignores SkyClan + anything else
 
         const card = document.createElement("div");
         card.className = "warrior-card";
@@ -366,9 +369,7 @@ function renderCommunity4Clans() {
         const bioEl = document.createElement("div");
         bioEl.className = "warrior-bio";
         const bio = (userData.bio || "").trim();
-        bioEl.textContent = bio
-          ? `“${bio.slice(0, 120)}${bio.length > 120 ? "…" : ""}”`
-          : "No bio published.";
+        bioEl.textContent = bio ? `“${bio.slice(0, 120)}${bio.length > 120 ? "…" : ""}”` : "No bio published.";
 
         card.appendChild(nameEl);
         card.appendChild(statsEl);
@@ -391,21 +392,21 @@ function renderCommunity4Clans() {
     },
     (err) => {
       console.error("Community load failed:", err);
-      Object.values(clanTargets).forEach((el) => (el.innerHTML = "❌ Community failed to load."));
+      Object.values(clanTargets).forEach((el) => (el.innerHTML = "❌ Community failed to load (Firestore rules)."));
     }
   );
 }
 
-/* Cleanup */
+// Cleanup
 window.addEventListener("beforeunload", () => {
   if (communityUnsub) communityUnsub();
   communityProgressUnsubs.forEach((u) => u && u());
   if (progressUnsubSelf) progressUnsubSelf();
 });
 
-/* =====================
-   AUTH ROUTING
-===================== */
+// =====================
+// AUTH ROUTING
+// =====================
 auth.onAuthStateChanged((user) => {
   const isLogin = isPage("login.html");
   const isSignup = isPage("signup.html");
