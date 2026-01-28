@@ -491,3 +491,120 @@ body.home { margin: 0; }
   color: rgba(255, 255, 255, 0.45);
   font-style: italic;
 }
+
+/* =====================
+   COMMUNITY PAGE (CLAN SECTIONS + PLACARDS)
+===================== */
+
+.community-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)),
+    url("images/profile-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+  text-align: center;
+}
+
+.community-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 18px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.85);
+}
+
+.community-sub {
+  font-family: 'Cinzel Decorative', serif;
+  opacity: 0.9;
+  margin: 4px 0 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+}
+
+.community-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 18px auto 26px;
+  flex-wrap: wrap;
+}
+
+.clan-section {
+  max-width: 1050px;
+  margin: 28px auto;
+  padding: 0 14px;
+}
+
+.clan-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.9);
+  margin: 10px 0 16px;
+}
+
+.clan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .clan-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .clan-grid { grid-template-columns: 1fr; }
+}
+
+/* “Placard” card */
+.placard {
+  text-align: left;
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    rgba(255, 240, 210, 0.10),
+    rgba(160, 110, 60, 0.10)
+  );
+
+  border: 1px solid rgba(255, 220, 170, 0.22);
+
+  backdrop-filter: blur(2px);
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.55),
+    inset 0 0 18px rgba(255, 220, 170, 0.06);
+}
+
+.placard-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  margin: 0 0 2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+}
+
+.placard-meta {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.15;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+}
+
+.placard-bio {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.95;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
