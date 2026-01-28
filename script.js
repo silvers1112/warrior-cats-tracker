@@ -363,6 +363,11 @@ auth.onAuthStateChanged((user) => {
     loadBio(user.uid);
   }
 
+  if (user && isApp) {
+  loadProfile(user.uid);     // shows name/clan at top
+  showBooks(user.uid);       // loads book tracker
+}
+
   // (Optional) If you later add app/community JS, you'd call it here safely:
   // if (user && isApp) { ... }
   // if (user && isCommunity) { ... }
