@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Community</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="community-page">
+
+  <header>
+    <div class="community-title">Community</div>
+    <div class="community-sub">Sorted by Clan</div>
+  </header>
+
+  <section class="community-actions">
+    <button class="forest-btn" type="button" onclick="location.href='profile.html'">Back to Profile</button>
+    <button class="forest-btn" type="button" onclick="logOut()">Log Out</button>
+  </section>
+
+  <!-- JS will fill this -->
+  <div id="communityClans"></div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
