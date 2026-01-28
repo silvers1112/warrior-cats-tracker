@@ -1,165 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Warrior Cats Fan Club</title>
-<style>
-body {
-  font-family: Arial, sans-serif;
-  background: #1b2b1b;
-  color: #f0f0f0;
-  padding: 20px;
-}
-h1, h2, h3 {
-  color: #f4c542;
-}
-input, button {
-  padding: 8px;
-  margin: 5px 0;
-}
-button {
-  cursor: pointer;
-}
-.book {
-  margin: 4px 0;
-}
-.userCard {
-  border: 1px solid #555;
-  padding: 10px;
-  margin: 10px 0;
-  background: #233823;
-}
-.hidden {
-  display: none;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Warrior Cats Club</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body>
 
-<h1>🐾 Warrior Cats Fan Club</h1>
+<body class="home">
 
-<!-- PUBLIC PROGRESS -->
-<h2>📚 Clan Reading Board</h2>
-<div id="publicBoard"></div>
+  <div class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Warrior Cats Club</h1>
+      <p>Join the adventure and track your journey through the Warrior Cats series.</p>
 
-<hr>
-
-<!-- LOGIN -->
-<div id="login">
-  <h2>Login / Create Username</h2>
-  <input id="usernameInput" placeholder="Username">
-  <button onclick="login()">Enter</button>
-  <p id="loginMsg"></p>
-</div>
-
-<!-- DASHBOARD -->
-<div id="dashboard" class="hidden">
-  <h2>Your Reading Progress</h2>
-  <button onclick="logout()">Logout</button>
-  <div id="books"></div>
-</div>
-
-<script>
-const booksList = [
-  "Into the Wild",
-  "Fire and Ice",
-  "Forest of Secrets",
-  "Rising Storm",
-  "A Dangerous Path",
-  "The Darkest Hour"
-];
-
-let currentUser = null;
-
-// Load on start
-window.onload = () => {
-  renderPublicBoard();
-  const savedUser = localStorage.getItem("currentUser");
-  if (savedUser) {
-    currentUser = savedUser;
-    showDashboard();
-  }
-};
-
-function login() {
-  const username = document.getElementById("usernameInput").value.trim();
-  if (!username) {
-    document.getElementById("loginMsg").innerText = "Enter a username.";
-    return;
-  }
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-
-  if (!users[username]) {
-    users[username] = { progress: {} };
-    localStorage.setItem("users", JSON.stringify(users));
-  }
-
-  currentUser = username;
-  localStorage.setItem("currentUser", username);
-  showDashboard();
-}
-
-function showDashboard() {
-  document.getElementById("login").classList.add("hidden");
-  document.getElementById("dashboard").classList.remove("hidden");
-  loadBooks();
-}
-
-function loadBooks() {
-  const booksDiv = document.getElementById("books");
-  booksDiv.innerHTML = "";
-
-  let users = JSON.parse(localStorage.getItem("users"));
-  let progress = users[currentUser].progress;
-
-  booksList.forEach(book => {
-    const checked = progress[book] ? "checked" : "";
-    booksDiv.innerHTML += `
-      <div class="book">
-        <input type="checkbox" ${checked}
-          onchange="toggleBook('${book}')">
-        ${book}
-      </div>`;
-  });
-}
-
-function toggleBook(book) {
-  let users = JSON.parse(localStorage.getItem("users"));
-  users[currentUser].progress[book] =
-    !users[currentUser].progress[book];
-  localStorage.setItem("users", JSON.stringify(users));
-  renderPublicBoard();
-}
-
-function renderPublicBoard() {
-  const board = document.getElementById("publicBoard");
-  board.innerHTML = "";
-
-  let users = JSON.parse(localStorage.getItem("users")) || {};
-
-  for (let username in users) {
-    let readCount = Object.values(users[username].progress).filter(Boolean).length;
-
-    let booksHTML = booksList.map(book =>
-      users[username].progress[book] ? "✅" : "⬜"
-    ).join(" ");
-
-    board.innerHTML += `
-      <div class="userCard">
-        <strong>${username}</strong><br>
-        ${booksHTML}<br>
-        <small>${readCount}/${booksList.length} books read</small>
+      <div class="hero-buttons">
+        <button class="forest-btn" type="button" onclick="location.href='signup.html'">Create Warrior</button>
+        <button class="forest-btn" type="button" onclick="location.href='login.html'">Log In</button>
       </div>
-    `;
-  }
-}
-
-function logout() {
-  localStorage.removeItem("currentUser");
-  location.reload();
-}
-</script>
+    </div>
+  </div>
 
 </body>
 </html>
