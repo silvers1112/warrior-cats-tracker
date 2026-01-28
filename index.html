@@ -10,7 +10,7 @@ body {
   color: #f0f0f0;
   padding: 20px;
 }
-h1, h2 {
+h1, h2, h3 {
   color: #f4c542;
 }
 input, button {
@@ -21,7 +21,13 @@ button {
   cursor: pointer;
 }
 .book {
-  margin: 5px 0;
+  margin: 4px 0;
+}
+.userCard {
+  border: 1px solid #555;
+  padding: 10px;
+  margin: 10px 0;
+  background: #233823;
 }
 .hidden {
   display: none;
@@ -32,9 +38,15 @@ button {
 
 <h1>🐾 Warrior Cats Fan Club</h1>
 
+<!-- PUBLIC PROGRESS -->
+<h2>📚 Clan Reading Board</h2>
+<div id="publicBoard"></div>
+
+<hr>
+
 <!-- LOGIN -->
 <div id="login">
-  <h2>Login / Create Account</h2>
+  <h2>Login / Create Username</h2>
   <input id="usernameInput" placeholder="Username">
   <button onclick="login()">Enter</button>
   <p id="loginMsg"></p>
@@ -42,10 +54,8 @@ button {
 
 <!-- DASHBOARD -->
 <div id="dashboard" class="hidden">
-  <h2>Welcome, <span id="userDisplay"></span>!</h2>
+  <h2>Your Reading Progress</h2>
   <button onclick="logout()">Logout</button>
-
-  <h3>The Prophecies Begin</h3>
   <div id="books"></div>
 </div>
 
@@ -61,8 +71,9 @@ const booksList = [
 
 let currentUser = null;
 
-// Load user if already logged in
+// Load on start
 window.onload = () => {
+  renderPublicBoard();
   const savedUser = localStorage.getItem("currentUser");
   if (savedUser) {
     currentUser = savedUser;
@@ -80,7 +91,6 @@ function login() {
   let users = JSON.parse(localStorage.getItem("users")) || {};
 
   if (!users[username]) {
-    // Create new user
     users[username] = { progress: {} };
     localStorage.setItem("users", JSON.stringify(users));
   }
@@ -93,7 +103,6 @@ function login() {
 function showDashboard() {
   document.getElementById("login").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
-  document.getElementById("userDisplay").innerText = currentUser;
   loadBooks();
 }
 
@@ -120,6 +129,30 @@ function toggleBook(book) {
   users[currentUser].progress[book] =
     !users[currentUser].progress[book];
   localStorage.setItem("users", JSON.stringify(users));
+  renderPublicBoard();
+}
+
+function renderPublicBoard() {
+  const board = document.getElementById("publicBoard");
+  board.innerHTML = "";
+
+  let users = JSON.parse(localStorage.getItem("users")) || {};
+
+  for (let username in users) {
+    let readCount = Object.values(users[username].progress).filter(Boolean).length;
+
+    let booksHTML = booksList.map(book =>
+      users[username].progress[book] ? "✅" : "⬜"
+    ).join(" ");
+
+    board.innerHTML += `
+      <div class="userCard">
+        <strong>${username}</strong><br>
+        ${booksHTML}<br>
+        <small>${readCount}/${booksList.length} books read</small>
+      </div>
+    `;
+  }
 }
 
 function logout() {
