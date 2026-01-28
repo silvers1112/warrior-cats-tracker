@@ -1,60 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Warrior Cats Profile</title>
 
-  <!-- Wilderness / Homepage Font -->
+  <!-- Decorative / Homepage Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
 
+  <!-- Optional handwritten Google font (safe to keep or remove) -->
+  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
+
+  <!-- Main stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="profile-page">
 
-
-
+  <!-- PROFILE HEADER -->
   <header>
-  <div id="welcome" class="profile-title"></div>
+    <div id="welcome"></div>
+  </header>
 
-  <!-- Character Biography -->
-<section class="bio-section">
-  <textarea
-    id="bioInput"
-    placeholder="Write your warrior’s story..."
-  ></textarea>
+  <!-- CHARACTER BIOGRAPHY -->
+  <section class="bio-section">
+    <textarea
+      id="bioInput"
+      placeholder="Write your warrior’s story..."
+    ></textarea>
 
-  <div class="bio-actions">
-    <button class="forest-btn" onclick="publishBio()">Publish Bio</button>
-    <div id="bioStatus"></div>
-  </div>
-</section>
+    <div class="bio-actions">
+      <button class="forest-btn" onclick="publishBio()">Publish Bio</button>
+      <div id="bioStatus"></div>
+    </div>
+  </section>
 
-
-
+  <!-- ARC PROGRESS -->
   <section id="arc-progress-section">
     <h3 class="profile-subtitle">Arc Progress</h3>
     <div id="arcProgress"></div>
   </section>
 
+  <!-- PROFILE ACTION BUTTONS -->
   <div class="profile-footer profile-actions">
-  <button class="forest-btn" onclick="location.href='app.html'">
-    📚 Book Tracker
-  </button>
+    <button class="forest-btn" onclick="location.href='app.html'">
+      📚 Book Tracker
+    </button>
 
-  <button class="forest-btn" onclick="location.href='community.html'">
-  👥 Community
-</button>
+    <button class="forest-btn" onclick="location.href='community.html'">
+      👥 Community
+    </button>
 
-
-  <button class="forest-btn" onclick="logOut()">
-    Log Out
-  </button>
+    <button class="forest-btn" onclick="logOut()">
+      Log Out
+    </button>
   </div>
 
-
+  <!-- FIREBASE + SCRIPT -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
