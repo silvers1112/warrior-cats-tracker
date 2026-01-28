@@ -3,26 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Community</title>
+  <title>Community – Warrior Cats Club</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 
 <body class="community-page">
 
   <header>
-    <div class="community-title">Community</div>
-    <div class="community-sub">Sorted by Clan</div>
+    <h1 class="community-title">Community</h1>
+    <p class="community-sub">Warriors by Clan</p>
   </header>
 
-  <section class="community-actions">
+  <div class="profile-actions">
     <button class="forest-btn" type="button" onclick="location.href='profile.html'">Back to Profile</button>
     <button class="forest-btn" type="button" onclick="logOut()">Log Out</button>
-  </section>
+  </div>
 
-  <!-- JS will fill this -->
-  <div id="communityClans"></div>
+  <!-- 4 clan boxes -->
+  <div class="clan-boxes">
+    <section class="clan-box" data-clan="ThunderClan">
+      <h2 class="clan-box-title">ThunderClan</h2>
+      <div class="clan-box-grid" id="clanThunder"></div>
+    </section>
+
+    <section class="clan-box" data-clan="RiverClan">
+      <h2 class="clan-box-title">RiverClan</h2>
+      <div class="clan-box-grid" id="clanRiver"></div>
+    </section>
+
+    <section class="clan-box" data-clan="ShadowClan">
+      <h2 class="clan-box-title">ShadowClan</h2>
+      <div class="clan-box-grid" id="clanShadow"></div>
+    </section>
+
+    <section class="clan-box" data-clan="WindClan">
+      <h2 class="clan-box-title">WindClan</h2>
+      <div class="clan-box-grid" id="clanWind"></div>
+    </section>
+  </div>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
