@@ -304,36 +304,159 @@ function renderBooksUI(uid, progress) {
 }
 
 // =====================
+// COMMUNITY: 4 CLAN BOXES
+// =====================
+let communityUnsub = null;
+let communityProgressUnsubs = [];
+
+function getMainArcProgressPercent(progress) {
+  // Uses your existing arcs + mainArcNames
+  let total = 0;
+  let read = 0;
+
+  mainArcNames.forEach(arcName => {
+    const books = arcs[arcName] || [];
+    total += books.length;
+    books.forEach(b => { if (progress[b] === true) read += 1; });
+  });
+
+  if (total === 0) return 0;
+  return Math.round((read / total) * 100);
+}
+
+function renderCommunity4Clans() {
+  const thunder = document.getElementById("clanThunder");
+  const river = document.getElementById("clanRiver");
+  const shadow = document.getElementById("clanShadow");
+  const wind = document.getElementById("clanWind");
+
+  if (!thunder || !river || !shadow || !wind) return;
+
+  // Prevent duplicate listeners
+  if (communityUnsub) return;
+
+  // Clear any old progress listeners
+  communityProgressUnsubs.forEach(u => u && u());
+  communityProgressUnsubs = [];
+
+  const clanTargets = {
+    ThunderClan: thunder,
+    RiverClan: river,
+    ShadowClan: shadow,
+    WindClan: wind,
+  };
+
+  // Show loading state
+  Object.values(clanTargets).forEach(el => (el.innerHTML = "Loading..."));
+
+  communityUnsub = db.collection("users").onSnapshot(
+    (snapshot) => {
+      // Clear clan columns
+      Object.values(clanTargets).forEach(el => (el.innerHTML = ""));
+
+      if (snapshot.empty) {
+        Object.values(clanTargets).forEach(el => (el.innerHTML = "<div>No warriors yet.</div>"));
+        return;
+      }
+
+      snapshot.forEach((userDoc) => {
+        const uid = userDoc.id;
+        const userData = userDoc.data();
+        const clan = userData.clan;
+
+        // Only show 4 clans (ignore SkyClan here)
+        const target = clanTargets[clan];
+        if (!target) return;
+
+        const card = document.createElement("div");
+        card.className = "warrior-card";
+
+        const nameEl = document.createElement("div");
+        nameEl.className = "warrior-name";
+        nameEl.textContent = userData.username || "Unknown Warrior";
+
+        const statsEl = document.createElement("div");
+        statsEl.className = "warrior-stats";
+        statsEl.textContent = "📚 Books Read: 0 • ⭐ Main Arc Progress: 0%";
+
+        const bioEl = document.createElement("div");
+        bioEl.className = "warrior-bio";
+        const bio = (userData.bio || "").trim();
+        bioEl.textContent = bio ? `“${bio.slice(0, 120)}${bio.length > 120 ? "…" : ""}”` : "No bio published.";
+
+        card.appendChild(nameEl);
+        card.appendChild(statsEl);
+        card.appendChild(bioEl);
+        target.appendChild(card);
+
+        // Live progress for each user
+        const unsub = db.collection("progress").doc(uid).onSnapshot((pdoc) => {
+          const progress = pdoc.exists ? pdoc.data() : {};
+          const booksRead = Object.values(progress).filter(v => v === true).length;
+          const pct = getMainArcProgressPercent(progress);
+
+          statsEl.textContent = `📚 Books Read: ${booksRead} • ⭐ Main Arc Progress: ${pct}%`;
+        });
+
+        communityProgressUnsubs.push(unsub);
+      });
+
+      // If any clan has nobody, show a message
+      Object.entries(clanTargets).forEach(([clanName, el]) => {
+        if (el.children.length === 0) el.innerHTML = "<div>No warriors yet.</div>";
+      });
+    },
+    (err) => {
+      console.error("Community load failed:", err);
+      Object.values(clanTargets).forEach(el => (el.innerHTML = "Community failed to load (check Firestore rules)."));
+    }
+  );
+}
+
+// Cleanup when leaving page
+window.addEventListener("beforeunload", () => {
+  if (communityUnsub) communityUnsub();
+  communityProgressUnsubs.forEach(u => u && u());
+});
+
+// =====================
 // AUTH ROUTING
 // =====================
 auth.onAuthStateChanged((user) => {
-  const isLogin = isPage("login.html");
-  const isSignup = isPage("signup.html");
-  const isProfile = isPage("profile.html");
-  const isApp = isPage("app.html");
-  const isCommunity = isPage("community.html");
+  const isLogin = onPage("login.html");
+  const isSignup = onPage("signup.html");
+  const isProfile = onPage("profile.html");
+  const isApp = onPage("app.html");
+  const isCommunity = onPage("community.html");
 
-  // Protect these pages
+  // Block logged-out users from protected pages
   if (!user && (isProfile || isApp || isCommunity)) {
     go("index.html");
     return;
   }
 
-  // If logged in, don't stay on login/signup
+  // Logged-in users shouldn't see login/signup
   if (user && (isLogin || isSignup)) {
     go("profile.html");
     return;
   }
 
-  // Profile
+  // PROFILE PAGE
   if (user && isProfile) {
     loadProfile(user.uid);
-    loadBio(user.uid);
+    if (document.getElementById("bioInput")) {
+      loadBio(user.uid);
+    }
   }
 
-  // Book tracker
+  // BOOK TRACKER
   if (user && isApp) {
     loadProfile(user.uid);
     showBooks(user.uid);
+  }
+
+  // ✅ COMMUNITY PAGE (STEP 4 GOES HERE)
+  if (user && isCommunity) {
+    renderCommunity4Clans();
   }
 });
