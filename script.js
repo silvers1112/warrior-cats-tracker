@@ -23,11 +23,9 @@ const db = firebase.firestore();
 function path() {
   return (window.location.pathname || "").toLowerCase();
 }
-
 function onPage(filename) {
   return path().endsWith("/" + filename.toLowerCase()) || path().includes(filename.toLowerCase());
 }
-
 function go(page) {
   window.location.href = page;
 }
@@ -152,7 +150,7 @@ function publishBio() {
 }
 
 // =====================
-// BOOK TRACKER DATA
+// BOOK TRACKER DATA + FUNCTIONS
 // =====================
 const arcs = {
   "The Prophecies Begin": [
@@ -265,6 +263,7 @@ function getCategoryForArc(arcName) {
 function showBooks(uid) {
   const booksDiv = document.getElementById("books");
   const filterEl = document.getElementById("categoryFilter");
+
   if (!booksDiv || !filterEl) return;
 
   // Build dropdown once
@@ -292,43 +291,50 @@ function showBooks(uid) {
     const chosen = filterEl.value;
     booksDiv.innerHTML = "Loading...";
 
-    db.collection("progress").doc(uid).get().then((doc) => {
-      const progress = doc.exists ? doc.data() : {};
-      booksDiv.innerHTML = "";
+    db.collection("progress")
+      .doc(uid)
+      .get()
+      .then((doc) => {
+        const progress = doc.exists ? doc.data() : {};
+        booksDiv.innerHTML = "";
 
-      Object.keys(arcs).forEach((arcName) => {
-        if (getCategoryForArc(arcName) !== chosen) return;
+        Object.keys(arcs).forEach((arcName) => {
+          if (getCategoryForArc(arcName) !== chosen) return;
 
-        const arcDiv = document.createElement("div");
-        arcDiv.className = "arc";
+          const arcDiv = document.createElement("div");
+          arcDiv.className = "arc";
 
-        const title = document.createElement("h3");
-        title.textContent = arcName;
-        arcDiv.appendChild(title);
+          const title = document.createElement("h3");
+          title.textContent = arcName;
+          arcDiv.appendChild(title);
 
-        arcs[arcName].forEach((book) => {
-          const bookDiv = document.createElement("div");
-          bookDiv.className = "book";
+          arcs[arcName].forEach((book) => {
+            const bookDiv = document.createElement("div");
+            bookDiv.className = "book";
 
-          const checkbox = document.createElement("input");
-          checkbox.type = "checkbox";
-          checkbox.checked = progress[book] === true;
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = progress[book] === true;
 
-          checkbox.onchange = () => {
-            db.collection("progress").doc(uid).set({ [book]: checkbox.checked }, { merge: true });
-          };
+            checkbox.onchange = () => {
+              db.collection("progress").doc(uid).set({ [book]: checkbox.checked }, { merge: true });
+            };
 
-          const label = document.createElement("span");
-          label.textContent = book;
+            const label = document.createElement("span");
+            label.textContent = book;
 
-          bookDiv.appendChild(checkbox);
-          bookDiv.appendChild(label);
-          arcDiv.appendChild(bookDiv);
+            bookDiv.appendChild(checkbox);
+            bookDiv.appendChild(label);
+            arcDiv.appendChild(bookDiv);
+          });
+
+          booksDiv.appendChild(arcDiv);
         });
-
-        booksDiv.appendChild(arcDiv);
+      })
+      .catch((err) => {
+        console.error("Progress read failed:", err);
+        booksDiv.innerHTML = "❌ Could not load books (check Firestore rules).";
       });
-    });
   }
 
   filterEl.onchange = render;
@@ -345,7 +351,7 @@ auth.onAuthStateChanged((user) => {
   const isApp = onPage("app.html");
   const isCommunity = onPage("community.html");
 
-  // Protect these pages (must be logged in)
+  // Protect these pages
   if (!user && (isProfile || isApp || isCommunity)) {
     go("index.html");
     return;
@@ -357,26 +363,15 @@ auth.onAuthStateChanged((user) => {
     return;
   }
 
-  // PROFILE PAGE
+  // Profile
   if (user && isProfile) {
     loadProfile(user.uid);
-
-    // Only load bio if the bio box exists on the page
-    if (document.getElementById("bioInput")) {
-      loadBio(user.uid);
-    }
+    if (document.getElementById("bioInput")) loadBio(user.uid);
   }
 
-  // BOOK TRACKER PAGE
+  // Book tracker
   if (user && isApp) {
     loadProfile(user.uid);
-
-    // Only render books if the tracker elements exist
-    if (document.getElementById("books") && document.getElementById("categoryFilter")) {
-      showBooks(user.uid);
-    }
+    showBooks(user.uid);
   }
-
-  // COMMUNITY PAGE (you can add later)
-  // if (user && isCommunity) { ... }
 });
