@@ -19,6 +19,19 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+function loadBio(uid) {
+  const bioInput = document.getElementById("bioInput");
+  if (!bioInput) return;
+
+  db.collection("users").doc(uid).get().then(doc => {
+    if (!doc.exists) return;
+
+    const data = doc.data();
+    bioInput.value = data.bio || "";
+  });
+}
+
+
 function publishBio() {
   const user = auth.currentUser;
   if (!user) {
