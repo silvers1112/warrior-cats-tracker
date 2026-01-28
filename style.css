@@ -36,9 +36,7 @@ section {
 /* =====================
    HOME PAGE HERO
 ===================== */
-body.home {
-  margin: 0;
-}
+body.home { margin: 0; }
 
 .hero {
   height: 100vh;
@@ -76,7 +74,6 @@ body.home {
   letter-spacing: 2px;
   text-transform: uppercase;
   margin: 0 0 10px;
-
   text-shadow:
     0 3px 12px rgba(0,0,0,0.75),
     0 0 24px rgba(255, 220, 140, 0.25);
@@ -87,7 +84,6 @@ body.home {
   margin: 0 0 25px;
 }
 
-/* Hero buttons layout */
 .hero-buttons {
   display: flex;
   gap: 20px;
@@ -153,8 +149,6 @@ body.home {
 
 /* =====================
    AUTH PAGES (Login + Create)
-   NOTE: auth-background.png should be next to HTML files
-   If you put it in /images, change url(...) accordingly.
 ===================== */
 .auth-page {
   min-height: 100vh;
@@ -180,13 +174,8 @@ body.home {
   pointer-events: none;
 }
 
-.auth-page > * {
-  position: relative;
-}
-
-.auth-page header {
-  display: none;
-}
+.auth-page > * { position: relative; }
+.auth-page header { display: none; }
 
 .auth-page h1 {
   font-family: 'Cinzel Decorative', serif;
@@ -216,9 +205,7 @@ body.home {
   outline: none;
 }
 
-.auth-page input::placeholder {
-  color: rgba(255,255,255,0.7);
-}
+.auth-page input::placeholder { color: rgba(255,255,255,0.7); }
 
 .auth-page a {
   font-family: 'Cinzel Decorative', serif;
@@ -239,11 +226,8 @@ body.home {
   gap: 16px;
 }
 
-/* Torch ember glow (auth buttons only) */
-.auth-page .forest-btn {
-  position: relative;
-  overflow: hidden;
-}
+/* Torch glow (auth buttons only) */
+.auth-page .forest-btn { position: relative; overflow: hidden; }
 
 .auth-page .forest-btn::before {
   content: "";
@@ -292,7 +276,14 @@ body.home {
   color: #fff;
 }
 
-/* Keep content readable without panels (text shadows only) */
+.profile-page header,
+.profile-page section {
+  max-width: 900px;
+  margin: 18px auto;
+  padding: 10px 0;
+  background: none;
+}
+
 .profile-page h1,
 .profile-page h2,
 .profile-page h3,
@@ -306,36 +297,22 @@ body.home {
     0 0 14px rgba(0,0,0,0.6);
 }
 
-/* Layout width */
-.profile-page header,
-.profile-page section {
-  max-width: 900px;
-  margin: 18px auto;
-  padding: 10px 0;
-  background: none;
-}
-
-/* Character name / clan stack (JS writes inside #welcome) */
+/* Name/Clan stack */
 .profile-name {
   font-family: "WarriorInk", cursive;
   font-size: 3.2rem;
   letter-spacing: 1px;
   color: #fff;
-
-  margin: 12px 0 -6px;   /* pulls clan upward */
+  margin: 12px 0 -6px;
 }
 
 .profile-clan {
   font-family: "WarriorInk", cursive;
   font-size: 1.9rem;
-
-  margin: 0;             /* zero spacing */
+  margin: 0;
   opacity: 0.95;
 }
 
-
-
-/* Section subtitles */
 .profile-subtitle {
   font-family: 'Cinzel Decorative', serif;
   letter-spacing: 1px;
@@ -373,27 +350,7 @@ body.home {
   background: rgba(255, 220, 140, 0.85);
 }
 
-/* Community progress readability */
-#community-section h3 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 2rem;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  margin: 10px 0 18px;
-}
-
-/* Bottom actions on profile (stacked + centered) */
-.profile-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  align-items: center;
-  justify-content: center;
-  margin: 40px auto 60px;
-  width: fit-content;
-}
-
-/* Clan logo in upper-left corner */
+/* Clan logo */
 .clan-corner-logo {
   position: fixed;
   top: 18px;
@@ -406,18 +363,13 @@ body.home {
 }
 
 /* =====================
-   APP PAGE (matches profile vibe)
-   Uses same background as profile for consistency
+   APP PAGE (Book Tracker)
 ===================== */
 .app-page {
   min-height: 100vh;
-
   background:
-    linear-gradient(
-      rgba(0, 0, 0, 0.22),
-      rgba(0, 0, 0, 0.45)
-    ),
-    url("images/app-bg.png"); /* ✅ BOOK TRACKER BACKGROUND */
+    linear-gradient(rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.45)),
+    url("images/app-bg.png");
 
   background-size: cover;
   background-position: center;
@@ -428,14 +380,12 @@ body.home {
   color: #fff;
 }
 
-/* Remove default header look on app page */
 .app-page header {
   background: none;
   padding: 10px 0 0;
   margin: 0;
 }
 
-/* Readability without panels */
 .app-page h1,
 .app-page h2,
 .app-page h3,
@@ -448,14 +398,12 @@ body.home {
     0 0 14px rgba(0,0,0,0.6);
 }
 
-/* App title uses the handwritten font too (optional) */
 .app-page #welcome {
   font-family: "WarriorInk", cursive;
   font-size: 2.6rem;
   margin: 24px 0 10px;
 }
 
-/* Buttons row on app page */
 .app-actions {
   display: flex;
   justify-content: center;
@@ -464,7 +412,6 @@ body.home {
   flex-wrap: wrap;
 }
 
-/* Dropdown styling */
 .app-page select#categoryFilter {
   font-family: 'Cinzel Decorative', serif;
   padding: 12px 14px;
@@ -486,7 +433,6 @@ body.home {
   margin: 0 auto;
 }
 
-/* Book item */
 .book {
   background: rgba(0,0,0,0.35);
   border: 1px solid rgba(255, 220, 170, 0.25);
@@ -495,9 +441,7 @@ body.home {
   color: #fff;
 }
 
-.book input {
-  margin-right: 10px;
-}
+.book input { margin-right: 10px; }
 
 .arc h3 {
   font-family: 'Cinzel Decorative', serif;
@@ -508,34 +452,29 @@ body.home {
 
 /* Responsive */
 @media (max-width: 768px) {
-  #books {
-    grid-template-columns: 1fr;
-  }
+  #books { grid-template-columns: 1fr; }
 }
 
 /* =====================
    PROFILE BIOGRAPHY (PARCHMENT STYLE)
+   ✅ uses SF-Karens-Cali.ttf via WarriorBio
 ===================== */
-
 .profile-bio textarea,
 #bioInput {
   width: min(860px, 92vw);
   min-height: 140px;
-
   padding: 18px 22px;
 
-  /* ✅ SF-KARENS-CALI FONT */
   font-family: "WarriorBio", cursive;
   font-size: 1.35rem;
   line-height: 1.6;
 
-  color: #2a1b12; /* ink color */
+  color: #2a1b12;
 
-  background:
-    linear-gradient(
-      rgba(255, 245, 225, 0.92),
-      rgba(245, 232, 205, 0.92)
-    );
+  background: linear-gradient(
+    rgba(255, 245, 225, 0.92),
+    rgba(245, 232, 205, 0.92)
+  );
 
   border: 2px solid rgba(120, 85, 55, 0.55);
   border-radius: 12px;
@@ -553,5 +492,3 @@ body.home {
   color: rgba(70, 45, 30, 0.55);
   font-style: italic;
 }
-
-
