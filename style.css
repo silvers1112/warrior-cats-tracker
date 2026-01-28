@@ -590,3 +590,14 @@ body.home {
   outline: none;
 }
 
+#publishBioBtn {
+  margin-top: 12px;
+}
+
+#bioStatus {
+  margin-top: 8px;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 0.9rem;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+}
