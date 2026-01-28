@@ -345,7 +345,7 @@ auth.onAuthStateChanged((user) => {
   const isApp = onPage("app.html");
   const isCommunity = onPage("community.html");
 
-  // Protect these pages
+  // Protect these pages (must be logged in)
   if (!user && (isProfile || isApp || isCommunity)) {
     go("index.html");
     return;
@@ -357,18 +357,26 @@ auth.onAuthStateChanged((user) => {
     return;
   }
 
-  // Load profile data when on profile page
+  // PROFILE PAGE
   if (user && isProfile) {
     loadProfile(user.uid);
-    loadBio(user.uid);
+
+    // Only load bio if the bio box exists on the page
+    if (document.getElementById("bioInput")) {
+      loadBio(user.uid);
+    }
   }
 
+  // BOOK TRACKER PAGE
   if (user && isApp) {
-  loadProfile(user.uid);     // shows name/clan at top
-  showBooks(user.uid);       // loads book tracker
-}
+    loadProfile(user.uid);
 
-  // (Optional) If you later add app/community JS, you'd call it here safely:
-  // if (user && isApp) { ... }
+    // Only render books if the tracker elements exist
+    if (document.getElementById("books") && document.getElementById("categoryFilter")) {
+      showBooks(user.uid);
+    }
+  }
+
+  // COMMUNITY PAGE (you can add later)
   // if (user && isCommunity) { ... }
 });
