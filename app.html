@@ -5,27 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Tracker</title>
 
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="app-page">
 
+  <!-- Header (same structure as profile page) -->
   <header class="app-header">
     <div id="welcome"></div>
   </header>
 
+  <!-- Book Tracker -->
   <section id="books-section">
     <h2 class="profile-subtitle">Book Tracker</h2>
 
-    <label for="categoryFilter" class="profile-subtitle" style="font-size:1.1rem; text-transform:none;">
-      Show:
-    </label>
-    <select id="categoryFilter"></select>
+    <div style="margin: 10px 0 18px;">
+      <label for="categoryFilter" class="profile-subtitle" style="font-size:1.05rem; text-transform:none;">
+        Show:
+      </label>
+      <br>
+      <select id="categoryFilter"></select>
+    </div>
 
     <div id="books"></div>
   </section>
 
+  <!-- Bottom buttons (centered stacked like before) -->
   <div class="profile-actions">
     <button class="forest-btn" type="button" onclick="location.href='profile.html'">
       Back to Profile
@@ -35,6 +44,7 @@
     </button>
   </div>
 
+  <!-- Firebase + script -->
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
