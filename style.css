@@ -437,3 +437,99 @@ a { color: inherit; }
   font-size: 0.85rem;
   opacity: 0.95;
 }
+
+/* =====================
+   COMMUNITY PAGE (4 CLAN BOXES)
+===================== */
+
+.community-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.30), rgba(0,0,0,0.60)),
+    url("images/profile-bg.png") center / cover no-repeat fixed;
+}
+
+.community-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  margin: 18px 0 8px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.9);
+}
+
+.community-sub {
+  font-family: 'Cinzel Decorative', serif;
+  margin: 0 0 18px;
+  opacity: 0.9;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.85);
+}
+
+.clan-boxes {
+  max-width: 1200px;
+  margin: 18px auto 60px;
+  padding: 0 14px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .clan-boxes { grid-template-columns: 1fr; }
+}
+
+.clan-box {
+  border-radius: 16px;
+  padding: 14px;
+
+  background: rgba(255, 240, 210, 0.07);
+  border: 1px solid rgba(255, 220, 170, 0.18);
+  backdrop-filter: blur(2px);
+
+  box-shadow: 0 10px 24px rgba(0,0,0,0.45);
+}
+
+.clan-box-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.7rem;
+  margin: 6px 0 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.85);
+}
+
+.clan-box-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+/* Character badge / placard */
+.warrior-card {
+  text-align: left;
+  border-radius: 14px;
+  padding: 10px 12px;
+
+  background: rgba(0,0,0,0.30);
+  border: 1px solid rgba(255, 220, 170, 0.20);
+}
+
+.warrior-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.05rem;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.warrior-stats {
+  margin-top: 2px;
+  font-size: 0.85rem;
+  opacity: 0.92;
+  line-height: 1.15;
+}
+
+.warrior-bio {
+  margin-top: 6px;
+  font-size: 0.85rem;
+  opacity: 0.95;
+  line-height: 1.2;
+}
