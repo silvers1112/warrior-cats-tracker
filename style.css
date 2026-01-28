@@ -603,7 +603,7 @@ body.home {
 }
 
 /* =====================
-   BIOGRAPHY FIELD
+   BIOGRAPHY FIELD (SF FONT + WHITE TEXT)
 ===================== */
 
 .bio-section textarea,
@@ -611,18 +611,21 @@ body.home {
   width: 90%;
   max-width: 1000px;
 
-  height: 140px;          /* ⬅️ HALF SIZE (was ~280px) */
+  height: 140px;          /* half-height version */
   min-height: 140px;
-  resize: vertical;      /* allow small manual resize if wanted */
+  resize: vertical;
 
-  padding: 28px 36px;    /* keeps parchment feel without tall box */
+  padding: 28px 36px;
 
-  font-family: "WarriorInk", cursive;
-  font-size: 1.15rem;
+  /* 🔥 USE YOUR SF FONT HERE */
+  font-family: "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.1rem;
   line-height: 1.6;
 
+  /* 🔥 WHITE TEXT */
+  color: #ffffff;
+
   background: url("images/parchment.png") center / cover no-repeat;
-  color: #2a1c12;
 
   border: none;
   border-radius: 18px;
