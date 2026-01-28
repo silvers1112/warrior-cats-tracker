@@ -1,28 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book Tracker</title>
 
-  <!-- Wilderness / Homepage Font -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="app-page">
 
-  <!-- optional: show clan logo in corner here too (same id used by JS) -->
-  <img id="clanLogo"
-       class="clan-corner-logo"
-       src=""
-       alt="Clan logo"
-       style="display:none;">
-
   <header class="app-header">
-    <div id="welcome" class="profile-title"></div>
+    <div id="welcome"></div>
   </header>
 
   <section id="books-section">
@@ -36,22 +26,15 @@
     <div id="books"></div>
   </section>
 
+  <div class="profile-actions">
+    <button class="forest-btn" type="button" onclick="location.href='profile.html'">Back to Profile</button>
+    <button class="forest-btn" type="button" onclick="logOut()">Log Out</button>
+  </div>
+
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
   <script src="script.js"></script>
-
-<div class="profile-actions">
-  <button class="forest-btn" onclick="location.href='profile.html'">
-    Back to Profile
-  </button>
-
-  <button class="forest-btn" onclick="logOut()">
-    Log Out
-  </button>
-</div>
-
-
 
 </body>
 </html>
