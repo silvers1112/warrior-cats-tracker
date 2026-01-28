@@ -1,3 +1,119 @@
+/* =====================
+   COMMUNITY PAGE (CLAN SECTIONS + PLACARDS)
+===================== */
+
+.community-page {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(0,0,0,0.25), rgba(0,0,0,0.55)),
+    url("images/profile-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: #fff;
+  text-align: center;
+}
+
+.community-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 18px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.85);
+}
+
+.community-sub {
+  font-family: 'Cinzel Decorative', serif;
+  opacity: 0.9;
+  margin: 4px 0 10px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.85);
+}
+
+.community-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin: 18px auto 26px;
+  flex-wrap: wrap;
+}
+
+.clan-section {
+  max-width: 1050px;
+  margin: 28px auto;
+  padding: 0 14px;
+}
+
+.clan-header {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.9);
+  margin: 10px 0 16px;
+}
+
+.clan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 900px) {
+  .clan-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+  .clan-grid { grid-template-columns: 1fr; }
+}
+
+/* “Placard” card */
+.placard {
+  text-align: left;
+  padding: 14px 14px 12px;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    rgba(255, 240, 210, 0.10),
+    rgba(160, 110, 60, 0.10)
+  );
+
+  border: 1px solid rgba(255, 220, 170, 0.22);
+
+  backdrop-filter: blur(2px);
+
+  box-shadow:
+    0 10px 26px rgba(0,0,0,0.55),
+    inset 0 0 18px rgba(255, 220, 170, 0.06);
+}
+
+.placard-name {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.25rem;
+  letter-spacing: 1px;
+  margin: 0 0 2px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+}
+
+.placard-meta {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0;
+  line-height: 1.15;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+}
+
+.placard-bio {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.95;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.9);
+
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 console.log("script.js loaded");
 
 // =====================
@@ -298,9 +414,6 @@ function getCompletedMainArcs(progress) {
 // =====================
 auth.onAuthStateChanged((user) => {
   // Always load community on pages that have it
-  if (document.getElementById("community")) {
-    loadCommunity();
-  }
 
   const protectedPages = ["app.html", "profile.html"];
   if (!user && protectedPages.some((p) => location.pathname.includes(p))) {
@@ -309,6 +422,118 @@ auth.onAuthStateChanged((user) => {
   }
 
   if (!user) return;
+
+  if (document.getElementById("communityClans")) {
+  renderCommunityByClan();
+}
+
+function renderCommunityByClan() {
+  const root = document.getElementById("communityClans");
+  if (!root) return;
+
+  const clans = ["ThunderClan", "RiverClan", "ShadowClan", "WindClan", "SkyClan"];
+
+  // prevent duplicate listeners
+  if (communityUnsub) return;
+
+  root.innerHTML = "Loading...";
+
+  // clear old per-user progress listeners
+  progressUnsubs.forEach(u => u && u());
+  progressUnsubs = [];
+
+  communityUnsub = db.collection("users").onSnapshot(
+    (snapshot) => {
+      root.innerHTML = "";
+
+      // bucket users by clan
+      const buckets = {};
+      clans.forEach(c => buckets[c] = []);
+
+      snapshot.forEach(doc => {
+        const u = doc.data();
+        const uid = doc.id;
+        const clan = u.clan || "Unknown";
+        if (!buckets[clan]) buckets[clan] = [];
+        buckets[clan].push({ uid, ...u });
+      });
+
+      clans.forEach((clanName) => {
+        const section = document.createElement("div");
+        section.className = "clan-section";
+
+        const header = document.createElement("div");
+        header.className = "clan-header";
+        header.textContent = clanName;
+        section.appendChild(header);
+
+        const grid = document.createElement("div");
+        grid.className = "clan-grid";
+        section.appendChild(grid);
+
+        const members = buckets[clanName] || [];
+
+        if (members.length === 0) {
+          const empty = document.createElement("div");
+          empty.style.opacity = "0.85";
+          empty.textContent = "No warriors yet.";
+          section.appendChild(empty);
+          root.appendChild(section);
+          return;
+        }
+
+        members.forEach((member) => {
+          const card = document.createElement("div");
+          card.className = "placard";
+
+          const name = document.createElement("div");
+          name.className = "placard-name";
+          name.textContent = member.username || "Unknown Warrior";
+          card.appendChild(name);
+
+          const meta1 = document.createElement("p");
+          meta1.className = "placard-meta";
+          meta1.textContent = `📚 Books Read: ...`;
+          card.appendChild(meta1);
+
+          const meta2 = document.createElement("p");
+          meta2.className = "placard-meta";
+          meta2.textContent = `⭐ Completed Main Arcs: ...`;
+          card.appendChild(meta2);
+
+          const bio = document.createElement("div");
+          bio.className = "placard-bio";
+          bio.textContent = member.bio ? `“${member.bio}”` : "No bio published.";
+          card.appendChild(bio);
+
+          grid.appendChild(card);
+
+          // live progress for each user
+          const unsub = db.collection("progress").doc(member.uid).onSnapshot((pdoc) => {
+            const progress = pdoc.exists ? pdoc.data() : {};
+            const booksRead = Object.values(progress).filter(v => v === true).length;
+
+            // completed main arcs (uses your existing helper)
+            const completedMain = getCompletedMainArcs(progress);
+
+            meta1.textContent = `📚 Books Read: ${booksRead}`;
+            meta2.textContent = `⭐ Completed Main Arcs: ${completedMain.length}`;
+          });
+
+          progressUnsubs.push(unsub);
+        });
+
+        root.appendChild(section);
+      });
+    },
+    (err) => {
+      console.error("Community page failed:", err);
+      root.textContent = "Community failed to load.";
+    }
+  );
+}
+
+
 
   // Header + clan logo + name/clan stack
   if (document.getElementById("welcome") || document.getElementById("clanLogo")) {
