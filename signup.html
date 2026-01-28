@@ -3,37 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Warrior</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <title>Create Warrior – Warrior Cats Club</title>
 
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="auth-page">
 
+  <h1>Create Warrior</h1>
 
-<!-- Sign up form -->
-<input id="username" placeholder="Warrior Name" type="text">
-<input id="email" placeholder="Email" type="email">
-<input id="password" placeholder="Password" type="password">
-<select id="clan">
-  <option>ThunderClan</option>
-  <option>RiverClan</option>
-  <option>ShadowClan</option>
-  <option>WindClan</option>
-  <option>SkyClan</option>
-</select>
+  <input id="username" placeholder="Warrior Name" type="text">
+  <select id="clan">
+    <option>ThunderClan</option>
+    <option>RiverClan</option>
+    <option>ShadowClan</option>
+    <option>WindClan</option>
+    <option>SkyClan</option>
+  </select>
 
-<!-- Submit buttons -->
-<div class="auth-actions">
-  <button class="forest-btn" onclick="signUp()">Create Warrior</button>
-  <button class="forest-btn" onclick="location.href='index.html'">Back to Landing</button>
-</div>
+  <input id="email" placeholder="Email" type="email">
+  <input id="password" placeholder="Password" type="password">
 
+  <div class="auth-actions">
+    <button class="forest-btn" type="button" onclick="signUp()">Create Warrior</button>
+    <a href="login.html">Already have an account? Log in</a>
+    <a href="index.html">Back to home</a>
+  </div>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="script.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
