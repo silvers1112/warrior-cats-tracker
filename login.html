@@ -3,23 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+  <title>Log In – Warrior Cats Club</title>
 
-  <title>Login - Warrior Cats Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="auth-page">
 
-   <!-- Form for login -->
-  <input id="email" type="email" placeholder="Email" required>
-  <input id="password" type="password" placeholder="Password" required>
-  
+  <h1>Log In</h1>
+
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
   <div class="auth-actions">
-  <button class="forest-btn" onclick="logIn()">Log In</button>
+    <button class="forest-btn" onclick="logIn()">Log In</button>
+    <p><a href="signup.html">Create a new warrior</a></p>
   </div>
-
-
-  <p>Don't have an account? <a href="signup.html">Create one</a></p>
 
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
