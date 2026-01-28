@@ -456,43 +456,49 @@ body.home { margin: 0; }
 }
 
 /* =====================
-   PROFILE BIOGRAPHY — TRANSLUCENT PARCHMENT
+   PROFILE BIOGRAPHY — ULTRA TRANSLUCENT, COMPACT
 ===================== */
 
 .profile-bio textarea,
 #bioInput {
   width: min(860px, 92vw);
-  min-height: 140px;
-  padding: 18px 22px;
+
+  /* ~3 lines tall */
+  height: 4.6em;
+  min-height: 4.6em;
+
+  /* VERY tight padding */
+  padding: 10px 14px;
 
   font-family: "WarriorBio", cursive;
-  font-size: 1.35rem;
-  line-height: 1.6;
+  font-size: 1.3rem;
+  line-height: 1.45;
 
   color: #ffffff;
 
+  /* ultra translucent parchment */
   background:
     linear-gradient(
-      rgba(255, 240, 210, 0.28),
-      rgba(230, 205, 170, 0.28)
+      rgba(255, 245, 225, 0.14),
+      rgba(235, 215, 185, 0.14)
     );
 
-  border: 2px solid rgba(200, 170, 120, 0.45);
-  border-radius: 14px;
+  border: 1.5px solid rgba(210, 180, 130, 0.35);
+  border-radius: 12px;
 
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(2px);
 
   box-shadow:
-    inset 0 0 16px rgba(120, 80, 40, 0.25),
-    0 8px 22px rgba(0, 0, 0, 0.55);
+    inset 0 0 10px rgba(120, 80, 40, 0.18),
+    0 6px 18px rgba(0, 0, 0, 0.45);
 
-  resize: vertical;
+  resize: none; /* keeps it compact */
   outline: none;
 }
 
 .profile-bio textarea::placeholder,
 #bioInput::placeholder {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
   font-style: italic;
 }
 
