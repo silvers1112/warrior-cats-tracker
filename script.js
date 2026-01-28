@@ -20,8 +20,12 @@ const db = firebase.firestore();
 // =====================
 // HELPERS
 // =====================
-function onPage(name) {
-  return window.location.pathname.toLowerCase().includes(name.toLowerCase());
+function path() {
+  return (window.location.pathname || "").toLowerCase();
+}
+
+function onPage(filename) {
+  return path().endsWith("/" + filename.toLowerCase()) || path().includes(filename.toLowerCase());
 }
 
 function go(page) {
@@ -40,9 +44,10 @@ function logIn() {
     return;
   }
 
-  auth.signInWithEmailAndPassword(email, password)
+  auth
+    .signInWithEmailAndPassword(email, password)
     .then(() => go("profile.html"))
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       alert(err.message);
     });
@@ -59,7 +64,8 @@ function signUp() {
     return;
   }
 
-  auth.createUserWithEmailAndPassword(email, password)
+  auth
+    .createUserWithEmailAndPassword(email, password)
     .then((cred) => {
       return db.collection("users").doc(cred.user.uid).set({
         username,
@@ -68,7 +74,7 @@ function signUp() {
       });
     })
     .then(() => go("profile.html"))
-    .catch(err => {
+    .catch((err) => {
       console.error(err);
       alert(err.message);
     });
@@ -85,25 +91,31 @@ function loadProfile(uid) {
   const welcomeEl = document.getElementById("welcome");
   if (!welcomeEl) return;
 
-  db.collection("users").doc(uid).get().then(doc => {
-    if (!doc.exists) return;
-    const data = doc.data();
+  db.collection("users")
+    .doc(uid)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) return;
+      const data = doc.data();
 
-    welcomeEl.innerHTML = `
-      <div class="profile-name">${data.username || ""}</div>
-      <div class="profile-clan">${data.clan || ""}</div>
-    `;
-  });
+      welcomeEl.innerHTML = `
+        <div class="profile-name">${data.username || ""}</div>
+        <div class="profile-clan">${data.clan || ""}</div>
+      `;
+    });
 }
 
 function loadBio(uid) {
   const bioInput = document.getElementById("bioInput");
   if (!bioInput) return;
 
-  db.collection("users").doc(uid).get().then(doc => {
-    if (!doc.exists) return;
-    bioInput.value = (doc.data().bio || "");
-  });
+  db.collection("users")
+    .doc(uid)
+    .get()
+    .then((doc) => {
+      if (!doc.exists) return;
+      bioInput.value = doc.data().bio || "";
+    });
 }
 
 function publishBio() {
@@ -120,21 +132,23 @@ function publishBio() {
   const bio = bioInput.value.trim();
   if (status) status.textContent = "Saving...";
 
-  db.collection("users").doc(user.uid).set(
-    {
-      bio,
-      bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-    },
-    { merge: true }
-  )
-  .then(() => {
-    if (status) status.textContent = "✅ Bio saved";
-  })
-  .catch(err => {
-    console.error(err);
-    if (status) status.textContent = "❌ Error saving bio";
-    alert(err.message);
-  });
+  db.collection("users")
+    .doc(user.uid)
+    .set(
+      {
+        bio,
+        bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+      },
+      { merge: true }
+    )
+    .then(() => {
+      if (status) status.textContent = "✅ Bio saved";
+    })
+    .catch((err) => {
+      console.error(err);
+      if (status) status.textContent = "❌ Error saving bio";
+      alert(err.message);
+    });
 }
 
 // =====================
@@ -146,24 +160,26 @@ auth.onAuthStateChanged((user) => {
   const isProfile = onPage("profile.html");
   const isApp = onPage("app.html");
   const isCommunity = onPage("community.html");
-  const isIndex = onPage("index.html") || window.location.pathname.endsWith("/");
 
-  // If logged OUT and trying to access protected pages → go home
+  // Protect these pages
   if (!user && (isProfile || isApp || isCommunity)) {
     go("index.html");
     return;
   }
 
-  // If logged IN and on login/signup → go profile
-  if (user && (isLogin || isSignup || isIndex)) {
-    // don’t force redirect if you want to stay on index while logged in;
-    // but most sites redirect to profile. Keep it simple:
-    // go("profile.html"); return;
+  // If logged in, don't stay on login/signup
+  if (user && (isLogin || isSignup)) {
+    go("profile.html");
+    return;
   }
 
-  // If logged IN and on profile → load profile + bio
+  // Load profile data when on profile page
   if (user && isProfile) {
     loadProfile(user.uid);
     loadBio(user.uid);
   }
+
+  // (Optional) If you later add app/community JS, you'd call it here safely:
+  // if (user && isApp) { ... }
+  // if (user && isCommunity) { ... }
 });
