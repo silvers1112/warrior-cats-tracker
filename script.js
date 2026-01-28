@@ -20,11 +20,14 @@ const db = firebase.firestore();
 // =====================
 // HELPERS
 // =====================
-function path() {
-  return (window.location.pathname || "").toLowerCase();
+function currentFile() {
+  // Works on GitHub Pages too
+  const p = window.location.pathname;
+  const parts = p.split("/").filter(Boolean);
+  return (parts[parts.length - 1] || "index.html").toLowerCase();
 }
-function onPage(filename) {
-  return path().endsWith("/" + filename.toLowerCase()) || path().includes(filename.toLowerCase());
+function isPage(file) {
+  return currentFile() === file.toLowerCase();
 }
 function go(page) {
   window.location.href = page;
@@ -42,8 +45,7 @@ function logIn() {
     return;
   }
 
-  auth
-    .signInWithEmailAndPassword(email, password)
+  auth.signInWithEmailAndPassword(email, password)
     .then(() => go("profile.html"))
     .catch((err) => {
       console.error(err);
@@ -62,8 +64,7 @@ function signUp() {
     return;
   }
 
-  auth
-    .createUserWithEmailAndPassword(email, password)
+  auth.createUserWithEmailAndPassword(email, password)
     .then((cred) => {
       return db.collection("users").doc(cred.user.uid).set({
         username,
@@ -89,9 +90,7 @@ function loadProfile(uid) {
   const welcomeEl = document.getElementById("welcome");
   if (!welcomeEl) return;
 
-  db.collection("users")
-    .doc(uid)
-    .get()
+  db.collection("users").doc(uid).get()
     .then((doc) => {
       if (!doc.exists) return;
       const data = doc.data();
@@ -100,20 +99,20 @@ function loadProfile(uid) {
         <div class="profile-name">${data.username || ""}</div>
         <div class="profile-clan">${data.clan || ""}</div>
       `;
-    });
+    })
+    .catch((err) => console.error("loadProfile failed:", err));
 }
 
 function loadBio(uid) {
   const bioInput = document.getElementById("bioInput");
   if (!bioInput) return;
 
-  db.collection("users")
-    .doc(uid)
-    .get()
+  db.collection("users").doc(uid).get()
     .then((doc) => {
       if (!doc.exists) return;
       bioInput.value = doc.data().bio || "";
-    });
+    })
+    .catch((err) => console.error("loadBio failed:", err));
 }
 
 function publishBio() {
@@ -130,23 +129,21 @@ function publishBio() {
   const bio = bioInput.value.trim();
   if (status) status.textContent = "Saving...";
 
-  db.collection("users")
-    .doc(user.uid)
-    .set(
-      {
-        bio,
-        bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-      },
-      { merge: true }
-    )
-    .then(() => {
-      if (status) status.textContent = "✅ Bio saved";
-    })
-    .catch((err) => {
-      console.error(err);
-      if (status) status.textContent = "❌ Error saving bio";
-      alert(err.message);
-    });
+  db.collection("users").doc(user.uid).set(
+    {
+      bio,
+      bioUpdatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    },
+    { merge: true }
+  )
+  .then(() => {
+    if (status) status.textContent = "✅ Bio saved";
+  })
+  .catch((err) => {
+    console.error(err);
+    if (status) status.textContent = "❌ Error saving bio";
+    alert(err.message);
+  });
 }
 
 // =====================
@@ -154,102 +151,54 @@ function publishBio() {
 // =====================
 const arcs = {
   "The Prophecies Begin": [
-    "Into the Wild",
-    "Fire and Ice",
-    "Forest of Secrets",
-    "Rising Storm",
-    "A Dangerous Path",
-    "The Darkest Hour",
+    "Into the Wild", "Fire and Ice", "Forest of Secrets",
+    "Rising Storm", "A Dangerous Path", "The Darkest Hour"
   ],
   "The New Prophecy": ["Midnight", "Moonrise", "Dawn", "Starlight", "Twilight", "Sunset"],
   "Power of Three": ["The Sight", "Dark River", "Outcast", "Eclipse", "Long Shadows", "Sunrise"],
   "Omen of the Stars": [
-    "The Fourth Apprentice",
-    "Fading Echoes",
-    "Night Whispers",
-    "Sign of the Moon",
-    "The Forgotten Warrior",
-    "The Last Hope",
+    "The Fourth Apprentice", "Fading Echoes", "Night Whispers",
+    "Sign of the Moon", "The Forgotten Warrior", "The Last Hope"
   ],
   "Dawn of the Clans": [
-    "The Sun Trail",
-    "Thunder Rising",
-    "The First Battle",
-    "The Blazing Star",
-    "A Forest Divided",
-    "Path of Stars",
+    "The Sun Trail", "Thunder Rising", "The First Battle",
+    "The Blazing Star", "A Forest Divided", "Path of Stars"
   ],
   "A Vision of Shadows": [
-    "The Apprentice’s Quest",
-    "Thunder and Shadow",
-    "Shattered Sky",
-    "Darkest Night",
-    "River of Fire",
-    "The Raging Storm",
+    "The Apprentice’s Quest", "Thunder and Shadow", "Shattered Sky",
+    "Darkest Night", "River of Fire", "The Raging Storm"
   ],
   "The Broken Code": [
-    "Lost Stars",
-    "The Silent Thaw",
-    "Veil of Shadows",
-    "Darkness Within",
-    "The Place of No Stars",
-    "A Light in the Mist",
+    "Lost Stars", "The Silent Thaw", "Veil of Shadows",
+    "Darkness Within", "The Place of No Stars", "A Light in the Mist"
   ],
   "A Starless Clan": ["River", "Sky", "Shadow", "Thunder", "Wind", "Star"],
   "Changing Skies": ["The Elders’ Quest", "Hidden Moon"],
 
   "Super Editions": [
-    "Firestar’s Quest",
-    "Bluestar’s Prophecy",
-    "SkyClan’s Destiny",
-    "Crookedstar’s Promise",
-    "Yellowfang’s Secret",
-    "Tallstar’s Revenge",
-    "Bramblestar’s Storm",
-    "Moth Flight’s Vision",
-    "Hawkwing’s Journey",
-    "Tigerheart’s Shadow",
-    "Crowfeather’s Trial",
-    "Squirrelflight’s Hope",
-    "Graystripe’s Vow",
-    "Leopardstar’s Honor",
-    "Onestar’s Confession",
-    "Riverstar’s Home",
-    "Ivypool’s Heart",
-    "StormClan’s Folly",
+    "Firestar’s Quest", "Bluestar’s Prophecy", "SkyClan’s Destiny",
+    "Crookedstar’s Promise", "Yellowfang’s Secret", "Tallstar’s Revenge",
+    "Bramblestar’s Storm", "Moth Flight’s Vision", "Hawkwing’s Journey",
+    "Tigerheart’s Shadow", "Crowfeather’s Trial", "Squirrelflight’s Hope",
+    "Graystripe’s Vow", "Leopardstar’s Honor", "Onestar’s Confession",
+    "Riverstar’s Home", "Ivypool’s Heart", "StormClan’s Folly"
   ],
   "Novellas": [
-    "Hollyleaf’s Story",
-    "Mistystar’s Omen",
-    "Cloudstar’s Journey",
-    "Tigerclaw’s Fury",
-    "Leafpool’s Wish",
-    "Dovewing’s Silence",
-    "Mapleshade’s Vengeance",
-    "Goosefeather’s Curse",
-    "Ravenpaw’s Farewell",
+    "Hollyleaf’s Story", "Mistystar’s Omen", "Cloudstar’s Journey",
+    "Tigerclaw’s Fury", "Leafpool’s Wish", "Dovewing’s Silence",
+    "Mapleshade’s Vengeance", "Goosefeather’s Curse", "Ravenpaw’s Farewell"
   ],
   "Field Guides": [
-    "Secrets of the Clans",
-    "Cats of the Clans",
-    "Code of the Clans",
-    "Battles of the Clans",
-    "Enter the Clans",
-    "The Ultimate Guide",
-    "The Ultimate Guide: Updated and Expanded Edition",
+    "Secrets of the Clans", "Cats of the Clans", "Code of the Clans",
+    "Battles of the Clans", "Enter the Clans", "The Ultimate Guide",
+    "The Ultimate Guide: Updated and Expanded Edition"
   ],
 };
 
 const mainArcNames = [
-  "The Prophecies Begin",
-  "The New Prophecy",
-  "Power of Three",
-  "Omen of the Stars",
-  "Dawn of the Clans",
-  "A Vision of Shadows",
-  "The Broken Code",
-  "A Starless Clan",
-  "Changing Skies",
+  "The Prophecies Begin", "The New Prophecy", "Power of Three",
+  "Omen of the Stars", "Dawn of the Clans", "A Vision of Shadows",
+  "The Broken Code", "A Starless Clan", "Changing Skies"
 ];
 
 function getCategoryForArc(arcName) {
@@ -260,10 +209,11 @@ function getCategoryForArc(arcName) {
   return "Other";
 }
 
+let progressUnsubSelf = null;
+
 function showBooks(uid) {
   const booksDiv = document.getElementById("books");
   const filterEl = document.getElementById("categoryFilter");
-
   if (!booksDiv || !filterEl) return;
 
   // Build dropdown once
@@ -287,69 +237,81 @@ function showBooks(uid) {
     filterEl.value = "Main Series";
   }
 
-  function render() {
-    const chosen = filterEl.value;
-    booksDiv.innerHTML = "Loading...";
+  // Live update your progress
+  if (progressUnsubSelf) progressUnsubSelf();
+  progressUnsubSelf = db.collection("progress").doc(uid).onSnapshot(
+    (doc) => {
+      const progress = doc.exists ? doc.data() : {};
+      renderBooksUI(uid, progress);
+    },
+    (err) => {
+      console.error("Progress listener failed:", err);
+      booksDiv.innerHTML =
+        "❌ Could not load books. This is almost always Firestore rules.<br>" +
+        "Firebase Console → Firestore → Rules.";
+    }
+  );
 
-    db.collection("progress")
-      .doc(uid)
-      .get()
-      .then((doc) => {
-        const progress = doc.exists ? doc.data() : {};
-        booksDiv.innerHTML = "";
+  filterEl.onchange = () => {
+    // re-render using latest cached snapshot by forcing a get
+    db.collection("progress").doc(uid).get().then((doc) => {
+      const progress = doc.exists ? doc.data() : {};
+      renderBooksUI(uid, progress);
+    });
+  };
+}
 
-        Object.keys(arcs).forEach((arcName) => {
-          if (getCategoryForArc(arcName) !== chosen) return;
+function renderBooksUI(uid, progress) {
+  const booksDiv = document.getElementById("books");
+  const filterEl = document.getElementById("categoryFilter");
+  if (!booksDiv || !filterEl) return;
 
-          const arcDiv = document.createElement("div");
-          arcDiv.className = "arc";
+  const chosen = filterEl.value;
+  booksDiv.innerHTML = "";
 
-          const title = document.createElement("h3");
-          title.textContent = arcName;
-          arcDiv.appendChild(title);
+  Object.keys(arcs).forEach((arcName) => {
+    if (getCategoryForArc(arcName) !== chosen) return;
 
-          arcs[arcName].forEach((book) => {
-            const bookDiv = document.createElement("div");
-            bookDiv.className = "book";
+    const arcDiv = document.createElement("div");
+    arcDiv.className = "arc";
 
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.checked = progress[book] === true;
+    const title = document.createElement("h3");
+    title.textContent = arcName;
+    arcDiv.appendChild(title);
 
-            checkbox.onchange = () => {
-              db.collection("progress").doc(uid).set({ [book]: checkbox.checked }, { merge: true });
-            };
+    arcs[arcName].forEach((book) => {
+      const row = document.createElement("div");
+      row.className = "book";
 
-            const label = document.createElement("span");
-            label.textContent = book;
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = progress[book] === true;
 
-            bookDiv.appendChild(checkbox);
-            bookDiv.appendChild(label);
-            arcDiv.appendChild(bookDiv);
-          });
+      checkbox.onchange = () => {
+        db.collection("progress").doc(uid).set({ [book]: checkbox.checked }, { merge: true });
+      };
 
-          booksDiv.appendChild(arcDiv);
-        });
-      })
-      .catch((err) => {
-        console.error("Progress read failed:", err);
-        booksDiv.innerHTML = "❌ Could not load books (check Firestore rules).";
-      });
-  }
+      const label = document.createElement("span");
+      label.textContent = book;
 
-  filterEl.onchange = render;
-  render();
+      row.appendChild(checkbox);
+      row.appendChild(label);
+      arcDiv.appendChild(row);
+    });
+
+    booksDiv.appendChild(arcDiv);
+  });
 }
 
 // =====================
 // AUTH ROUTING
 // =====================
 auth.onAuthStateChanged((user) => {
-  const isLogin = onPage("login.html");
-  const isSignup = onPage("signup.html");
-  const isProfile = onPage("profile.html");
-  const isApp = onPage("app.html");
-  const isCommunity = onPage("community.html");
+  const isLogin = isPage("login.html");
+  const isSignup = isPage("signup.html");
+  const isProfile = isPage("profile.html");
+  const isApp = isPage("app.html");
+  const isCommunity = isPage("community.html");
 
   // Protect these pages
   if (!user && (isProfile || isApp || isCommunity)) {
@@ -366,7 +328,7 @@ auth.onAuthStateChanged((user) => {
   // Profile
   if (user && isProfile) {
     loadProfile(user.uid);
-    if (document.getElementById("bioInput")) loadBio(user.uid);
+    loadBio(user.uid);
   }
 
   // Book tracker
